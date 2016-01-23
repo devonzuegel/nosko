@@ -42,6 +42,10 @@ GEM
       execjs
       json
     awesome_print (1.6.1)
+    babel-source (5.8.35)
+    babel-transpiler (0.7.0)
+      babel-source (>= 4.0, < 6)
+      execjs (~> 2.0)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -71,6 +75,7 @@ GEM
     coffee-script-source (1.10.0)
     colorize (0.7.7)
     concurrent-ruby (1.0.0)
+    connection_pool (2.2.0)
     crass (1.0.2)
     database_cleaner (1.5.1)
     debug_inspector (0.0.2)
@@ -209,6 +214,13 @@ GEM
     rb-fsevent (0.9.7)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
+    react-rails (1.5.0)
+      babel-transpiler (>= 0.7.0)
+      coffee-script-source (~> 1.8)
+      connection_pool
+      execjs
+      rails (>= 3.2)
+      tilt
     redcarpet (3.3.4)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
@@ -337,6 +349,7 @@ DEPENDENCIES
   rb-fchange
   rb-fsevent
   rb-inotify
+  react-rails (~> 1.0)
   redcarpet
   rspec-rails
   sanitize (= 4.0.1)
