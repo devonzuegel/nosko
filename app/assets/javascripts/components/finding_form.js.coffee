@@ -1,8 +1,9 @@
+
 @FindingForm = React.createClass
   getInitialState: ->
     title: ''
-    url: 'http://'
-    kind: ''
+    url:   'http://'
+    kind:  ''
 
   handleSubmit: (e) ->
     e.preventDefault()
@@ -13,39 +14,40 @@
 
   render: ->
     React.DOM.form
-      className: 'form-inline'
-      onSubmit: @handleSubmit
+      className:   'form-inline'
+      onSubmit:    @handleSubmit
       React.DOM.div
         className: 'form-group'
         React.DOM.input
-          type: 'text'
-          className: 'form-control'
+          type:        'text'
+          className:   'form-control'
           placeholder: 'URL'
-          name: 'url'
-          value: @state.url
-          onChange: @handleChange
+          name:        'url'
+          value:       @state.url
+          onChange:    @handleChange
       React.DOM.div
         className: 'form-group'
         React.DOM.input
-          type: 'text'
-          className: 'form-control'
+          type:        'text'
+          className:   'form-control'
           placeholder: 'Title'
-          name: 'title'
-          value: @state.title
-          onChange: @handleChange
+          name:        'title'
+          value:       @state.title
+          onChange:    @handleChange
       React.DOM.div
         className: 'form-group'
-        React.DOM.input
-          type: 'number'
-          className: 'form-control'
-          placeholder: 'Kind'
-          name: 'kind'
-          value: @state.kind
-          onChange: @handleChange
+        React.DOM.select
+          className:   'form-control'
+          name:        'kind'
+          defaultValue: 'other'
+          value:       @state.kind
+          onChange:    @handleChange
+          for kind in @props.kinds
+            React.DOM.option value: kind, kind
       React.DOM.button
-        type: 'submit'
+        type:      'submit'
         className: 'btn btn-primary'
-        disabled: !@valid()
+        disabled:  !@valid()
         'Create finding!'
 
   valid: ->

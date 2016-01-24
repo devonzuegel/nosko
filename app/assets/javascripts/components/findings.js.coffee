@@ -1,6 +1,6 @@
 @Findings = React.createClass
   getInitialState: ->
-    findings: @props.data
+    findings: @props.findings
 
   getDefaultProps: ->
     findings: []
@@ -19,10 +19,7 @@
   render: ->
     React.DOM.div
       className: 'findings'
-      React.DOM.h2
-        className: 'title'
-        'Findings'
-      React.createElement FindingForm, handleNewFinding: @addFinding
+      React.createElement FindingForm, handleNewFinding: @addFinding, kinds: @props.kinds
       React.DOM.hr null
       React.DOM.table
         className: 'table table-bordered'
@@ -30,7 +27,7 @@
           React.DOM.tr null,
             React.DOM.th null, 'Date'
             React.DOM.th null, 'Title'
-            React.DOM.th null, 'Amount'
+            React.DOM.th null, 'Type'
             React.DOM.th null, 'Actions'
         React.DOM.tbody null,
           for finding in @state.findings
