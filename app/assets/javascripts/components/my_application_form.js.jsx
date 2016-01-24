@@ -7,12 +7,17 @@ var MyApplicationForm = React.createClass({
       <Form url="/emails" onSuccess={this.changeUrl}>
         <div className='form-group'>
 
-          <label>Email</label>
-          <Input name="email" validations={[
+          <label>Email 1</label>
+          <Input name="email1" validations={[
             { fn: required },
             { fn: minLength, args: { len: 3 } }
           ]}/>
 
+          <label>Email 2</label>
+          <Input name="email2" validations={[
+            { fn: required },
+            { fn: minLength, args: { len: 3 } }
+          ]}/>
         </div>
       </Form>
     );

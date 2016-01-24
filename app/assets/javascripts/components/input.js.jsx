@@ -4,7 +4,9 @@ var Input = React.createClass({
   // or an empty value
   getInitialState: function () {
     return {
-      value: this.props.value || ''
+      edited:       false,
+      value:        this.props.value || '',
+      serverErrors: null  // No initial server errors
     };
   },
   componentWillMount: function () {
@@ -21,12 +23,31 @@ var Input = React.createClass({
       value: event.currentTarget.value
     }, function () {
       // When the value changes, wait for it to propagate, then validate the input
-      this.props.validate(this);
+      if (this.state.edited) {
+        this.props.validate(this);
+      }
     }.bind(this));
   },
+
+  onBlur: function (event) {
+    this.props.validate(this);
+    this.setState({ edited: true });
+  },
+
   render: function () {
+    var markAsValid = this.state.isValid;
+
+    var className = '';
+
+    // We prioritize marking it as required over marking it
+    // as not valid
+    className = markAsValid ? '' : 'error';
+
     return (
-      <input type="text" name={this.props.name} onChange={this.setValue} value={this.state.value}/>
+      <div className={className}>
+        <input type="text" name={this.props.name} className={className} onChange={this.setValue} onBlur={this.onBlur} value={this.state.value}/>
+        <span>{markAsValid ? null : this.state.serverErrors || this.state.validationError}</span>
+      </div>
     );
   }
 });

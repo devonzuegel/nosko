@@ -18,9 +18,8 @@ var Form = React.createClass({
 
   registeredInputs: function (children) {
     return React.Children.map(children, function(child) {
-      // We do a simple check for "name" on the child, which indicates it is an input.
-      if (child.props && child.props.name) {
-        // console.log('Registering "' + child.props.name + '" to form...');
+      is_input = child.props && child.props.name;
+      if (is_input) {
         child = React.cloneElement(child, {
           attachToForm:   this.attachToForm,
           detachFromForm: this.detachFromForm,
@@ -38,16 +37,14 @@ var Form = React.createClass({
   },
 
   validate: function (component) {
-    if (!component.props.validations) {
-      return;       // If no validations property, do not validate
-    }
-
     var isValid = true;
-    component.props.validations.forEach(function (validation) {
-      if (!validation.fn(component.state.value, validation.args)) {
-        isValid = false;
-      }
-    });
+    if (component.props.validations && (component.state.value || component.state.edited)) {
+      component.props.validations.forEach(function (validation) {
+        if (!validation.fn(component.state.value, validation.args)) {
+          isValid = false;
+        }
+      });
+    }
 
     // Now we et the state of the input based on the validation
     component.setState({
@@ -69,18 +66,14 @@ var Form = React.createClass({
   // All methods defined are bound to the component by React JS, so it is safe to use "this"
   // even though we did not bind it. We add the input component to our inputs map
   attachToForm: function (component) {
-    // console.log('Attaching "' + component.props.name + '" to form...')
     this.inputs[component.props.name] = component;
     this.model[component.props.name]  = component.state.value;
     this.validate(component);
   },
   detachFromForm: function (component) {
-    // console.log('Detaching "' + component.props.name + '" to form...')
     delete this.inputs[component.props.name];
-
-    // We of course have to delete the model property
-    // if the component is removed
     delete this.model[component.props.name];
+    // Delete the model property if the component is removed.
   },
 
   updateModel: function (component) {
@@ -95,6 +88,7 @@ var Form = React.createClass({
     this.setState({ isSubmitting: true });
     this.updateModel();
     console.log(this.model);
+
     // MyAjaxService.post(this.props.url, this.model)
     //   .then(this.props.onSuccess);
   },
