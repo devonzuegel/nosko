@@ -6,14 +6,12 @@
     findings: []
 
   addFinding: (finding) ->
-    findings = @state.findings.slice()
-    findings.push finding
+    findings = React.addons.update(@state.findings, { $push: [ finding ] })
     @setState findings: findings
 
   deleteFinding: (finding) ->
-    findings = @state.findings.slice()
-    index = findings.indexOf finding
-    findings.splice index, 1
+    index = @state.findings.indexOf finding
+    findings = React.addons.update(@state.findings, { $splice: [[ index, 1 ]] })
     @replaceState findings: findings
 
   render: ->
