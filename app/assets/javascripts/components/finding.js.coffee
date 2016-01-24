@@ -1,7 +1,21 @@
 @Finding = React.createClass
   render: ->
     React.DOM.tr null,
-      created_at = @props.finding.created_at
-      React.DOM.td null, moment(created_at).fromNow()
+      React.DOM.td null, moment( @props.finding.created_at ).fromNow()
       React.DOM.td null, @props.finding.title
       React.DOM.td null, amountFormat(333)
+      React.DOM.td null,
+        React.DOM.a
+          className: 'btn btn-danger'
+          onClick: @handleDelete
+          'Delete'
+
+  handleDelete: (e) ->
+    e.preventDefault()
+    console.log @props.finding
+    $.ajax  # jQuery doesn't have a $.delete shortcut method
+      method: 'DELETE'
+      url: "/findings/#{ @props.finding.id }"
+      dataType: 'JSON'
+      success: () =>
+        @props.handleDeleteFinding @props.finding

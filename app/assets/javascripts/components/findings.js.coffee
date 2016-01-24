@@ -1,6 +1,5 @@
 @Findings = React.createClass
   getInitialState: ->
-    console.log @props.data
     findings: @props.data
 
   getDefaultProps: ->
@@ -10,6 +9,12 @@
     findings = @state.findings.slice()
     findings.push finding
     @setState findings: findings
+
+  deleteFinding: (finding) ->
+    findings = @state.findings.slice()
+    index = findings.indexOf finding
+    findings.splice index, 1
+    @replaceState findings: findings
 
   render: ->
     React.DOM.div
@@ -26,6 +31,10 @@
             React.DOM.th null, 'Date'
             React.DOM.th null, 'Title'
             React.DOM.th null, 'Amount'
+            React.DOM.th null, 'Actions'
         React.DOM.tbody null,
           for finding in @state.findings
-            React.createElement Finding, key: finding.id, finding: finding
+            React.createElement Finding,
+              key:                 finding.id
+              finding:             finding
+              handleDeleteFinding: @deleteFinding
