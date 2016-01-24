@@ -2,7 +2,7 @@
 @FindingForm = React.createClass
   getInitialState: ->
     title: ''
-    url:   'http://'
+    url:   ''
     kind:  ''
 
   handleSubmit: (e) ->
@@ -37,11 +37,12 @@
       React.DOM.div
         className: 'form-group'
         React.DOM.select
-          className:   'form-control'
-          name:        'kind'
-          defaultValue: 'other'
-          value:       @state.kind
-          onChange:    @handleChange
+          className:    'form-control'
+          name:         'kind'
+          value:        'Other'
+          defaultValue: 'Other'
+          value:        @state.kind
+          onChange:     @handleChange
           for kind in @props.kinds
             React.DOM.option value: kind, kind
       React.DOM.button
@@ -51,7 +52,7 @@
         'Create finding!'
 
   valid: ->
-    @state.url && @state.title && @state.kind
+    @state.url && @state.title && @state.kind && validURL(@state.url)
 
   handleChange: (e) ->
     name = e.target.name

@@ -14,6 +14,11 @@
     findings = React.addons.update(@state.findings, { $splice: [[ index, 1 ]] })
     @replaceState findings: findings
 
+  updateFinding: (finding, data) ->
+    index = @state.findings.indexOf finding
+    findings = React.addons.update(@state.findings, { $splice: [[ index, 1, data ]] })
+    @replaceState findings: findings
+
   render: ->
     React.DOM.div
       className: 'findings'
@@ -23,13 +28,12 @@
         className: 'table table-bordered'
         React.DOM.thead null,
           React.DOM.tr null,
-            React.DOM.th null, 'Date'
-            React.DOM.th null, 'Title'
-            React.DOM.th null, 'Type'
-            React.DOM.th null, 'Actions'
+            for label in [ 'Date', 'Title', 'Type', 'Actions' ]
+              React.DOM.th null, label
         React.DOM.tbody null,
           for finding in @state.findings
             React.createElement Finding,
               key:                 finding.id
               finding:             finding
               handleDeleteFinding: @deleteFinding
+              handleEditFinding:   @updateFinding

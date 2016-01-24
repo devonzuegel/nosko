@@ -15,6 +15,15 @@ class FindingsController < ApplicationController
     head :no_content
   end
 
+  def update
+    @finding = Finding.find(params[:id])
+    if @finding.update(finding_params)
+      render json: @finding
+    else
+      render json: @finding.errors, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def finding_params
