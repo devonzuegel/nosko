@@ -6,12 +6,19 @@
   getDefaultProps: ->
     findings: []
 
+  addFinding: (finding) ->
+    findings = @state.findings.slice()
+    findings.push finding
+    @setState findings: findings
+
   render: ->
     React.DOM.div
       className: 'findings'
       React.DOM.h2
         className: 'title'
         'Findings'
+      React.createElement FindingForm, handleNewFinding: @addFinding
+      React.DOM.hr null
       React.DOM.table
         className: 'table table-bordered'
         React.DOM.thead null,
