@@ -19,7 +19,10 @@ var Input = React.createClass({
   setValue: function (event) {
     this.setState({
       value: event.currentTarget.value
-    });
+    }, function () {
+      // When the value changes, wait for it to propagate, then validate the input
+      this.props.validate(this);
+    }.bind(this));
   },
   render: function () {
     return (
