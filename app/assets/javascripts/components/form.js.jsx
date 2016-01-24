@@ -1,4 +1,8 @@
 var Form = React.createClass({
+  getInitialState: function () {
+    return { isSubmitting: false };
+  },
+
   componentWillMount: function () {
     this.model = {}; // We add a model to use when submitting the form
     this.inputs = {}; // We create a map of traversed inputs
@@ -15,7 +19,9 @@ var Form = React.createClass({
       }
       // If the child has its own children, traverse through them also
       if (child.props && child.props.children) {
-        child.props.children = this.registeredInputs(child.props.children);
+        child = React.cloneElement(child, {
+          children: this.registeredInputs(child.props.children)
+        });
       }
       return child
     }.bind(this));
@@ -51,15 +57,18 @@ var Form = React.createClass({
   // behaviour, update the model and log out the value
   submit: function (event) {
     event.preventDefault();
+    this.setState({ isSubmitting: true });
     this.updateModel();
     console.log(this.model);
+    // MyAjaxService.post(this.props.url, this.model)
+    //   .then(this.props.onSuccess);
   },
 
   render: function () {
     return (
       <form onSubmit={this.submit}>
         {this.registeredInputs(this.props.children)}
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={this.state.isSubmitting}>Submit</button>
       </form>
     );
   }
