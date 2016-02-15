@@ -4,17 +4,15 @@ var MyApplicationForm = React.createClass({
   },
   render: function () {
     return (
-      <Form url="/emails" onSuccess={this.changeUrl}>
+      <Form url='/emails' onSuccess={ this.changeUrl }>
         <div className='form-group'>
 
-          <label>Email 1</label>
-          <Input name="email1" validations={[
+          <Input name='email' validations={[
             { fn: required },
             { fn: minLength, args: { len: 3 } }
           ]}/>
 
-          <label>Email 2</label>
-          <Input name="email2" validations={[
+          <Textarea name='textarea1' validations={[
             { fn: required },
             { fn: minLength, args: { len: 3 } }
           ]}/>
@@ -23,5 +21,3 @@ var MyApplicationForm = React.createClass({
     );
   }
 });
-          // <label>Number</label>
-          // <Input name="number" validations="isNumeric,isLength:4:12"/>

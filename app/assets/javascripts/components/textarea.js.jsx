@@ -1,9 +1,10 @@
-var Input = React.createClass({
+var Textarea = React.createClass({
   /* Create an initial state with the value passed to the input
    * or an empty value */
   getInitialState: function () {
     return {
       edited:       false,
+      elemType:     this.props.elemType || 'input',
       value:        this.props.value || '',
       serverErrors: null  // No initial server errors
     };
@@ -39,13 +40,13 @@ var Input = React.createClass({
     className = markAsValid ? '' : 'error';
 
     return (
-      <div className={className}>
-        <input type      = 'text'
-               name      = { this.props.name  }
-               className = { className        }
-               onChange  = { this.setValue    }
-               onBlur    = { this.onBlur      }
-               value     = { this.state.value }/>
+      <div className={ className }>
+        <textarea
+               name      = { this.props.name     }
+               className = { className           }
+               onChange  = { this.setValue       }
+               onBlur    = { this.onBlur         }
+               value     = { this.state.value    }/>
         <span>{ markAsValid ? null : this.state.serverErrors || this.state.validationError }</span>
       </div>
     );

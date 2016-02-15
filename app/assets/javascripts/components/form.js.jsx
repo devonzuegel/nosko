@@ -7,7 +7,7 @@ var Form = React.createClass({
   },
 
   componentWillMount: function () {
-    this.model = {}; // We add a model to use when submitting the form
+    this.model  = {}; // We add a model to use when submitting the form
     this.inputs = {}; // We create a map of traversed inputs
   },
 
@@ -25,6 +25,7 @@ var Form = React.createClass({
           detachFromForm: this.detachFromForm,
           validate:       this.validate
         });
+        console.log('child.props: ' + JSON.stringify(child.props));
       }
       // If the child has its own children, traverse through them also
       if (child.props && child.props.children) {
@@ -32,7 +33,7 @@ var Form = React.createClass({
           children: this.registeredInputs(child.props.children)
         });
       }
-      return child
+      return child;
     }.bind(this));
   },
 
@@ -56,6 +57,7 @@ var Form = React.createClass({
     var allAreValid = true;
     var inputs      = this.inputs;
     Object.keys(inputs).forEach(function (name) {
+      // console.log(name);
       if (!inputs[name].state.isValid) {
         allAreValid = false;
       }
@@ -66,6 +68,7 @@ var Form = React.createClass({
   // All methods defined are bound to the component by React JS, so it is safe to use "this"
   // even though we did not bind it. We add the input component to our inputs map
   attachToForm: function (component) {
+    console.log('component.props.name: ' + component.props.name);
     this.inputs[component.props.name] = component;
     this.model[component.props.name]  = component.state.value;
     this.validate(component);
@@ -87,17 +90,19 @@ var Form = React.createClass({
     event.preventDefault();
     this.setState({ isSubmitting: true });
     this.updateModel();
-    console.log(this.model);
+
+    console.log('SUBMITTING: ' + JSON.stringify(this.model));
 
     // MyAjaxService.post(this.props.url, this.model)
     //   .then(this.props.onSuccess);
   },
 
   render: function () {
+    console.log('\nRENDERING ===================');
     return (
-      <form onSubmit={this.submit}>
-        {this.registeredInputs(this.props.children)}
-        <button type="submit" disabled={this.state.isSubmitting}>Submit</button>
+      <form onSubmit={ this.submit }>
+        { this.registeredInputs(this.props.children) }
+        <button type='submit' disabled={ this.state.isSubmitting }>Submit</button>
       </form>
     );
   }
