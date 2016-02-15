@@ -28,5 +28,10 @@ var FormElemMixin = {
   onBlur: function (event) {
     this.props.validate(this);
     this.setState({ edited: true });
-  }
+  },
+
+  className: function () {
+    var str = this.state.isValid ? '' : 'error ';
+    return str + this.props.className
+  },
 };

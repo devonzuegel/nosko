@@ -12,8 +12,7 @@
 .container
   .row
     .col-lg-8.col-lg-offset-2.col-md-10.col-md-offset-1
-      = react_component 'MyApplicationForm'
-      /= react_component 'Findings', { findings: @findings, kinds: Finding::KINDS }
+      = react_component 'Findings', { findings: @findings, kinds: Finding::KINDS }
 
       / .post-preview
       /   = link_to page_path('post') do

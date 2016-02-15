@@ -22,14 +22,15 @@
   render: ->
     React.DOM.div
       className: 'findings'
-      React.createElement FindingForm, handleNewFinding: @addFinding, kinds: @props.kinds
+      # React.createElement FindingForm, handleNewFinding: @addFinding, kinds: @props.kinds
+      React.createElement NewFindingForm, handleNewFinding: @addFinding, kinds: @props.kinds
       React.DOM.hr null
       React.DOM.table
         className: 'table table-bordered'
         React.DOM.thead null,
           React.DOM.tr null,
-            for label in [ 'Date', 'Title', 'Type', 'Actions' ]
-              React.DOM.th null, label
+            for label, i in [ 'Date', 'Title', 'Type', 'Actions' ]
+              React.DOM.th key: i, label
         React.DOM.tbody null,
           for finding in @state.findings
             React.createElement Finding,

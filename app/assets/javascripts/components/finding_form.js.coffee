@@ -1,4 +1,3 @@
-
 @FindingForm = React.createClass
   getInitialState: ->
     title: ''

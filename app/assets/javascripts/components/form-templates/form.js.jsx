@@ -25,7 +25,6 @@ var Form = React.createClass({
           detachFromForm: this.detachFromForm,
           validate:       this.validate
         });
-        console.log('child.props: ' + JSON.stringify(child.props));
       }
       // If the child has its own children, traverse through them also
       if (child.props && child.props.children) {
@@ -86,21 +85,26 @@ var Form = React.createClass({
   },
 
   // We prevent the form from default behaviour, update model and log out the value.
-  submit: function (event) {
+  handleSubmit: function (event) {
     event.preventDefault();
     this.setState({ isSubmitting: true });
     this.updateModel();
-
     console.log('SUBMITTING: ' + JSON.stringify(this.model));
 
-    // MyAjaxService.post(this.props.url, this.model)
-    //   .then(this.props.onSuccess);
+    $.post(this.props.url, {
+      finding: this.state
+    }, (function(_this) {
+      return function(data) {
+        _this.props.handleNewFinding(data);
+        return _this.setState(_this.getInitialState());
+      };
+    })(this), 'JSON');
   },
 
   render: function () {
     console.log('\nRENDERING ===================');
     return (
-      <form onSubmit={ this.submit }>
+      <form onSubmit={ this.handleSubmit }>
         { this.registeredInputs(this.props.children) }
         <button type='submit' disabled={ this.state.isSubmitting }>Submit</button>
       </form>
