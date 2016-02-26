@@ -1,26 +1,30 @@
 var Select = React.createClass({
   mixins: [FormElemMixin],
 
-  render: function () {
-    // We prioritize marking it as required over marking it as not valid.
-    var className = this.state.isValid ? '' : 'error';
-    var errors    = this.state.isValid ? null : this.state.serverErrors || this.state.validationError
+  propTypes: {
+    options:      React.PropTypes.array.isRequired,
+    defaultValue: React.PropTypes.string
+  },
 
-    return (
-      <div className={className}>
-        <select
-          name         = { this.props.name  }
-          className    = { this.className() }
-          onChange     = { this.setValue    }
-          onBlur       = { this.onBlur      }>{
+  getDefaultValue: function () {
+    return this.props.defaultValue || this.props.options[0] || '';
+  },
+
+  render: function () {
+    return (<div>
+      <span>{ this.getErrors() }</span>
+      <select
+        name         = { this.props.name     }
+        className    = { this.getClassName() }
+        onChange     = { this.setValue       }
+        value        = { this.state.value    }
+        onBlur       = { this.onBlur         }>{
 
           this.props.options.map(function(opt, i) {
             return (<option value={ opt } key={ i }>{ opt }</option>);
           })
 
-        }</select>
-        <span>{ errors }</span>
-      </div>
-    );
+      }</select>
+    </div>);
   }
 });

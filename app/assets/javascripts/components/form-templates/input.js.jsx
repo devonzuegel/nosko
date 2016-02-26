@@ -1,23 +1,26 @@
 var Input = React.createClass({
   mixins: [FormElemMixin],
 
-  render: function () {
-    // We prioritize marking it as required over marking it as not valid.
-    var className = this.state.isValid ? '' : 'error';
-    var errors    = this.state.isValid ? null : this.state.serverErrors || this.state.validationError
+  propTypes: {
+    defaultValue: React.PropTypes.string
+  },
 
+  getDefaultValue: function () {
+    return this.props.defaultValue || '';
+  },
+
+  render: function () {
     return (
-      <div className={className}>
+      <div>
+        <span>{ this.getErrors() }</span>
         <input
           type        = 'text'
           name        = { this.props.name         }
           placeholder = { this.props.placeholder  }
-          className   = { this.className()        }
+          className   = { this.getClassName()     }
           onChange    = { this.setValue           }
           onBlur      = { this.onBlur             }
           value       = { this.state.value        }/>
-
-        <span>{ errors }</span>
       </div>
     );
   }

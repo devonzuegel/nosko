@@ -1,8 +1,15 @@
 var Form = React.createClass({
   propTypes: {
-    url:          React.PropTypes.string.isRequired,
-    handleSubmit: React.PropTypes.func.isRequired,
-    validations:  React.PropTypes.array
+    url:            React.PropTypes.string.isRequired,
+    handleSubmit:   React.PropTypes.func.isRequired,
+    validations:    React.PropTypes.array,
+    clearOnSubmit:  React.PropTypes.bool
+  },
+
+  getDefaultProps: function() {
+    return {
+      clearOnSubmit: true
+    };
   },
 
   getInitialState: function () {
@@ -19,9 +26,6 @@ var Form = React.createClass({
 
   // Validate the form when it loads.
   componentDidMount: function () {
-    Object.keys(this.inputs).forEach(function (name) {
-      console.log(name);
-    });
     this.validateForm();
     this.setState(this.getInitialState());
   },
@@ -48,17 +52,15 @@ var Form = React.createClass({
 
   validate: function (component) {
     var isValid = true;
-    if (component.props.validations && (component.state.value || component.state.edited)) {
-      component.props.validations.forEach(function (validation) {
+    if (component.getValidations() && (component.state.value || component.state.edited)) {
+      component.getValidations().forEach(function (validation) {
         if (!validation.fn(component.state.value, validation.args)) {
           isValid = false;
         }
       });
     }
 
-    component.setState({  // Now we et the state of the input based on the validation
-      isValid: isValid,
-    }, this.validateForm);
+    component.setState({ isValid: isValid }, this.validateForm());
   },
 
   clearForm: function () {
@@ -71,10 +73,11 @@ var Form = React.createClass({
   validateForm: function () {
     var allAreValid = true;
     var inputs      = this.inputs;
+
     Object.keys(inputs).forEach(function (name) {
-      if (!inputs[name].state.isValid) {
-        allAreValid = false;
-      }
+      var input              = inputs[name];
+      var isRequiredButEmpty = (input.props.required && input.state.value == '');
+      if (!input.state.isValid || isRequiredButEmpty)   allAreValid = false;
     });
     this.setState({ isValid: allAreValid });
   },
@@ -111,7 +114,7 @@ var Form = React.createClass({
     $.post(this.props.url, { finding: this.model }, (function(_this) {
       return function(data) {
         _this.props.handleSubmit(data);
-        return _this.clearForm();
+        if (_this.props.clearOnSubmit)     _this.clearForm();
       };
     })(this), 'JSON');
   },
