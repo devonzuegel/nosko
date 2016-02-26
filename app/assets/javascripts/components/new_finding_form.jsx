@@ -1,7 +1,7 @@
 var NewFindingForm = React.createClass({
   render: function () {
     return (
-      <Form url='/findings' className='form-inline' onSubmit={ this.handleSubmit }>
+      <Form url='/findings' className='form-inline' handleSubmit={ this.props.handleNewFinding }>
         <div className='form-group'>
 
           <Input name='url' className='form-control' placeholder='URL' validations={[
@@ -14,12 +14,9 @@ var NewFindingForm = React.createClass({
             { fn: minLength, args: { len: 3 } }
           ]}/>
 
-          <select className='form-control' name='kind' defaultValue='Other'>{
-            this.props.kinds.map(function(kind, i) {
-              return (<option value={ kind } key={ i }>{ kind }</option>);
-            })
-          }
-          </select>
+          <Select className='form-control' name='kind' options={ this.props.kinds } validations={[
+            { fn: required }
+          ]}/>
         </div>
       </Form>
     );

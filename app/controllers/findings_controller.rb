@@ -10,7 +10,6 @@ class FindingsController < ApplicationController
 
   def destroy
     @finding = Finding.find(params[:id])
-    ap @finding
     @finding.destroy
     head :no_content
   end

@@ -1,8 +1,14 @@
 var Form = React.createClass({
+  propTypes: {
+    url:          React.PropTypes.string.isRequired,
+    handleSubmit: React.PropTypes.func.isRequired,
+    validations:  React.PropTypes.array
+  },
+
   getInitialState: function () {
     return {
       isSubmitting: false,
-      isValid:      true
+      isValid:      false
     };
   },
 
@@ -13,7 +19,11 @@ var Form = React.createClass({
 
   // Validate the form when it loads.
   componentDidMount: function () {
+    Object.keys(this.inputs).forEach(function (name) {
+      console.log(name);
+    });
     this.validateForm();
+    this.setState(this.getInitialState());
   },
 
   registeredInputs: function (children) {
@@ -46,17 +56,22 @@ var Form = React.createClass({
       });
     }
 
-    // Now we et the state of the input based on the validation
-    component.setState({
+    component.setState({  // Now we et the state of the input based on the validation
       isValid: isValid,
     }, this.validateForm);
+  },
+
+  clearForm: function () {
+    this.setState(this.getInitialState())
+    Object.keys(this.inputs).forEach(function (name) {
+      this.inputs[name].setState({ value: '' });
+    }.bind(this));
   },
 
   validateForm: function () {
     var allAreValid = true;
     var inputs      = this.inputs;
     Object.keys(inputs).forEach(function (name) {
-      // console.log(name);
       if (!inputs[name].state.isValid) {
         allAreValid = false;
       }
@@ -67,11 +82,11 @@ var Form = React.createClass({
   // All methods defined are bound to the component by React JS, so it is safe to use "this"
   // even though we did not bind it. We add the input component to our inputs map
   attachToForm: function (component) {
-    console.log('component.props.name: ' + component.props.name);
     this.inputs[component.props.name] = component;
     this.model[component.props.name]  = component.state.value;
     this.validate(component);
   },
+
   detachFromForm: function (component) {
     delete this.inputs[component.props.name];
     delete this.model[component.props.name];
@@ -85,28 +100,28 @@ var Form = React.createClass({
   },
 
   // We prevent the form from default behaviour, update model and log out the value.
-  handleSubmit: function (event) {
+  submitForm: function (event) {
     event.preventDefault();
     this.setState({ isSubmitting: true });
-    this.updateModel();
-    console.log('SUBMITTING: ' + JSON.stringify(this.model));
 
-    $.post(this.props.url, {
-      finding: this.state
-    }, (function(_this) {
+    this.updateModel();
+    this.validateForm();
+    if (!this.state.isValid)  return;
+
+    $.post(this.props.url, { finding: this.model }, (function(_this) {
       return function(data) {
-        _this.props.handleNewFinding(data);
-        return _this.setState(_this.getInitialState());
+        _this.props.handleSubmit(data);
+        return _this.clearForm();
       };
     })(this), 'JSON');
   },
 
   render: function () {
-    console.log('\nRENDERING ===================');
     return (
-      <form onSubmit={ this.handleSubmit }>
+      <form onSubmit={ this.submitForm }>
         { this.registeredInputs(this.props.children) }
-        <button type='submit' disabled={ this.state.isSubmitting }>Submit</button>
+        <button className='btn btn-primary' type='submit'
+                disabled={ !this.state.isValid || this.state.isSubmitting }>Submit</button>
       </form>
     );
   }
