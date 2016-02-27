@@ -38,3 +38,4 @@
               finding:             finding
               handleDeleteFinding: @deleteFinding
               handleEditFinding:   @updateFinding
+              kinds:               @props.kinds

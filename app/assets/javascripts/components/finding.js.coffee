@@ -40,11 +40,15 @@
           defaultValue: @props.finding.title
           ref: 'title'
       React.DOM.td null,
-        React.DOM.input
+        React.DOM.select
           className: 'form-control'
-          type: 'number'
           defaultValue: @props.finding.kind
           ref: 'kind'
+          @props.kinds.map (opt, i) ->
+            React.DOM.option
+              value: opt
+              key: i
+              opt
       React.DOM.td null,
         React.DOM.a
           className: 'btn btn-default'
@@ -72,7 +76,7 @@
 
   handleDelete: (e) ->
     e.preventDefault()
-    console.log @props.finding
+    # console.log @props.finding
     $.ajax  # jQuery doesn't have a $.delete shortcut method
       method: 'DELETE'
       url: "/findings/#{ @props.finding.id }"
