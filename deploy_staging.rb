@@ -4,7 +4,7 @@ def precompile_assets?
     answer = gets.chomp
     return true  if answer.downcase == 'y'
     return false if answer.downcase == 'n'
-    puts ' > Please respond with Y or N'
+    puts '  > Please respond with Y or N'
   end
 end
 
