@@ -1,6 +1,6 @@
 def promote_to_production?
   loop do
-    print 'About to promote `nosko-staging` (staging) to `nosko` (production). Continue?  '
+    print 'About to promote `nosko-staging` (staging) to `nosko` (production). Continue? (Y/N)  '
     answer = gets.chomp
     return true  if answer.downcase == 'y'
     return false if answer.downcase == 'n'

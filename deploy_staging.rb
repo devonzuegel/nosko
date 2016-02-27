@@ -16,6 +16,9 @@ if precompile_assets?
   puts `git commit -m 'Precompiles assets'`
 end
 
-puts `git push`
+puts 'Pushing...'
+puts `git push --no-verify`
+puts 'Running migrations...'
 puts `/usr/local/heroku/bin/heroku run rake db:migrate --app nosko-staging`
+puts 'Opening heroku logs...'
 exec '/usr/local/heroku/bin/heroku logs -t --app nosko-staging'
