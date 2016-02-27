@@ -22,8 +22,7 @@
   render: ->
     React.DOM.div
       className: 'findings'
-      # React.createElement FindingForm, handleNewFinding: @addFinding, kinds: @props.kinds
-      React.createElement NewFindingForm, handleNewFinding: @addFinding, kinds: @props.kinds
+      React.createElement FindingForm, handleNewFinding: @addFinding, kinds: @props.kinds
       React.DOM.hr null
       React.DOM.table
         className: 'table table-bordered'

@@ -1,4 +1,4 @@
-var NewFindingForm = React.createClass({
+var FindingForm = React.createClass({
   render: function () {
     return (
       <Form url='/findings' className='form-inline' handleSubmit={ this.props.handleNewFinding }>
