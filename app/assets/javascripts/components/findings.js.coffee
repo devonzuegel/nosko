@@ -27,10 +27,6 @@
       React.DOM.hr null
       React.DOM.table
         className: 'table table-bordered'
-        React.DOM.thead null,
-          React.DOM.tr null,
-            for label, i in [ 'Date', 'Title', 'Type', 'Actions' ]
-              React.DOM.th key: i, label
         React.DOM.tbody null,
           for finding in @state.findings
             React.createElement Finding,
