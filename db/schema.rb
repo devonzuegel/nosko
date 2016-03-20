@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160123204846) do
+ActiveRecord::Schema.define(version: 20160320221225) do
 
   create_table "findings", force: :cascade do |t|
     t.string   "url"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20160123204846) do
     t.string   "kind"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "permalink"
   end
 
   create_table "users", force: :cascade do |t|
