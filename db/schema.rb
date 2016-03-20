@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160320221225) do
+ActiveRecord::Schema.define(version: 20160320232313) do
 
   create_table "findings", force: :cascade do |t|
     t.string   "url"
@@ -21,6 +21,16 @@ ActiveRecord::Schema.define(version: 20160320221225) do
     t.datetime "updated_at", null: false
     t.string   "permalink"
   end
+
+  create_table "highlights", force: :cascade do |t|
+    t.integer  "finding_id"
+    t.string   "permalink"
+    t.text     "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "highlights", ["finding_id"], name: "index_highlights_on_finding_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
