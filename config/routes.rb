@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :sharings
   resources :highlights
   resources :findings
   resources :users
