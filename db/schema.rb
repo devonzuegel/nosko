@@ -11,33 +11,48 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160320233521) do
+ActiveRecord::Schema.define(version: 20160320232313) do
 
-  create_table "findings", force: :cascade do |t|
-    t.string   "url"
-    t.string   "title"
-    t.string   "kind"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string   "permalink"
-  end
-
-  create_table "highlights", force: :cascade do |t|
-    t.integer  "finding_id"
-    t.string   "permalink"
+  create_table "articles", force: :cascade do |t|
+    t.integer  "finding_id", null: false
     t.text     "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_index "highlights", ["finding_id"], name: "index_highlights_on_finding_id"
+  add_index "articles", ["finding_id"], name: "index_articles_on_finding_id"
+
+  create_table "findings", force: :cascade do |t|
+    t.integer  "permalink_id", null: false
+    t.string   "url"
+    t.string   "title"
+    t.string   "kind"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "highlights", force: :cascade do |t|
+    t.integer  "article_id",   null: false
+    t.integer  "permalink_id", null: false
+    t.text     "content"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "highlights", ["article_id"], name: "index_highlights_on_article_id"
+
+  create_table "permalinks", force: :cascade do |t|
+    t.text     "path",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "sharings", force: :cascade do |t|
-    t.boolean  "share_by_default"
-    t.string   "reminders_frequency"
+    t.boolean  "share_by_default",    default: false
+    t.string   "reminders_frequency", default: "daily"
     t.integer  "user_id"
-    t.datetime "created_at",          null: false
-    t.datetime "updated_at",          null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
   add_index "sharings", ["user_id"], name: "index_sharings_on_user_id"
