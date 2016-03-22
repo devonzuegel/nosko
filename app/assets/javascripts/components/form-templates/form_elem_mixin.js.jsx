@@ -21,7 +21,7 @@ var FormElemMixin = {
   setValue: function (event) {
     // When the value changes, wait for it to propagate, then validate the input
     this.setState({ value: event.currentTarget.value }, function () {
-      if (this.state.edited)  this.props.validate(this);
+      this.props.validate(this);
     }.bind(this));
   },
 

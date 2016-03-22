@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
+  before_action :correct_user?, only: %(update)
 
   def index
     @users = User.all
@@ -14,16 +15,18 @@ class UsersController < ApplicationController
   end
 
   def update
-    if current_user.update(user_params)
-      render json: current_user
+    @user = current_user
+    if @user.update(user_params)
+      render json: @user
     else
-      render json: current_user.errors, status: :unprocessable_entity
+      render json: @user.errors, status: :unprocessable_entity
     end
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:name, sharing_attributes: %(share_by_default, reminders_frequency))
+    ap params
+    params.require(:user).permit(:name, sharing_attributes: Sharing::UPDATEABLE_ATTRIBUTES)
   end
 end

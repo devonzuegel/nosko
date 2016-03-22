@@ -2,7 +2,6 @@ var Form = React.createClass({
   propTypes: {
     url:            React.PropTypes.string.isRequired,
     handleSubmit:   React.PropTypes.func.isRequired,
-    validations:    React.PropTypes.array,
     clearOnSubmit:  React.PropTypes.bool
   },
 
@@ -110,6 +109,8 @@ var Form = React.createClass({
     this.updateModel();
     this.validateForm();
     if (!this.state.isValid)  return;
+
+    console.log(this.model);
 
     $.post(this.props.url, { finding: this.model }, (function(_this) {
       return function(data) {

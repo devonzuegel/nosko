@@ -76,7 +76,6 @@
 
   handleDelete: (e) ->
     e.preventDefault()
-    # console.log @props.finding
     $.ajax  # jQuery doesn't have a $.delete shortcut method
       method: 'DELETE'
       url: "/findings/#{ @props.finding.id }"
