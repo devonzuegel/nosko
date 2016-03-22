@@ -1,5 +1,6 @@
 class Finding < ActiveRecord::Base
   include Permalinkable
+  has_one :article
 
   KINDS = %w(Article) # %w(Other Article Book Podcast)
 
@@ -10,11 +11,11 @@ class Finding < ActiveRecord::Base
 
   before_save :clean_url
 
+  private
+
   def clean_url
     self.url = self.url.sub %r{^https?:(\/\/|\\\\)(www\.)?}i, ''
   end
-
-  private
 
   def restricted_kinds
     unless KINDS.include? kind
