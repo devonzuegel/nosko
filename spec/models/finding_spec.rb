@@ -24,5 +24,11 @@ RSpec.describe Finding, type: :model do
       finding.trash!
       expect(finding.trashed?).to be true
     end
+
+    it 'Only allow kind="Article" for now' do
+      %w(Other Book Podcast).each do |k|
+        expect(build(:finding, kind: k)).to_not be_valid
+      end
+    end
   end
 end
