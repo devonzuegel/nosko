@@ -8,17 +8,14 @@ class CreatePermalinksArticlesFindingsHighlightsAndSharings < ActiveRecord::Migr
       t.timestamps null: false
     end
 
-    create_table :findings do |t|
-      t.references :permalink, null: false, foreign_key: true
-      t.string :url
-      t.string :title
-      t.string :kind
-
-      t.timestamps null: false
-    end
-
     create_table :articles do |t|
-      t.references :finding, index: true, foreign_key: true, null: false
+      # All findings
+      t.references :permalink, null: false, foreign_key: true
+      t.string     :url, blank: false
+      t.string     :title, blank: false
+      t.string     :kind, blank: false
+
+      # Article kind specific
       t.text       :content
 
       t.timestamps null: false

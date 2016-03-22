@@ -18,6 +18,10 @@ RSpec.describe Finding, type: :model do
       expect { create(:finding) }.to change { Permalink.count }.by 1
     end
 
+    it 'should generate an article on creation' do
+      expect { create(:finding) }.to change { Permalink.count }.by 1
+    end
+
     it '.trash! should update finding.permalink.trashed? = true' do
       finding = create(:finding)
       expect(finding.trashed?).to be false
@@ -26,7 +30,7 @@ RSpec.describe Finding, type: :model do
     end
 
     it 'Only allow kind="Article" for now' do
-      %w(Other Book Podcast).each do |k|
+      %w(Other Book Podcast blahblah).each do |k|
         expect(build(:finding, kind: k)).to_not be_valid
       end
     end

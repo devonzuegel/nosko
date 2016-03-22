@@ -14,19 +14,11 @@
 ActiveRecord::Schema.define(version: 20160320232313) do
 
   create_table "articles", force: :cascade do |t|
-    t.integer  "finding_id", null: false
-    t.text     "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "articles", ["finding_id"], name: "index_articles_on_finding_id"
-
-  create_table "findings", force: :cascade do |t|
     t.integer  "permalink_id", null: false
     t.string   "url"
     t.string   "title"
     t.string   "kind"
+    t.text     "content"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
