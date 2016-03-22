@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  belongs_to :sharing, dependent: :destroy
+  accepts_nested_attributes_for :sharing
+  before_create :add_sharing
 
   def self.create_with_omniauth(auth)
     create! do |user|
@@ -10,4 +13,7 @@ class User < ActiveRecord::Base
     end
   end
 
+  def add_sharing
+    self.sharing = Sharing.create!
+  end
 end

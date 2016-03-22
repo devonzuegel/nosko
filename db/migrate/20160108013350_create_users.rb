@@ -4,6 +4,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :name
       t.string :provider
       t.string :uid
+      t.references :sharing, null: false, foreign_key: true
 
       t.timestamps null: false
     end

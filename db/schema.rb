@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20160320232313) do
     t.string   "name"
     t.string   "provider"
     t.string   "uid"
+    t.integer  "sharing_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
