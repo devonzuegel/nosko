@@ -2,12 +2,14 @@ var Form = React.createClass({
   propTypes: {
     url:            React.PropTypes.string.isRequired,
     handleSubmit:   React.PropTypes.func.isRequired,
-    clearOnSubmit:  React.PropTypes.bool
+    clearOnSubmit:  React.PropTypes.bool,
+    baseModel:      React.PropTypes.object
   },
 
   getDefaultProps: function() {
     return {
-      clearOnSubmit: true
+      clearOnSubmit:  true,
+      baseModel:      {}
     };
   },
 
@@ -19,8 +21,8 @@ var Form = React.createClass({
   },
 
   componentWillMount: function () {
-    this.model  = {}; // We add a model to use when submitting the form
-    this.inputs = {}; // We create a map of traversed inputs
+    this.model  = this.props.baseModel; // We add a model to use when submitting the form
+    this.inputs = {};                   // We create a map of traversed inputs
   },
 
   // Validate the form when it loads.
@@ -78,6 +80,7 @@ var Form = React.createClass({
       var isRequiredButEmpty = (input.props.required && input.state.value == '');
       if (!input.state.isValid || isRequiredButEmpty)   allAreValid = false;
     });
+    console.log('allAreValid = ' + allAreValid);
     this.setState({ isValid: allAreValid });
   },
 
@@ -110,14 +113,18 @@ var Form = React.createClass({
     this.validateForm();
     if (!this.state.isValid)  return;
 
-    console.log(this.model);
-
-    $.post(this.props.url, { finding: this.model }, (function(_this) {
-      return function(data) {
+    _this = this
+    $.ajax({
+      method:   'PUT',
+      url:      _this.props.url,
+      dataType: 'JSON',
+      data:     { user: _this.model },
+      success: function (data) {
+        _this.setState({ edit: false, isSubmitting: false });
         _this.props.handleSubmit(data);
         if (_this.props.clearOnSubmit)     _this.clearForm();
-      };
-    })(this), 'JSON');
+      }
+    });
   },
 
   render: function () {
