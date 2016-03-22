@@ -23,7 +23,7 @@ class UsersController < ApplicationController
 
   private
 
-  def finding_params
-    params.require(:user).permit(:name, :url, :kind)
+  def user_params
+    params.require(:user).permit(:name, sharing_attributes: %(share_by_default, reminders_frequency))
   end
 end
