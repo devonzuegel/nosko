@@ -115,17 +115,12 @@ var Form = React.createClass({
     this.validateForm();
     if (!this.state.isValid)  return;
 
-    _this = this
-    $.ajax({
-      method:   'PUT',
-      url:      _this.props.url,
-      dataType: 'JSON',
-      data:     { user: _this.model },
-      success: function (data) {
-        _this.setState({ edit: false, isSubmitting: false });
-        _this.props.handleSubmit(data);
-        if (_this.props.clearOnSubmit)     _this.clearForm();
-      }
+    _this = this;
+
+    $.put(_this.props.url, { user: _this.model }, function (data) {
+      _this.setState({ edit: false, isSubmitting: false });
+      _this.props.handleSubmit(data);
+      if (_this.props.clearOnSubmit)     _this.clearForm();
     });
   },
 

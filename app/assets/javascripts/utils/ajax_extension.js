@@ -1,33 +1,19 @@
-// Borrowed from: stepansuvorov.com/blog/2014/04/jquery-put-and-delete/
-
-$.put = function(url, data, callback, type){
-  if ( $.isFunction(data) ){
-    type = type || callback,
-    callback = data,
-    data = {}
-  }
-
+$.put = function(url, data, callback, dataType = 'JSON') {
   return $.ajax({
-    url:         url,
-    type:        'PUT',
-    success:     callback,
-    data:        data,
-    contentType: type
+    method:   'PUT',
+    url:      url,
+    dataType: dataType,
+    data:     data,
+    success:  callback
   });
 }
 
-$.delete = function(url, data, callback, type){
-  if ( $.isFunction(data) ){
-    type     = type || callback,
-    callback = data,
-    data     = {}
-  }
-
+$.delete = function(url, data, callback, dataType = 'JSON') {
   return $.ajax({
-    url:         url,
-    type:        'DELETE',
-    success:     callback,
-    data:        data,
-    contentType: type
+    method:   'DELETE',
+    url:      _url,
+    dataType: dataType,
+    data:     data,
+    success:  callback
   });
 }
