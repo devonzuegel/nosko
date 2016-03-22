@@ -1,18 +1,25 @@
 module Permalinkable
   extend ActiveSupport::Concern
 
-  module ClassMethods
+  included do
+    before_create :generate_permalink
+    belongs_to :permalink
   end
 
-  module InstanceMethods
-    private
-    def generate_permalink
-      puts "\n\n\n\nHELLOOOO\n\n\n"
-    end
+  def generate_permalink
+    return unless permalink_id.nil?
+    generate_permalink!
   end
 
-  def self.included(receiver)
-    receiver.extend         ClassMethods
-    receiver.send :include, InstanceMethods
+  def generate_permalink!
+    self.permalink = Permalink.create!
+  end
+
+  def trash!
+    permalink.update_attributes(trashed: true)
+  end
+
+  def trashed?
+    permalink.trashed?
   end
 end

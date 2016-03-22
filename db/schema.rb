@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 20160320232313) do
   create_table "permalinks", force: :cascade do |t|
     t.text     "path",                       null: false
     t.boolean  "publicized", default: false
-    t.boolean  "removed",    default: false
+    t.boolean  "trashed",    default: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
   end

@@ -3,7 +3,7 @@ class CreatePermalinksArticlesFindingsHighlightsAndSharings < ActiveRecord::Migr
     create_table :permalinks do |t|
       t.text    :path, unique: true, null: false
       t.boolean :publicized, default: false
-      t.boolean :removed, default: false
+      t.boolean :trashed, default: false
 
       t.timestamps null: false
     end

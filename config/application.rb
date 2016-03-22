@@ -9,6 +9,11 @@ Bundler.require(*Rails.groups)
 module Nosko
   class Application < Rails::Application
 
+    config.autoload_paths += %W(
+      #{config.root}/app/controllers/concerns
+      #{config.root}/app/models/concerns
+    )
+
     config.generators do |g|
       g.test_framework :rspec,
         fixtures: true,

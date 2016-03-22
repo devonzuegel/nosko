@@ -1,8 +1,8 @@
 FactoryGirl.define do
   factory :finding do
-    url "MyString"
-title "MyString"
-type ""
+    title { Faker::Lorem.sentence }
+    kind  'Article'
+    url   { Faker::Internet.url }
   end
 
 end
