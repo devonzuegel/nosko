@@ -1,4 +1,4 @@
-module EvernoteParsable
+module Permalinkable
   extend ActiveSupport::Concern
 
   module ClassMethods
@@ -6,9 +6,9 @@ module EvernoteParsable
 
   module InstanceMethods
     private
-    # constants go here
-    #
-    # methods available only within class go here
+    def generate_permalink
+      puts "\n\n\n\nHELLOOOO\n\n\n"
+    end
   end
 
   def self.included(receiver)

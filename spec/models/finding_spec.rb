@@ -1,5 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Finding, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  pending 'Should require :title, :kind, and :url'
+  pending 'Should generate a permalink on creation'
+  pending 'Remove should update finding.permalink.removed = true'
 end

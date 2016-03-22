@@ -1,7 +1,9 @@
 class CreatePermalinksArticlesFindingsHighlightsAndSharings < ActiveRecord::Migration
   def change
     create_table :permalinks do |t|
-      t.text :path, unique: true, null: false
+      t.text    :path, unique: true, null: false
+      t.boolean :publicized, default: false
+      t.boolean :removed, default: false
 
       t.timestamps null: false
     end

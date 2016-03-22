@@ -42,9 +42,11 @@ ActiveRecord::Schema.define(version: 20160320232313) do
   add_index "highlights", ["article_id"], name: "index_highlights_on_article_id"
 
   create_table "permalinks", force: :cascade do |t|
-    t.text     "path",       null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.text     "path",                       null: false
+    t.boolean  "publicized", default: false
+    t.boolean  "removed",    default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "sharings", force: :cascade do |t|
