@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :findings
   resources :users
   root to: 'visitors#index'
+  get '/settings' => 'users#show'
 
   get '/auth/:provider/callback' => 'sessions#create'
   get '/signin'                  => 'sessions#new',     as: :signin
