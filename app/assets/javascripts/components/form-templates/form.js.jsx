@@ -3,7 +3,8 @@ var Form = React.createClass({
     url:            React.PropTypes.string.isRequired,
     handleSubmit:   React.PropTypes.func.isRequired,
     clearOnSubmit:  React.PropTypes.bool,
-    baseModel:      React.PropTypes.object
+    baseModel:      React.PropTypes.object,
+    submitButton:   React.PropTypes.string
   },
 
   getDefaultProps: function() {
@@ -15,6 +16,7 @@ var Form = React.createClass({
 
   getInitialState: function () {
     return {
+      submitButton: 'Submit',
       isSubmitting: false,
       isValid:      false
     };
@@ -80,7 +82,7 @@ var Form = React.createClass({
       var isRequiredButEmpty = (input.props.required && input.state.value == '');
       if (!input.state.isValid || isRequiredButEmpty)   allAreValid = false;
     });
-    console.log('allAreValid = ' + allAreValid);
+
     this.setState({ isValid: allAreValid });
   },
 
@@ -131,8 +133,10 @@ var Form = React.createClass({
     return (
       <form onSubmit={ this.submitForm }>
         { this.registeredInputs(this.props.children) }
-        <button className='btn btn-primary' type='submit'
-                disabled={ !this.state.isValid || this.state.isSubmitting }>Submit</button>
+        <button className='btn btn-primary' type='submit' id='btnSubmit'
+                disabled={ !this.state.isValid || this.state.isSubmitting }>{
+          this.props.submitButton
+        }</button>
       </form>
     );
   }

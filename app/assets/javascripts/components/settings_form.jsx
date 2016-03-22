@@ -1,13 +1,16 @@
 var SettingsForm = React.createClass({
   propTypes: {
-    handleUpdate:   React.PropTypes.func.isRequired,
-    user:           React.PropTypes.object.isRequired
+    user: React.PropTypes.object.isRequired
+  },
+
+  handleUpdate: function (data) {
+    alert('Saved!');
   },
 
   render: function () {
     return (
-      <Form url={ '/users/' + this.props.user.id } className='form-inline' handleSubmit={ this.props.handleUpdate }
-            clearOnSubmit={ false }  baseModel={ this.props.user }>
+      <Form url={ '/users/' + this.props.user.id } className='form-inline' handleSubmit={ this.handleUpdate }
+            clearOnSubmit={ false }  baseModel={ this.props.user } submitButton='Save'>
         <div className='form-group'>
 
           <label>Name</label>

@@ -16,7 +16,7 @@
 //= require moment
 //= require react
 //= require react_ujs
-//= require components
+//= require_tree ./components
 //= require bootstrap-sprockets
 //= require_tree .
 
