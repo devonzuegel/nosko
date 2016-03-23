@@ -16,7 +16,8 @@ class UsersController < ApplicationController
 
   def update
     @user = current_user
-    if @user.update(user_params)
+    ap modified_params
+    if @user.update(modified_params)
       render json: @user
     else
       render json: @user.errors, status: :unprocessable_entity
@@ -26,7 +27,17 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    ap params
     params.require(:user).permit(:name, sharing_attributes: Sharing::UPDATEABLE_ATTRIBUTES)
+  end
+
+  def modified_params
+    params = user_params.deep_symbolize_keys
+    if params[:sharing]
+      share_by_default = params[:sharing][:share_by_default]
+      params[:sharing_attributes] = params[:sharing]
+      params[:sharing_attributes][:share_by_default] = (share_by_default == 'true') ? true : false
+      params.delete('sharing')
+    end
+    params
   end
 end

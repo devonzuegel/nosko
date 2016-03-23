@@ -1,0 +1,17 @@
+$loading-gif-width: 220px;
+
+#loadingGif {
+  display:  none;
+  position: absolute;
+  height:   $loading-gif-width;
+  left:     50%;
+  top:      50%;
+  margin:   0 0 (-$loading-gif-width / 2) (-$loading-gif-width / 2);
+}
+
+#successfulSaveMessage {
+  margin:   auto;
+  width:    auto;
+  float:    right;
+  display:  none;
+}

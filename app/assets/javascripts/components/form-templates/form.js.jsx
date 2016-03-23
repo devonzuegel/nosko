@@ -1,16 +1,20 @@
 var Form = React.createClass({
   propTypes: {
-    url:            React.PropTypes.string.isRequired,
-    handleSubmit:   React.PropTypes.func.isRequired,
-    clearOnSubmit:  React.PropTypes.bool,
-    baseModel:      React.PropTypes.object,
-    submitButton:   React.PropTypes.string
+    url:               React.PropTypes.string.isRequired,
+    handleSubmit:      React.PropTypes.func.isRequired,
+    clearOnSubmit:     React.PropTypes.bool,
+    baseModel:         React.PropTypes.object,
+    submitButton:      React.PropTypes.string,
+    includeLoadingGif: React.PropTypes.bool,
+    includeSuccessDiv: React.PropTypes.bool
   },
 
   getDefaultProps: function() {
     return {
-      clearOnSubmit:  true,
-      baseModel:      {}
+      clearOnSubmit:      true,
+      baseModel:          {},
+      includeLoadingGif:  false,
+      includeSuccessDiv:  false
     };
   },
 
@@ -20,6 +24,17 @@ var Form = React.createClass({
       isSubmitting: false,
       isValid:      false
     };
+  },
+
+  componentDidUpdate: function () {
+    if (this.props.includeLoadingGif) {
+      if (this.state.isSubmitting) {
+        $('#loadingGif').show();
+        setTimeout(function(){ }, 1000);
+      } else {
+        $('#loadingGif').hide();
+      }
+    }
   },
 
   componentWillMount: function () {
@@ -73,6 +88,10 @@ var Form = React.createClass({
     }.bind(this));
   },
 
+  successDiv: function () {
+    $('#successfulSaveMessage').fadeIn(100).delay(800).fadeOut(1000);
+  },
+
   validateForm: function () {
     var allAreValid = true;
     var inputs      = this.inputs;
@@ -117,20 +136,24 @@ var Form = React.createClass({
 
     _this = this;
     $.put(this.props.url, { user: this.model }, function (data) {
-      _this.setState({ edit: false, isSubmitting: false });
+      _this.setState({ isSubmitting: false });
       _this.props.handleSubmit(data);
-      if (_this.props.clearOnSubmit)     _this.clearForm();
+      if (_this.props.includeSuccessDiv)  _this.successDiv();
+      if (_this.props.clearOnSubmit)      _this.clearForm();
     });
   },
 
   render: function () {
+    img_link = 'http://earthcharter.org/wp-content/themes/canvas/includes/images/prettyPhoto/loader.gif'
     return (
       <form onSubmit={ this.submitForm }>
+        <img src={ img_link } id='loadingGif'/>
         { this.registeredInputs(this.props.children) }
         <button className='btn btn-primary' type='submit' id='btnSubmit'
                 disabled={ !this.state.isValid || this.state.isSubmitting }>{
           this.props.submitButton
         }</button>
+        <div id='successfulSaveMessage'>Saved successfully!</div>
       </form>
     );
   }
