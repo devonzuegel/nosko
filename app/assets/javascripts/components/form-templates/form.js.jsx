@@ -116,8 +116,7 @@ var Form = React.createClass({
     if (!this.state.isValid)  return;
 
     _this = this;
-
-    $.put(_this.props.url, { user: _this.model }, function (data) {
+    $.put(this.props.url, { user: this.model }, function (data) {
       _this.setState({ edit: false, isSubmitting: false });
       _this.props.handleSubmit(data);
       if (_this.props.clearOnSubmit)     _this.clearForm();
