@@ -81,6 +81,7 @@ GEM
     debug_inspector (0.0.2)
     diff-lcs (1.2.5)
     erubis (2.7.0)
+    evernote-thrift (1.25.2)
     execjs (2.6.0)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
@@ -161,6 +162,10 @@ GEM
     omniauth (1.2.2)
       hashie (>= 1.2, < 4)
       rack (~> 1.0)
+    omniauth-evernote (1.2.1)
+      evernote-thrift
+      multi_json (~> 1.0)
+      omniauth-oauth (~> 1.0)
     omniauth-oauth (1.1.0)
       oauth
       omniauth (~> 1.0)
@@ -342,6 +347,7 @@ DEPENDENCIES
   momentjs-rails
   oauth (= 0.4.7)
   omniauth (= 1.2.2)
+  omniauth-evernote (= 1.2.1)
   omniauth-twitter (= 1.2.1)
   pg
   pry-rails

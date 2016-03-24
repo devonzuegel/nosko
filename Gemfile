@@ -23,6 +23,7 @@ gem 'momentjs-rails'
 gem 'oauth',                '0.4.7'
 gem 'omniauth',             '1.2.2'
 gem 'omniauth-twitter',     '1.2.1'
+gem 'omniauth-evernote',    '1.2.1'
 gem 'redcarpet'
 
 group :development, :test do
