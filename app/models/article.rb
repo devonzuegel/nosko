@@ -3,8 +3,4 @@ class Article < Finding
 
   REQUIRED_FIELDS = superclass::REQUIRED_FIELDS + %i(content)
   OPTIONAL_FIELDS = superclass::OPTIONAL_FIELDS
-
-  def trashed?
-    permalink.trashed?
-  end
 end
