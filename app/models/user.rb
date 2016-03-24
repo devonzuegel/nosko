@@ -22,4 +22,13 @@ class User < ActiveRecord::Base
   def add_empty_evernote_account
     EvernoteAccount.create!(user: self)
   end
+
+  def connect_evernote(omniauth_response)
+    auth_token = omniauth_response['credentials']['token']
+    evernote_account.update(auth_token: auth_token)
+  end
+
+  def evernote_connected?
+    !!evernote_account.auth_token
+  end
 end
