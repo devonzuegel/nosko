@@ -1,6 +1,11 @@
+.container: .row
+  h3 Settings
+  .col-lg-8.col-lg-offset-2.col-md-10.col-md-offset-1
+    - if current_user.evernote_connected?
+      button.btn.btn-primary.disabled Evernote already connected!
+    - else
+      a href='/evernote/connect'
+        button.btn.btn-primary Connect your Evernote account
 
-.container
-  .row
-    .col-lg-8.col-lg-offset-2.col-md-10.col-md-offset-1
-      h3 Settings
-      = react_component 'SettingsForm', { user: @user.attributes.merge(sharing: @user.sharing.attributes) }
+  .col-lg-8.col-lg-offset-2.col-md-10.col-md-offset-1
+    = react_component 'SettingsForm', { user: @user.attributes.merge(sharing: @user.sharing.attributes) }
