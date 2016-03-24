@@ -27,6 +27,11 @@ RSpec.describe Article, type: :model do
       article.trash!
       expect(article.trashed?).to be true
     end
+
+    it 'should generate a permalink on creation' do
+      expect { create(:article) }.to change { Permalink.count }.by 1
+    end
+
   end
 
   describe 'Retrieving articles' do
