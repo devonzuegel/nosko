@@ -26,6 +26,9 @@ gem 'omniauth-twitter',     '1.2.1'
 gem 'omniauth-evernote',    '1.2.1'
 gem 'redcarpet'
 
+# Evernote
+gem 'evernote_oauth'
+
 group :development, :test do
   gem 'byebug'
   gem 'web-console',        '~> 2.0'

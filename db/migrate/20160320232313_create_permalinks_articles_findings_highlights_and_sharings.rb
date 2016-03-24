@@ -9,12 +9,12 @@ class CreatePermalinksArticlesFindingsHighlightsAndSharings < ActiveRecord::Migr
     end
 
     create_table :articles do |t|
-      # All findings
+      # Fields that apply to all findings
       t.references :permalink, null: false, foreign_key: true
       t.string     :url, blank: false
       t.string     :title, blank: false
 
-      # Article-kind specific
+      # Fields that are Article-specific
       t.text       :content
 
       t.timestamps null: false
