@@ -9,7 +9,8 @@ feature 'Home page' do
   #   When I visit the home page
   scenario 'visit the home page' do
     visit root_path
-    expect(page).to have_content 'Start Bootstrap'
+    expect(page).to have_content 'Home'
+    expect(page).to have_content 'Sign in'
     expect(page).to have_content 'Sign in'
   end
 
