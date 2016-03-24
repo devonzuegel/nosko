@@ -1,43 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe Finding, type: :model do
-  describe 'Initializing a finding' do
-    it 'requires :title, :kind, and :url' do
-      expect(build(:finding, title: nil)).to_not be_valid
-      expect(build(:finding, kind:  nil)).to_not be_valid
-      expect(build(:finding, url:   nil)).to_not be_valid
-      expect(build(:finding, title: nil, kind:  nil)).to_not be_valid
-      expect(build(:finding, title: nil, url:   nil)).to_not be_valid
-      expect(build(:finding, kind: nil,  url:   nil)).to_not be_valid
-      expect(build(:finding, title: nil, kind:  nil, url: nil)).to_not be_valid
-      expect(build(:finding)).to be_valid
-      expect { create(:finding) }.to change { Finding.count }.by 1
-    end
-
-    it 'should generate a permalink on creation' do
-      expect { create(:finding) }.to change { Permalink.count }.by 1
-    end
-
-    it 'should generate an article on creation' do
-      expect { create(:finding) }.to change { Permalink.count }.by 1
-    end
-
-    it '.trash! should update finding.permalink.trashed? = true' do
-      finding = create(:finding)
-      expect(finding.trashed?).to be false
-      finding.trash!
-      expect(finding.trashed?).to be true
-    end
-
-    it 'Only allow kind="Article" for now' do
-      %w(Other Book Podcast blahblah).each do |k|
-        expect(build(:finding, kind: k)).to_not be_valid
-      end
-    end
+  it 'should be an abstract class' do
+    expect(Finding.abstract_class?).to be true
   end
 
-  describe 'Retrieving Findings' do
-    it 'should retrieve only live (untrashed) findings'
-    it 'should retrieve only trashed findings'
+  it 'should have the expected required fields' do
+    expect(Finding::REQUIRED_FIELDS).to match_array %i(title url) # Ordering doesn't matter
+  end
+
+  it 'should have the expected optional fields' do
+    expect(Finding::OPTIONAL_FIELDS).to match_array %i() # Ordering doesn't matter
   end
 end

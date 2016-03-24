@@ -13,9 +13,8 @@ class CreatePermalinksArticlesFindingsHighlightsAndSharings < ActiveRecord::Migr
       t.references :permalink, null: false, foreign_key: true
       t.string     :url, blank: false
       t.string     :title, blank: false
-      t.string     :kind, blank: false
 
-      # Article kind specific
+      # Article-kind specific
       t.text       :content
 
       t.timestamps null: false

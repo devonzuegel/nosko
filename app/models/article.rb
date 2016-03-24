@@ -1,11 +1,10 @@
 class Article < Finding
   validates :content, presence: true, blank: false
 
-  def trashed?
-    finding.trashed?
-  end
+  REQUIRED_FIELDS = superclass::REQUIRED_FIELDS + %i(content)
+  OPTIONAL_FIELDS = superclass::OPTIONAL_FIELDS
 
-  def kind
-    'Article'
+  def trashed?
+    permalink.trashed?
   end
 end
