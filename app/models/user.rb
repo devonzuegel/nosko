@@ -1,7 +1,9 @@
 class User < ActiveRecord::Base
-  belongs_to :sharing, dependent: :destroy
-  accepts_nested_attributes_for :sharing
-  before_create :add_sharing
+  has_one :sharing, dependent: :destroy
+  has_one :evernote_account, dependent: :destroy
+  accepts_nested_attributes_for :sharing, :evernote_account
+
+  after_create :add_sharing, :add_empty_evernote_account
 
   def self.create_with_omniauth(auth)
     create! do |user|
@@ -14,6 +16,10 @@ class User < ActiveRecord::Base
   end
 
   def add_sharing
-    self.sharing = Sharing.create!
+    Sharing.create!(user: self)
+  end
+
+  def add_empty_evernote_account
+    EvernoteAccount.create!(user: self)
   end
 end

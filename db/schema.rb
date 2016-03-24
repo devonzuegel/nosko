@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160320232313) do
+ActiveRecord::Schema.define(version: 20160324171930) do
 
   create_table "articles", force: :cascade do |t|
     t.integer  "permalink_id", null: false
@@ -21,6 +21,13 @@ ActiveRecord::Schema.define(version: 20160320232313) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
+
+  create_table "evernote_accounts", force: :cascade do |t|
+    t.string  "auth_token"
+    t.integer "user_id"
+  end
+
+  add_index "evernote_accounts", ["user_id"], name: "index_evernote_accounts_on_user_id"
 
   create_table "highlights", force: :cascade do |t|
     t.integer  "article_id",   null: false
@@ -54,7 +61,6 @@ ActiveRecord::Schema.define(version: 20160320232313) do
     t.string   "name"
     t.string   "provider"
     t.string   "uid"
-    t.integer  "sharing_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
