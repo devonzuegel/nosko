@@ -4,8 +4,10 @@
 class EvernoteClient
   include EvernoteParsable
 
-  OFFSET    = 0
-  N_RESULTS = 100
+  OFFSET            = 0
+  N_RESULTS_DEFAULT = 100
+  DEFAULT_ORDER     = :updated
+  ASCENDING_DEFAULT = false
 
   def initialize(attributes = {})
     @auth_token = attributes.fetch(:auth_token)
@@ -25,12 +27,14 @@ class EvernoteClient
     user_store.getUser(@auth_token)
   end
 
-  def notes_metadata
-    note_store.findNotesMetadata(filter, OFFSET, N_RESULTS, notes_metadata_result_spec)
+  def notes_metadata(n_results: N_RESULTS_DEFAULT, order: DEFAULT_ORDER, ascending: ASCENDING_DEFAULT)
+    custom_filter = filter(order: order, ascending: ascending)
+    note_store.findNotesMetadata(custom_filter, OFFSET, n_results, notes_metadata_result_spec)
   end
 
-  def notes
-    note_guids = notes_metadata.notes.map(&:guid)
+  def notes(n_results: N_RESULTS_DEFAULT, order: DEFAULT_ORDER, ascending: ASCENDING_DEFAULT)
+    options    = { n_results: n_results, order: order, ascending: ascending }
+    note_guids = notes_metadata(options).notes.map(&:guid)
     notes      = note_guids.map { |guid| find_note_by_guid(guid) }
   end
 
@@ -55,8 +59,8 @@ class EvernoteClient
     raise Evernote::EDAM::Error::EDAMUserException, 'Invalid authentication token.'
   end
 
-  def filter
-    Evernote::EDAM::NoteStore::NoteFilter.new
+  def filter(order: order, ascending: ASCENDING_DEFAULT)
+    Evernote::EDAM::NoteStore::NoteFilter.new(order: sort_order_value(order), ascending: ascending)
   end
 
   def notes_metadata_result_spec
@@ -66,6 +70,23 @@ class EvernoteClient
       includeCreated:       true,
       includeUpdated:       true,
       includeDeleted:       true,
+      includeNotebookGuid:  true,
+      includeAttributes:    true,
+      includeTagGuids:      true
     )
+  end
+
+  def sort_order_value_map
+    Evernote::EDAM::Type::NoteSortOrder::VALUE_MAP.map { |k, v| [v.downcase, k] }.to_h
+  end
+
+  def sort_order_value(order = DEFAULT_ORDER)
+    value_map = sort_order_value_map
+    unless value_map.include? order.to_s.downcase
+      msg = "#{order} is not a valid Evernote sort order. Please choose from " \
+            "#{value_map.keys.to_sentence(last_word_connector:', or ')}"
+      raise Exception, msg
+    end
+    value_map[order]
   end
 end
