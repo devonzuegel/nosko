@@ -1,6 +1,6 @@
-def promote_to_production?
+def permission_granted?(question)
   loop do
-    print 'About to promote `nosko-staging` (staging) to `nosko` (production). Continue? (Y/N)  '
+    print "#{question} (Y/N)  "
     answer = gets.chomp
     return true  if answer.downcase == 'y'
     return false if answer.downcase == 'n'
@@ -8,11 +8,14 @@ def promote_to_production?
   end
 end
 
-if promote_to_production?
+if permission_granted?('Promote `nosko-staging` (staging) to `nosko` (production)?')
   puts 'Promoting...'
   puts `/usr/local/heroku/bin/heroku pipelines:promote --app nosko-staging`
   puts 'Migrating...'
   puts `/usr/local/heroku/bin/heroku run rake db:migrate --app nosko`
-  puts 'Opening logs...'
-  exec '/usr/local/heroku/bin/heroku logs -t --app nosko'
+end
+
+if permission_granted?('Open heroku logs?')
+  puts 'Opening heroku logs...'
+  exec '/usr/local/heroku/bin/heroku logs -t --app nosko-staging'
 end
