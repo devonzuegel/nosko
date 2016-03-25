@@ -1,8 +1,11 @@
 class EvernoteNote < ActiveRecord::Base
-  belongs_to :evernote_account, dependent: :destroy
-  validates  :evernote_account, presence: true
+  belongs_to :article, dependent: :destroy
+  validates  :article, presence: true
 
-  def expired?
-    raise NotImplementedError
+  def initialize(all_attributes)
+    article_attributes  = all_attributes.slice(*Article::FIELDS)
+    evernote_attributes = all_attributes.slice!(*Article::FIELDS)
+    article = Article.create!(article_attributes)
+    super(evernote_attributes.merge(article: article))
   end
 end

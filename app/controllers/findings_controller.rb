@@ -26,6 +26,6 @@ class FindingsController < ApplicationController
   private
 
   def finding_params
-    params.require(:finding).permit(:title, :url, :kind)
+    params.require(:finding).permit(:title, :source_url, :kind)
   end
 end

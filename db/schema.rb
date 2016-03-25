@@ -15,8 +15,8 @@ ActiveRecord::Schema.define(version: 20160325014738) do
 
   create_table "articles", force: :cascade do |t|
     t.integer  "permalink_id", null: false
-    t.string   "source_url"
     t.string   "title"
+    t.string   "source_url",   null: false
     t.text     "content"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
@@ -30,16 +30,16 @@ ActiveRecord::Schema.define(version: 20160325014738) do
   add_index "evernote_accounts", ["user_id"], name: "index_evernote_accounts_on_user_id"
 
   create_table "evernote_notes", force: :cascade do |t|
-    t.string   "guid"
-    t.datetime "en_created_at"
-    t.datetime "en_updated_at"
-    t.boolean  "active"
-    t.string   "notebook_guid"
-    t.string   "author"
-    t.integer  "evernote_account_id"
+    t.string   "guid",          null: false
+    t.datetime "en_created_at", null: false
+    t.datetime "en_updated_at", null: false
+    t.boolean  "active",        null: false
+    t.string   "notebook_guid", null: false
+    t.string   "author",        null: false
+    t.integer  "article_id",    null: false
   end
 
-  add_index "evernote_notes", ["evernote_account_id"], name: "index_evernote_notes_on_evernote_account_id"
+  add_index "evernote_notes", ["article_id"], name: "index_evernote_notes_on_article_id"
 
   create_table "highlights", force: :cascade do |t|
     t.integer  "article_id",   null: false

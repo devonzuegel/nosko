@@ -1,5 +1,4 @@
 class EvernoteAccount < ActiveRecord::Base
-  has_many   :evernote_note, dependent: :destroy
   belongs_to :user
   validates  :user, presence: true
 

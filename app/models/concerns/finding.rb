@@ -2,12 +2,12 @@ class Finding < ActiveRecord::Base
   include Permalinkable
   self.abstract_class = true
 
-  validates :title, presence: true, blank: false
-  validates :url,   presence: true, blank: false
+  validates :title,      presence: true, blank: false
+  validates :source_url, presence: true, blank: false
 
   before_save :clean_url
 
-  REQUIRED_FIELDS = %i(title url)
+  REQUIRED_FIELDS = %i(title source_url)
   OPTIONAL_FIELDS = %i()
 
   def self.descendants
@@ -17,6 +17,6 @@ class Finding < ActiveRecord::Base
   private
 
   def clean_url
-    self.url = self.url.sub %r{^https?:(\/\/|\\\\)(www\.)?}i, ''
+    self.source_url = self.source_url.sub %r{^https?:(\/\/|\\\\)(www\.)?}i, ''
   end
 end
