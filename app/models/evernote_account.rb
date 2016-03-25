@@ -15,7 +15,7 @@ class EvernoteAccount < ActiveRecord::Base
 
   def retrieve_notes(en_client = nil)
     en_client ||= EvernoteClient.new(auth_token: auth_token)
-    en_client.notes(updated_interval: updated_interval).map { |h| h[:content]='REMOVED FOR NOW'; h }
+    en_client.notes(updated_interval: updated_interval)
   end
 
   def sync_notes
