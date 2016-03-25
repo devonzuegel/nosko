@@ -10,7 +10,7 @@ FactoryGirl.define do
             notebook_guid:  Faker::Lorem.characters(20),
             title:          Faker::Lorem.sentence,
             source_url:     Faker::Internet.url,
-            content:        Faker::Lorem.paragraphs(3),
+            content:        Faker::Lorem.paragraphs(3).join("\n"),
         } }
     end
     initialize_with { EvernoteNote.new(data) }

@@ -9,8 +9,7 @@ class EvernoteNote < ActiveRecord::Base
   validates_uniqueness_of :guid, :article
 
   def initialize(all_attributes)
-    article_attributes  = all_attributes.slice(*Article::FIELDS)
-    evernote_attributes = all_attributes.slice!(*Article::FIELDS)
+    article_attributes, evernote_attributes = partition_attributes(all_attributes)
     article = Article.new(article_attributes)
     super(evernote_attributes.merge(article: article))
   end
@@ -20,7 +19,25 @@ class EvernoteNote < ActiveRecord::Base
     super
   end
 
+  def update_attributes(all_attributes)
+    article_attributes, evernote_attributes = partition_attributes(all_attributes)
+    article.update_attributes(article_attributes)
+    super(evernote_attributes)
+  end
+
   def self.update_or_create!(all_attributes)
-    ap all_attributes
+    matches = where(guid: all_attributes.fetch(:guid))
+    return create!(all_attributes) if matches.empty?
+
+    matches.first.update_attributes(all_attributes)
+    matches.first
+  end
+
+  private
+
+  def partition_attributes(all_attributes)
+    article_attributes  = all_attributes.slice(*Article::FIELDS)
+    evernote_attributes = all_attributes.reject { |k,v| article_attributes.keys.include? k }
+    return [article_attributes, evernote_attributes]
   end
 end
