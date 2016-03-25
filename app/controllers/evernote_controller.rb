@@ -6,6 +6,9 @@ class EvernoteController < ApplicationController
   end
 
   def create
+    puts "\n\n"
+    puts request
+    puts "\n\n"
     current_user.connect_evernote(request.env['omniauth.auth'])
     redirect_to root_url, notice: 'Evernote connected!'
   end
