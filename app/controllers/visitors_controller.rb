@@ -1,6 +1,6 @@
 class VisitorsController < ApplicationController
   def index
-    @articles = Article.all
+    @evernote_notes = EvernoteNote.all
     # if Rails.env.development?
     #   puts "\nREMOVE THIS!!!!!!!!!!!!!!!!\n".red
     #   session[:user_id] = User.first.id

@@ -26,11 +26,11 @@ class EvernoteNote < ActiveRecord::Base
   end
 
   def self.update_or_create!(all_attributes)
-    matches = where(guid: all_attributes.fetch(:guid))
-    return create!(all_attributes) if matches.empty?
+    match = find_by_guid( all_attributes.fetch(:guid) )
+    return create!(all_attributes) if match.nil?
 
-    matches.first.update_attributes(all_attributes)
-    matches.first
+    match.update_attributes(all_attributes)
+    match
   end
 
   private

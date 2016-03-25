@@ -5,7 +5,7 @@ class EvernoteClient
   include EvernoteParsable
 
   OFFSET           = 0
-  N_RESULTS        = 100
+  N_RESULTS        = 10
   ORDER            = :updated
   ASCENDING        = false
   UPDATED_INTERVAL = 1.day.ago
