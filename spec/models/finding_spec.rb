@@ -6,7 +6,7 @@ RSpec.describe Finding, type: :model do
   end
 
   it 'should have the expected required fields' do
-    expect(Finding::REQUIRED_FIELDS).to match_array %i(title source_url) # Ordering doesn't matter
+    expect(Finding::REQUIRED_FIELDS).to match_array %i(title source_url user) # Ordering doesn't matter
   end
 
   it 'should have the expected optional fields' do

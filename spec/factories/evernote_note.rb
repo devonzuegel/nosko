@@ -11,6 +11,7 @@ FactoryGirl.define do
             title:          Faker::Lorem.sentence,
             source_url:     Faker::Internet.url,
             content:        Faker::Lorem.paragraphs(3).join("\n"),
+            user:           FactoryGirl.create(:user)
         } }
     end
     initialize_with { EvernoteNote.new(data) }

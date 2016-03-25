@@ -14,11 +14,6 @@ class EvernoteNote < ActiveRecord::Base
     super(evernote_attributes.merge(article: article))
   end
 
-  def save!
-    article.save
-    super
-  end
-
   def update_attributes(all_attributes)
     article_attributes, evernote_attributes = partition_attributes(all_attributes)
     article.update_attributes(article_attributes)

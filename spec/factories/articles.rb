@@ -3,7 +3,7 @@ FactoryGirl.define do
     title      { Faker::Lorem.sentence }
     source_url { Faker::Internet.url }
     content    { Faker::Lorem.paragraph }
-
-    f.after(:build) { |article| article.user = build(:user) }
+    user       { FactoryGirl.create(:user) }
+    # f.before(:create)   { |article| article.user = create(:user) }
   end
 end

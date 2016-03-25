@@ -8,7 +8,7 @@ class Finding < ActiveRecord::Base
 
   before_save :clean_url
 
-  REQUIRED_FIELDS = %i(title source_url)
+  REQUIRED_FIELDS = %i(title source_url user)
   OPTIONAL_FIELDS = %i()
 
   def self.descendants
