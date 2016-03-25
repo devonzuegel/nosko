@@ -13,18 +13,17 @@ class EvernoteAccount < ActiveRecord::Base
     raise NotImplementedError
   end
 
-  def retrieve_notes(en_client = nil)
-    en_client ||= EvernoteClient.new(auth_token: auth_token)
+  def retrieve_notes
+    en_client = EvernoteClient.new(auth_token: auth_token)
     en_client.notes(updated_interval: updated_interval)
   end
 
   def sync_notes
-    raise Error, "EvernoteAccount ##{id} is not connected." if auth_token.nil?
+    raise Error, "EvernoteAccount ##{id} is not connected." if !connected?
 
     puts "Syncing Evernote notes for EvernoteAccount ##{id}..."
 
-    en_client = EvernoteClient.new(auth_token: auth_token)
-    retrieve_notes(en_client).each do |note_attrs|
+    retrieve_notes.each do |note_attrs|
       EvernoteNote.update_or_create!(note_attrs.merge(user: user))
     end
 
