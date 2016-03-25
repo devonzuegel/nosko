@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160324171930) do
+ActiveRecord::Schema.define(version: 20160325014738) do
 
   create_table "articles", force: :cascade do |t|
     t.integer  "permalink_id", null: false
@@ -28,6 +28,18 @@ ActiveRecord::Schema.define(version: 20160324171930) do
   end
 
   add_index "evernote_accounts", ["user_id"], name: "index_evernote_accounts_on_user_id"
+
+  create_table "evernote_notes", force: :cascade do |t|
+    t.string   "guid"
+    t.datetime "en_created_at"
+    t.datetime "en_updated_at"
+    t.boolean  "active"
+    t.string   "notebook_guid"
+    t.string   "author"
+    t.integer  "evernote_account_id"
+  end
+
+  add_index "evernote_notes", ["evernote_account_id"], name: "index_evernote_notes_on_evernote_account_id"
 
   create_table "highlights", force: :cascade do |t|
     t.integer  "article_id",   null: false

@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
-  has_one :sharing, dependent: :destroy
   has_one :evernote_account, dependent: :destroy
+  has_one :sharing,          dependent: :destroy
   accepts_nested_attributes_for :sharing, :evernote_account
 
   after_create :add_sharing, :add_empty_evernote_account
