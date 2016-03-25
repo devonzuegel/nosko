@@ -2,6 +2,7 @@ class Finding < ActiveRecord::Base
   include Permalinkable
   self.abstract_class = true
 
+  validates :user,       presence: true, blank: false
   validates :title,      presence: true, blank: false
   validates :source_url, presence: true, blank: false
 

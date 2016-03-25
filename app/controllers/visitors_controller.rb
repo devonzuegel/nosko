@@ -1,9 +1,11 @@
 class VisitorsController < ApplicationController
   def index
-    @evernote_notes = EvernoteNote.all
-    # if Rails.env.development?
-    #   puts "\nREMOVE THIS!!!!!!!!!!!!!!!!\n".red
-    #   session[:user_id] = User.first.id
-    # end
+    if user_signed_in?
+      en_account = current_user.evernote_account
+      @evernote_notes = EvernoteNotes.where(evernote_account: en_account)
+      evernote_account.sync_notes if current_user.evernote_connected?
+    else
+      @evernote_notes = []
+    end
   end
 end

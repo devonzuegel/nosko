@@ -19,12 +19,20 @@ class EvernoteAccount < ActiveRecord::Base
   end
 
   def sync_notes
+    raise Error, "EvernoteAccount ##{id} is not connected." if auth_token.nil?
+
     puts "Syncing Evernote notes for EvernoteAccount ##{id}..."
 
     en_client = EvernoteClient.new(auth_token: auth_token)
-    retrieve_notes(en_client).each { |note_attrs| EvernoteNote.update_or_create!(note_attrs) }
+    retrieve_notes(en_client).each do |note_attrs|
+      EvernoteNote.update_or_create!(note_attrs.merge(user: user))
+    end
 
     puts "Done syncing notes for EvernoteAccount ##{id}.\n"
+  end
+
+  def connected?
+    !!auth_token
   end
 
   private

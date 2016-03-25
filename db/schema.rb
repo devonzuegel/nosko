@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20160325014738) do
     t.integer  "permalink_id", null: false
     t.string   "title"
     t.string   "source_url",   null: false
+    t.integer  "user_id",      null: false
     t.text     "content"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false

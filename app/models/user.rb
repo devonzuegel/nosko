@@ -29,6 +29,6 @@ class User < ActiveRecord::Base
   end
 
   def evernote_connected?
-    !!evernote_account.auth_token
+    evernote_account.connected?
   end
 end
