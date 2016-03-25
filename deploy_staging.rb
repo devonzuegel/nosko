@@ -22,7 +22,7 @@ def deploy
 
   if permission_granted?('Precompile assets?')
     puts 'Precompiling assets...'
-    `RAILS_ENV=production bundle exec rake assets:precompile`
+    `bundle exec rake assets:precompile`
     puts 'Committing...'
     puts `git add .`
     puts `git commit -m 'Precompiles assets'`
