@@ -60,7 +60,7 @@ class EvernoteClient
     raise Evernote::EDAM::Error::EDAMUserException, 'Invalid authentication token.'
   end
 
-  def filter(order: order, ascending: ASCENDING, updated_interval: UPDATED_INTERVAL)
+  def filter(order: ORDER, ascending: ASCENDING, updated_interval: UPDATED_INTERVAL)
     Evernote::EDAM::NoteStore::NoteFilter.new(
       order:     sort_order_value(order),
       ascending: ascending,

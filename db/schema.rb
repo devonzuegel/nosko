@@ -23,8 +23,9 @@ ActiveRecord::Schema.define(version: 20160325014738) do
   end
 
   create_table "evernote_accounts", force: :cascade do |t|
-    t.string  "auth_token"
-    t.integer "user_id"
+    t.string   "auth_token"
+    t.datetime "last_updated"
+    t.integer  "user_id"
   end
 
   add_index "evernote_accounts", ["user_id"], name: "index_evernote_accounts_on_user_id"

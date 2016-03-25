@@ -8,4 +8,8 @@ class EvernoteNote < ActiveRecord::Base
     article = Article.create!(article_attributes)
     super(evernote_attributes.merge(article: article))
   end
+
+  def self.update_or_create!(all_attributes)
+    ap all_attributes
+  end
 end
