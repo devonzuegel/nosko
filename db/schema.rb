@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 20160324171930) do
 
   create_table "articles", force: :cascade do |t|
     t.integer  "permalink_id", null: false
-    t.string   "url"
+    t.string   "source_url"
     t.string   "title"
     t.text     "content"
     t.datetime "created_at",   null: false

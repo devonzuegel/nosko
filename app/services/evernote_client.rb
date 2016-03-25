@@ -4,10 +4,11 @@
 class EvernoteClient
   include EvernoteParsable
 
-  OFFSET            = 0
-  N_RESULTS_DEFAULT = 100
-  DEFAULT_ORDER     = :updated
-  ASCENDING_DEFAULT = false
+  OFFSET           = 0
+  N_RESULTS        = 100
+  ORDER            = :updated
+  ASCENDING        = false
+  UPDATED_INTERVAL = 1.day.ago
 
   def initialize(attributes = {})
     @auth_token = attributes.fetch(:auth_token)
@@ -19,21 +20,21 @@ class EvernoteClient
     note_store.listNotebooks(@auth_token).map { |n| format_notebook(n) }
   end
 
-  def notebook_counts
-    note_store.findNoteCounts(@auth_token, filter, false)
+  def notebook_counts(order: ORDER, ascending: ASCENDING, updated_interval: UPDATED_INTERVAL)
+    note_store.findNoteCounts(@auth_token, filter(order: order, ascending: ascending, updated_interval: updated_interval), false)
   end
 
   def en_user
     user_store.getUser(@auth_token)
   end
 
-  def notes_metadata(n_results: N_RESULTS_DEFAULT, order: DEFAULT_ORDER, ascending: ASCENDING_DEFAULT)
-    custom_filter = filter(order: order, ascending: ascending)
+  def notes_metadata(n_results: N_RESULTS, order: ORDER, ascending: ASCENDING, updated_interval: UPDATED_INTERVAL)
+    custom_filter = filter(order: order, ascending: ascending, updated_interval: updated_interval)
     note_store.findNotesMetadata(custom_filter, OFFSET, n_results, notes_metadata_result_spec)
   end
 
-  def notes(n_results: N_RESULTS_DEFAULT, order: DEFAULT_ORDER, ascending: ASCENDING_DEFAULT)
-    options    = { n_results: n_results, order: order, ascending: ascending }
+  def notes(n_results: N_RESULTS, order: ORDER, ascending: ASCENDING, updated_interval: UPDATED_INTERVAL)
+    options    = { n_results: n_results, order: order, ascending: ascending, updated_interval: updated_interval }
     note_guids = notes_metadata(options).notes.map(&:guid)
     notes      = note_guids.map { |guid| find_note_by_guid(guid) }
   end
@@ -59,8 +60,16 @@ class EvernoteClient
     raise Evernote::EDAM::Error::EDAMUserException, 'Invalid authentication token.'
   end
 
-  def filter(order: order, ascending: ASCENDING_DEFAULT)
-    Evernote::EDAM::NoteStore::NoteFilter.new(order: sort_order_value(order), ascending: ascending)
+  def filter(order: order, ascending: ASCENDING, updated_interval: UPDATED_INTERVAL)
+    Evernote::EDAM::NoteStore::NoteFilter.new(
+      order:     sort_order_value(order),
+      ascending: ascending,
+      words:     "updated:#{date_search_format(updated_interval)}"
+    )
+  end
+
+  def date_search_format(date)
+    date.utc.strftime('%Y%m%dT%H%M%S')
   end
 
   def notes_metadata_result_spec
@@ -81,7 +90,7 @@ class EvernoteClient
   end
 
   # More information at `dev.evernote.com/doc/reference/Types.html#Enum_NoteSortOrder`.
-  def sort_order_value(order = DEFAULT_ORDER)
+  def sort_order_value(order = ORDER)
     value_map = sort_order_value_map
     order     = order.to_s.downcase # Treats up/downcase symbols/strings equally (e.g. :title ~ :TITLE ~ 'title' ~ 'TITLE')
     unless value_map.include? order

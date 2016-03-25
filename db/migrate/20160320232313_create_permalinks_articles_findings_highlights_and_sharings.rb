@@ -11,7 +11,7 @@ class CreatePermalinksArticlesFindingsHighlightsAndSharings < ActiveRecord::Migr
     create_table :articles do |t|
       # Fields that apply to all findings
       t.references :permalink, null: false, foreign_key: true
-      t.string     :url, blank: false
+      t.string     :source_url, blank: false
       t.string     :title, blank: false
 
       # Fields that are Article-specific
