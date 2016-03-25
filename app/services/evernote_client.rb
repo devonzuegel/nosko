@@ -64,12 +64,12 @@ class EvernoteClient
     Evernote::EDAM::NoteStore::NoteFilter.new(
       order:     sort_order_value(order),
       ascending: ascending,
-      words:     "updated:#{date_search_format(updated_interval)}"
+      words:     date_search_format(updated_interval)
     )
   end
 
   def date_search_format(date)
-    date.utc.strftime('%Y%m%dT%H%M%S')
+    (date.blank?) ? '' : "updated:#{date.utc.strftime('%Y%m%dT%H%M%S')}"
   end
 
   def notes_metadata_result_spec
