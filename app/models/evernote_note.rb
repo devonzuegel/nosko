@@ -1,6 +1,11 @@
 class EvernoteNote < ActiveRecord::Base
   belongs_to :article, dependent: :destroy
-  validates_presence_of   :guid, :article, :en_created_at, :en_updated_at, :active, :notebook_guid, :author, :article
+
+  REQUIRED_FIELDS = %i(guid article en_created_at en_updated_at active notebook_guid author article)
+  OPTIONAL_FIELDS = %i()
+  FIELDS          = REQUIRED_FIELDS + OPTIONAL_FIELDS
+
+  validates_presence_of   REQUIRED_FIELDS
   validates_uniqueness_of :guid, :article
 
   def initialize(all_attributes)
