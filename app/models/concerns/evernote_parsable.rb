@@ -33,7 +33,7 @@ module EvernoteParsable
         content:       note.content,
         en_created_at: timestamp_to_datetime(note.created),
         en_updated_at: timestamp_to_datetime(note.updated),
-        active:        note.active,
+        source_url:    note.attributes.sourceURL,
         notebook_guid: note.notebookGuid,
         author:        note.attributes.author
       }
@@ -43,9 +43,9 @@ module EvernoteParsable
       {
         en_created_at: timestamp_to_datetime(notebook.serviceCreated),
         en_updated_at: timestamp_to_datetime(notebook.serviceUpdated),
-        guid: notebook.guid,
-        name: notebook.name,
-        user_id: @user_id
+        guid:          notebook.guid,
+        name:          notebook.name,
+        user_id:       @user_id
       }
     end
 

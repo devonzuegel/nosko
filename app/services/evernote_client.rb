@@ -80,9 +80,11 @@ class EvernoteClient
     Evernote::EDAM::Type::NoteSortOrder::VALUE_MAP.map { |k, v| [v.downcase, k] }.to_h
   end
 
+  # More information at `dev.evernote.com/doc/reference/Types.html#Enum_NoteSortOrder`.
   def sort_order_value(order = DEFAULT_ORDER)
     value_map = sort_order_value_map
-    unless value_map.include? order.to_s.downcase
+    order     = order.to_s.downcase # Treats up/downcase symbols/strings equally (e.g. :title ~ :TITLE ~ 'title' ~ 'TITLE')
+    unless value_map.include? order
       msg = "#{order} is not a valid Evernote sort order. Please choose from " \
             "#{value_map.keys.to_sentence(last_word_connector:', or ')}"
       raise Exception, msg
