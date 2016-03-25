@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20160325014738) do
   end
 
   add_index "evernote_notes", ["article_id"], name: "index_evernote_notes_on_article_id"
+  add_index "evernote_notes", ["guid"], name: "index_evernote_notes_on_guid"
 
   create_table "highlights", force: :cascade do |t|
     t.integer  "article_id",   null: false

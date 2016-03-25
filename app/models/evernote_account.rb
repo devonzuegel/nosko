@@ -13,16 +13,19 @@ class EvernoteAccount < ActiveRecord::Base
     raise NotImplementedError
   end
 
-  def retrieve_notes
-    en_client        = EvernoteClient.new(auth_token: auth_token)
+  def retrieve_notes(en_client = nil)
+    en_client ||= EvernoteClient.new(auth_token: auth_token)
     en_client.notes(n_results: 1, updated_interval: updated_interval).map { |h| h[:content]='REMOVED FOR NOW'; h }
   end
 
   def sync_notes
     puts "Syncing Evernote notes for EvernoteAccount ##{id}..."
 
+    # Avoid recreating an EvernoteClient on every iteration.
+    en_client = EvernoteClient.new(auth_token: auth_token)
+
     while true
-      retrieved = retrieve_notes
+      retrieved = retrieve_notes(en_client)
       break if retrieved.empty?
       retrieved.each { |note_attrs| EvernoteNote.update_or_create!(note_attrs) }
       break  # TODO remove me

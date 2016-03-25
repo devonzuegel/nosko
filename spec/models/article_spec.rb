@@ -8,7 +8,7 @@ RSpec.describe Article, type: :model do
     end
 
     it 'requires expected required fields' do
-      expect(Article::REQUIRED_FIELDS).to match_array %i(title url content)
+      expect(Article::REQUIRED_FIELDS).to match_array %i(title source_url content)
       Article::REQUIRED_FIELDS.each do |field|
         expect(build(:article, field => nil)).to_not be_valid
       end
