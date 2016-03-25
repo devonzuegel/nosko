@@ -35,7 +35,8 @@ module EvernoteParsable
         en_updated_at: timestamp_to_datetime(note.updated),
         source_url:    note.attributes.sourceURL,
         notebook_guid: note.notebookGuid,
-        author:        note.attributes.author
+        author:        note.attributes.author,
+        active:        note.active
       }
     end
 
