@@ -6,10 +6,9 @@ class EvernoteController < ApplicationController
   end
 
   def create
-    puts "\n\n"
-    puts request
-    puts "\n\n"
     current_user.connect_evernote(request.env['omniauth.auth'])
+    # TODO add error handling in case of bad account info
+    current_user.evernote_account.sync_notes
     redirect_to root_url, notice: 'Evernote connected!'
   end
 
