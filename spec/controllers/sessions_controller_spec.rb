@@ -15,9 +15,9 @@ describe SessionsController, :omniauth do
       expect(session[:user_id]).not_to be_nil
     end
 
-    it 'redirects to the home page' do
+    it 'redirects to the settings page' do
       post :create, provider: :twitter
-      expect(response).to redirect_to root_url
+      expect(response).to redirect_to '/settings'
     end
   end
 
