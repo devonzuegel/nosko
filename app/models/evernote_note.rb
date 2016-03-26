@@ -33,6 +33,18 @@ class EvernoteNote < ActiveRecord::Base
   def partition_attributes(all_attributes)
     article_attributes  = all_attributes.slice(*Article::FIELDS)
     evernote_attributes = all_attributes.reject { |k,v| article_attributes.keys.include? k }
-    return [article_attributes, evernote_attributes]
+
+    return [replace_highlights(article_attributes), evernote_attributes]
+  end
+
+  def replace_highlights(attributes)
+    REPLACEMENTS = {
+      '<span style="-evernote-highlighted:true;background-color:#FFFFb0;display: inline;”>': '<div class="en-highlight">'
+      '</span>':                                                                             '</div>'
+    }
+    REPLACEMENTS.each do |from_str, to_str|
+      attributes[:content].gsub!(from_str, to_str)
+    end
+    attributes
   end
 end
