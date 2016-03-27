@@ -1,0 +1,12 @@
+$highlight:       linear-gradient(to bottom,rgba(92,255,160,.6),rgba(92,255,160,.5));
+$highlight-hover: linear-gradient(to bottom,rgba(92,255,160,.9),rgba(92,255,160,.8));
+
+.highlight {
+  background-image: $highlight;
+  padding: 1px 3px;
+
+  &:hover {
+    background-image: $highlight-hover;
+    cursor: pointer;
+  }
+}

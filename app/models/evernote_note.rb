@@ -4,6 +4,10 @@ class EvernoteNote < ActiveRecord::Base
   REQUIRED_FIELDS = %i(guid article en_created_at en_updated_at active notebook_guid author article)
   OPTIONAL_FIELDS = %i()
   FIELDS          = REQUIRED_FIELDS + OPTIONAL_FIELDS
+  HIGHLIGHT_TAGS  = {
+    from: '<span style="-evernote-highlighted:true; background-color:#FFFFb0">',
+    to:   '<span class="highlight en-highlight">'
+  }
 
   validates_presence_of   REQUIRED_FIELDS
   validates_uniqueness_of :guid, :article
@@ -38,13 +42,7 @@ class EvernoteNote < ActiveRecord::Base
   end
 
   def replace_highlights(attributes)
-    REPLACEMENTS = {
-      '<span style="-evernote-highlighted:true;background-color:#FFFFb0;display: inline;”>': '<div class="en-highlight">'
-      '</span>':                                                                             '</div>'
-    }
-    REPLACEMENTS.each do |from_str, to_str|
-      attributes[:content].gsub!(from_str, to_str)
-    end
+    attributes[:content].gsub!(HIGHLIGHT_TAGS[:from], HIGHLIGHT_TAGS[:to])
     attributes
   end
 end

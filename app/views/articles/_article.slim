@@ -1,3 +1,3 @@
 .well.markdown-body
   h1= article.title
-  p=  article.content.html_safe
+  #article-body= simple_format(article.content)
