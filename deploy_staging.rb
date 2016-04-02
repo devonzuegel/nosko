@@ -1,3 +1,5 @@
+TRUTH_BRANCH = 'master'
+
 def current_branch
   `git rev-parse --abbrev-ref HEAD`.chomp
 end
@@ -13,10 +15,10 @@ def permission_granted?(question)
 end
 
 def deploy
-  if current_branch != 'staging'
+  if current_branch != "#{TRUTH_BRANCH}"
     puts "Your current branch is `#{current_branch}`. Merge any " \
           'changes you wish to deploy to nosko-staging onto the ' \
-          '`staging` branch, then re-run this script on `staging`.'
+          "`#{TRUTH_BRANCH}` branch, then re-run this script on `#{TRUTH_BRANCH}`."
     return
   end
 
