@@ -17,5 +17,5 @@ end
 
 if permission_granted?('Open heroku logs?')
   puts 'Opening heroku logs...'
-  exec '/usr/local/heroku/bin/heroku logs -t --app nosko-staging'
+  exec '/usr/local/heroku/bin/heroku logs -t --app nosko-production'
 end
