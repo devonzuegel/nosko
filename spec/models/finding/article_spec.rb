@@ -1,23 +1,23 @@
 require 'rails_helper'
 
-RSpec.describe Article, type: :model do
+RSpec.describe Finding::Article, type: :model do
   describe 'Initializing an article' do
     it 'should build a valid article' do
       expect(build(:article)).to be_valid
-      expect { create(:article) }.to change { Article.count }.by 1
+      expect { create(:article) }.to change { Finding::Article.count }.by 1
     end
 
     it 'requires expected required fields' do
-      expect(Article::REQUIRED_FIELDS).to match_array %i(title source_url content user)
-      Article::REQUIRED_FIELDS.each do |field|
+      expect(Finding::Article::REQUIRED_FIELDS).to match_array %i(title source_url content user)
+      Finding::Article::REQUIRED_FIELDS.each do |field|
         next if field == :user
         expect(build(:article, field => nil)).to_not be_valid
       end
     end
 
     it 'shouldn\'t require expected optional fields' do
-      expect(Article::OPTIONAL_FIELDS).to match_array %i()
-      Article::OPTIONAL_FIELDS.each do |field|
+      expect(Finding::Article::OPTIONAL_FIELDS).to match_array %i()
+      Finding::Article::OPTIONAL_FIELDS.each do |field|
         expect(build(:article, field => nil)).to be_valid
       end
     end

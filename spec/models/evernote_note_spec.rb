@@ -11,7 +11,7 @@ RSpec.describe EvernoteNote, type: :model do
     end
 
     # it 'should create a corresponding article' do
-    #   expect { create(:evernote_note) }.to change { Article.count }.by 1
+    #   expect { create(:evernote_note) }.to change { Finding::Article.count }.by 1
     # end
   end
 
@@ -34,9 +34,9 @@ RSpec.describe EvernoteNote, type: :model do
   #   end
 
   #   it 'should create a new corresponding article if none already exists' do
-  #     expect(Article.count).to be 0
-  #     expect { @en = EvernoteNote.update_or_create!(data) }.to change { Article.count }.by 1
-  #     expect(@en.article.id).to eq Article.first.id
+  #     expect(Finding::Article.count).to be 0
+  #     expect { @en = EvernoteNote.update_or_create!(data) }.to change { Finding::Article.count }.by 1
+  #     expect(@en.article.id).to eq Finding::Article.first.id
   #   end
 
   #   it 'should update existing evernote_note' do
@@ -53,15 +53,15 @@ RSpec.describe EvernoteNote, type: :model do
   #   end
 
   #   it 'should update existing article associated with evernote_note' do
-  #     expect(Article.count).to be 0
+  #     expect(Finding::Article.count).to be 0
   #     EvernoteNote.update_or_create!(data)
-  #     expect(Article.count).to be 1
+  #     expect(Finding::Article.count).to be 1
 
   #     new_title = 'New title!'
   #     new_data    = data.merge(title: new_title)
   #     expect(new_data[:title]).to eq new_title
 
-  #     expect { @en = EvernoteNote.update_or_create!(new_data) }.to change { Article.count }.by 0
+  #     expect { @en = EvernoteNote.update_or_create!(new_data) }.to change { Finding::Article.count }.by 0
   #     expect(@en.article.title).to eq new_title
   #   end
   # end

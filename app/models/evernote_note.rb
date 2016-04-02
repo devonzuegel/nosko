@@ -14,7 +14,7 @@ class EvernoteNote < ActiveRecord::Base
 
   def initialize(all_attributes)
     article_attributes, evernote_attributes = partition_attributes(all_attributes)
-    article = Article.new(article_attributes)
+    article = Finding::Article.new(article_attributes)
     super(evernote_attributes.merge(article: article))
   end
 
@@ -35,7 +35,7 @@ class EvernoteNote < ActiveRecord::Base
   private
 
   def partition_attributes(all_attributes)
-    article_attributes  = all_attributes.slice(*Article::FIELDS)
+    article_attributes  = all_attributes.slice(*Finding::Article::FIELDS)
     evernote_attributes = all_attributes.reject { |k,v| article_attributes.keys.include? k }
 
     return [replace_highlights(article_attributes), evernote_attributes]

@@ -4,7 +4,7 @@
 
 ![](http://i.imgur.com/rTurMFC.jpg)
 
-- The `Findings` module is the group of all of the different types of Findings. They are very similar from the user's perspective, but their internal structure, public-facing methods, and rendering partials are very different. They do share several characteristics – they each must belong to a `:user`, must have a non-blank `:title` and `:source_url`, and they are all [`Permalinkable`](app/models/concerns/permalinkable.rb).
+- The `Finding` module is the group of all of the different types of Findings. They are very similar from the user's perspective, but their internal structure, public-facing methods, and rendering partials are very different. They do share several characteristics – they each must belong to a `:user`, must have a non-blank `:title` and `:source_url`, and they are all [`Permalinkable`](app/models/concerns/permalinkable.rb).
     + `Article` – An HTML-based, web-clipping Finding. It can come from a number of different sources. No matter the original source, it always has a non-blank `:body` attribute. Depending on its original source, it owns metadata in a format unique to that source:
         * `EvernoteArticle`
         * `InstapaperArticle` (not yet implemented)
