@@ -1,5 +1,5 @@
 class EvernoteNote < ActiveRecord::Base
-  belongs_to :article, dependent: :destroy
+  belongs_to :article, :class_name => Finding::Article, dependent: :destroy
 
   REQUIRED_FIELDS = %i(guid article en_created_at en_updated_at active notebook_guid author article)
   OPTIONAL_FIELDS = %i()
