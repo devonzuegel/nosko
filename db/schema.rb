@@ -13,12 +13,15 @@
 
 ActiveRecord::Schema.define(version: 20160403051932) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "article_extractions", force: :cascade do |t|
     t.integer "article_id"
     t.integer "source"
   end
 
-  add_index "article_extractions", ["article_id"], name: "index_article_extractions_on_article_id"
+  add_index "article_extractions", ["article_id"], name: "index_article_extractions_on_article_id", using: :btree
 
   create_table "articles", force: :cascade do |t|
     t.integer  "permalink_id", null: false
@@ -36,7 +39,7 @@ ActiveRecord::Schema.define(version: 20160403051932) do
     t.integer  "user_id"
   end
 
-  add_index "evernote_accounts", ["user_id"], name: "index_evernote_accounts_on_user_id"
+  add_index "evernote_accounts", ["user_id"], name: "index_evernote_accounts_on_user_id", using: :btree
 
   create_table "evernote_article_extractions", force: :cascade do |t|
     t.string   "api_token"
@@ -44,7 +47,7 @@ ActiveRecord::Schema.define(version: 20160403051932) do
     t.integer  "article_extraction_id"
   end
 
-  add_index "evernote_article_extractions", ["article_extraction_id"], name: "index_evernote_article_extractions_on_article_extraction_id"
+  add_index "evernote_article_extractions", ["article_extraction_id"], name: "index_evernote_article_extractions_on_article_extraction_id", using: :btree
 
   create_table "highlights", force: :cascade do |t|
     t.integer  "article_id",   null: false
@@ -54,7 +57,7 @@ ActiveRecord::Schema.define(version: 20160403051932) do
     t.datetime "updated_at",   null: false
   end
 
-  add_index "highlights", ["article_id"], name: "index_highlights_on_article_id"
+  add_index "highlights", ["article_id"], name: "index_highlights_on_article_id", using: :btree
 
   create_table "permalinks", force: :cascade do |t|
     t.text     "path",                       null: false
@@ -72,7 +75,7 @@ ActiveRecord::Schema.define(version: 20160403051932) do
     t.datetime "updated_at",                            null: false
   end
 
-  add_index "sharings", ["user_id"], name: "index_sharings_on_user_id"
+  add_index "sharings", ["user_id"], name: "index_sharings_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
@@ -82,4 +85,12 @@ ActiveRecord::Schema.define(version: 20160403051932) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "article_extractions", "articles"
+  add_foreign_key "articles", "permalinks"
+  add_foreign_key "articles", "users"
+  add_foreign_key "evernote_accounts", "users"
+  add_foreign_key "evernote_article_extractions", "article_extractions"
+  add_foreign_key "highlights", "articles"
+  add_foreign_key "highlights", "permalinks"
+  add_foreign_key "sharings", "users"
 end

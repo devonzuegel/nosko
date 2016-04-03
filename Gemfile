@@ -29,6 +29,8 @@ gem 'redcarpet'
 # Evernote
 gem 'evernote_oauth'
 
+gem 'pg'
+
 group :development, :test do
   gem 'byebug'
   gem 'web-console',        '~> 2.0'
@@ -60,7 +62,6 @@ group :development do
 end
 
 group :production do
-  gem 'pg'
   gem 'rails_12factor'
 end
 
