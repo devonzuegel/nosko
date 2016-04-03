@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20160403080010) do
   enable_extension "plpgsql"
 
   create_table "articles", force: :cascade do |t|
+    t.integer  "user_id"
     t.integer  "permalink_id", null: false
     t.string   "title"
     t.string   "source_url",   null: false
@@ -24,6 +25,8 @@ ActiveRecord::Schema.define(version: 20160403080010) do
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
   end
+
+  add_index "articles", ["user_id"], name: "index_articles_on_user_id", using: :btree
 
   create_table "evernote_accounts", force: :cascade do |t|
     t.string   "auth_token"
@@ -91,6 +94,7 @@ ActiveRecord::Schema.define(version: 20160403080010) do
   end
 
   add_foreign_key "articles", "permalinks"
+  add_foreign_key "articles", "users"
   add_foreign_key "evernote_accounts", "users"
   add_foreign_key "evernote_extractors", "articles"
   add_foreign_key "evernote_extractors", "evernote_accounts"

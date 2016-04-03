@@ -8,6 +8,7 @@ module Finding
     HIDDEN_FIELDS   = %i(id permalink_id created_at updated_at)
 
     included do
+      belongs_to :user
       before_save :clean_url, :save_user
     end
 

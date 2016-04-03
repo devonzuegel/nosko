@@ -1,9 +1,12 @@
 require "que/testing"
 
 describe "Testing SyncEvernoteAccount job" do
+  let(:user) { create(:user, :evernote_connected) }
   after { SyncEvernoteAccount.jobs.clear }
 
-  it "Stores a job"
+  it "Stores a job" do
+
+  end
     # SyncEvernoteAccount.enqueue("foo")
 
     # js = MyJob.jobs

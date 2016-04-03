@@ -17,6 +17,10 @@ describe User do
       expect(@user.evernote_account.auth_token).to be nil
       expect(@user.evernote_connected?).to         be false
     end
+
+    it 'should have an evernote_account' do
+      expect(create(:user, :evernote_connected).evernote_connected?).to be true
+    end
   end
 
   describe 'connecting to evernote' do

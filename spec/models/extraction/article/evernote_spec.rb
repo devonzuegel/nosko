@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe Extraction::Article::Evernote, type: :model do
+RSpec.describe Extractor::Article::Evernote, type: :model do
   it 'should have the expected table_name' do
-    expect(Extraction::Article::Evernote.table_name).to eq 'evernote_article_extractions'
+    expect(Extractor::Article::Evernote.table_name).to eq 'evernote_extractors'
   end
 
   describe 'Initializing an Evernote extractor' do
