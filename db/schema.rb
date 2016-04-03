@@ -20,7 +20,6 @@ ActiveRecord::Schema.define(version: 20160403080010) do
     t.integer  "permalink_id", null: false
     t.string   "title"
     t.string   "source_url",   null: false
-    t.integer  "user_id",      null: false
     t.text     "content"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
@@ -34,15 +33,15 @@ ActiveRecord::Schema.define(version: 20160403080010) do
 
   add_index "evernote_accounts", ["user_id"], name: "index_evernote_accounts_on_user_id", using: :btree
 
-  create_table "evernote_extractions", force: :cascade do |t|
+  create_table "evernote_extractors", force: :cascade do |t|
     t.string   "guid"
     t.datetime "last_accessed_at"
     t.integer  "evernote_account_id"
     t.integer  "article_id"
   end
 
-  add_index "evernote_extractions", ["article_id"], name: "index_evernote_extractions_on_article_id", using: :btree
-  add_index "evernote_extractions", ["evernote_account_id"], name: "index_evernote_extractions_on_evernote_account_id", using: :btree
+  add_index "evernote_extractors", ["article_id"], name: "index_evernote_extractors_on_article_id", using: :btree
+  add_index "evernote_extractors", ["evernote_account_id"], name: "index_evernote_extractors_on_evernote_account_id", using: :btree
 
   create_table "highlights", force: :cascade do |t|
     t.integer  "article_id",   null: false
@@ -92,10 +91,9 @@ ActiveRecord::Schema.define(version: 20160403080010) do
   end
 
   add_foreign_key "articles", "permalinks"
-  add_foreign_key "articles", "users"
   add_foreign_key "evernote_accounts", "users"
-  add_foreign_key "evernote_extractions", "articles"
-  add_foreign_key "evernote_extractions", "evernote_accounts"
+  add_foreign_key "evernote_extractors", "articles"
+  add_foreign_key "evernote_extractors", "evernote_accounts"
   add_foreign_key "highlights", "articles"
   add_foreign_key "highlights", "permalinks"
   add_foreign_key "sharings", "users"
