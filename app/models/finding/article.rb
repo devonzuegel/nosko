@@ -1,6 +1,6 @@
 module Finding
   class Article < ActiveRecord::Base
-    include Findable
+    include Finding::Findable
 
     belongs_to :user,          dependent: :destroy
     has_one    :evernote_note, dependent: :destroy
