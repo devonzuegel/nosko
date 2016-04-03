@@ -7,6 +7,8 @@ class SyncEvernoteNote < Que::Job
       ActiveRecord::Base.transaction do
         extractor = EvernoteExtractor.create(guid: guid, evernote_account: evernote_account)
         ExtractArticleFromEvernote.enqueue(extractor.id)
+
+        destroy
       end
     else
       # Handle update

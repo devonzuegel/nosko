@@ -7,6 +7,8 @@ class ExtractArticleFromEvernote < Que::Job
     ActiveRecord::Base.transaction do
       article = Article.create(note)
       extractor.update_attributes(article: article, last_accessed_at: Time.now.utc)
+
+      destroy
     end
   end
 end
