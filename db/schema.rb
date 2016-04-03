@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20160403051932) do
 
   create_table "evernote_accounts", force: :cascade do |t|
     t.string   "auth_token"
-    t.datetime "last_updated"
+    t.datetime "last_accessed_at"
     t.integer  "user_id"
   end
 
