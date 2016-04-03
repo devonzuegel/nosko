@@ -5,5 +5,7 @@ class SyncEvernoteAccount < Que::Job
     evernote_account.each_stale_guid do |stale_guid|
       SyncEvernoteNote.enqueue(stale_guid, en_account_id)
     end
+
+    # TODO: When all are done, update last_accessed_at
   end
 end
