@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160403050841) do
+ActiveRecord::Schema.define(version: 20160403051354) do
+
+  create_table "article_extractions", force: :cascade do |t|
+    t.integer "article_id"
+    t.integer "source"
+    t.integer "extraction_id_id"
+  end
+
+  add_index "article_extractions", ["article_id"], name: "index_article_extractions_on_article_id"
+  add_index "article_extractions", ["extraction_id_id"], name: "index_article_extractions_on_extraction_id_id"
 
   create_table "articles", force: :cascade do |t|
     t.integer  "permalink_id", null: false
@@ -30,14 +39,6 @@ ActiveRecord::Schema.define(version: 20160403050841) do
   end
 
   add_index "evernote_accounts", ["user_id"], name: "index_evernote_accounts_on_user_id"
-
-  create_table "evernote_article_extractions", force: :cascade do |t|
-    t.string   "api_token"
-    t.datetime "last_accessed_at"
-    t.integer  "article_id"
-  end
-
-  add_index "evernote_article_extractions", ["article_id"], name: "index_evernote_article_extractions_on_article_id"
 
   create_table "evernote_extractions", force: :cascade do |t|
     t.string   "guid",          null: false
