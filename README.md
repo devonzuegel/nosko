@@ -1,5 +1,9 @@
 # Nosko #
 
+## Running Jobs ##
+
+[`Que` jobs](./app/jobs/) (including [`SyncEvernoteAccount`](./app/jobs/sync_evernote_account.rb), [`SyncEvernoteNote`](./app/jobs/sync_evernote_note.rb), and [`ExtractArticleFromEvernote`](./app/jobs/extract_article_from_evernote.rb.rb)) require you to run `$ que ./config/environment.rb`.
+
 ## Models Structure ##
 
 ![](http://i.imgur.com/rTurMFC.jpg)

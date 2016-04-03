@@ -1,6 +1,9 @@
 .container
   .row
     .col-lg-8.col-lg-offset-2.col-md-10.col-md-offset-1
-      - @articles.each do |article|
-        hr
-        = render partial: 'articles/article', locals: { article: article }
+      pre= "Highlight.all = #{Highlight.all.as_json}"
+      pre= "@articles = #{@articles.as_json}"
+    / .col-lg-8.col-lg-offset-2.col-md-10.col-md-offset-1
+    /   - @articles.each do |article|
+    /     hr
+    /     = render partial: 'articles/article', locals: { article: article }

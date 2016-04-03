@@ -15,7 +15,10 @@ class EvernoteController < ApplicationController
   end
 
   def sync
-    SyncEvernoteAccount.enqueue(current_user.evernote_account.id)
+    ActiveRecord::Base.transaction do
+      SyncEvernoteAccount.enqueue(current_user.evernote_account.id)
+    end
+    Que.wake_all!
     redirect_to root_url, notice: 'Evernote sync in progress!'
   end
 
