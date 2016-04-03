@@ -3,7 +3,7 @@ module Finding
     include Finding::Findable
 
     belongs_to :user,          dependent: :destroy
-    has_one    :evernote_note, dependent: :destroy
+    has_one    :evernote_article, dependent: :destroy
 
     private
 

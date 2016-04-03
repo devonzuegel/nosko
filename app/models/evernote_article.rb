@@ -1,4 +1,4 @@
-class EvernoteNote < ActiveRecord::Base
+class EvernoteArticle < ActiveRecord::Base
   belongs_to :article, class_name: Finding::Article, dependent: :destroy
 
   validates_uniqueness_of :guid, :article

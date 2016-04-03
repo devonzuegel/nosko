@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :evernote_note do |f|
+  factory :evernote_article do |f|
     ignore do
         data { {
             active:         true,
@@ -14,6 +14,6 @@ FactoryGirl.define do
             user:           FactoryGirl.create(:user)
         } }
     end
-    initialize_with { EvernoteNote.new(data) }
+    initialize_with { EvernoteArticle.new(data) }
   end
 end
