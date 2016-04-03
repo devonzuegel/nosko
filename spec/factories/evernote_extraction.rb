@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :evernote_extraction do |f|
-    ignore do
+    transient do
         data { {
             active:         true,
             author:         Faker::Name.name,
