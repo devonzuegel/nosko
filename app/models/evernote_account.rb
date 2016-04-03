@@ -24,7 +24,7 @@ class EvernoteAccount < ActiveRecord::Base
     puts "Syncing Evernote notes for EvernoteAccount ##{id}..."
 
     retrieve_notes.each do |note_attrs|
-      EvernoteArticle.update_or_create!(note_attrs.merge(user: user))
+      EvernoteExtraction.update_or_create!(note_attrs.merge(user: user))
     end
 
     puts "Done syncing notes for EvernoteAccount ##{id}.\n"

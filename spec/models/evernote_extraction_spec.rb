@@ -1,17 +1,17 @@
 require 'rails_helper'
 
-RSpec.describe EvernoteArticle, type: :model do
+RSpec.describe EvernoteExtraction, type: :model do
   describe 'basic model' do
     it 'should be valid' do
-      expect(build(:evernote_article).valid?).to be true
+      expect(build(:evernote_extraction).valid?).to be true
     end
 
-    it 'should create an evernote_article' do
-      expect { create(:evernote_article) }.to change { EvernoteArticle.count }.by 1
+    it 'should create an evernote_extraction' do
+      expect { create(:evernote_extraction) }.to change { EvernoteExtraction.count }.by 1
     end
 
     # it 'should create a corresponding article' do
-    #   expect { create(:evernote_article) }.to change { Finding::Article.count }.by 1
+    #   expect { create(:evernote_extraction) }.to change { Finding::Article.count }.by 1
     # end
   end
 
@@ -28,45 +28,45 @@ RSpec.describe EvernoteArticle, type: :model do
   #     content:        Faker::Lorem.paragraphs(3).join("\n"),
   #   } }
 
-  #   it 'should create a new evernote_article if none already exists' do
-  #     expect(EvernoteArticle.count).to be 0
-  #     expect { EvernoteArticle.update_or_create!(data) }.to change { EvernoteArticle.count }.by 1
+  #   it 'should create a new evernote_extraction if none already exists' do
+  #     expect(EvernoteExtraction.count).to be 0
+  #     expect { EvernoteExtraction.update_or_create!(data) }.to change { EvernoteExtraction.count }.by 1
   #   end
 
   #   it 'should create a new corresponding article if none already exists' do
   #     expect(Finding::Article.count).to be 0
-  #     expect { @en = EvernoteArticle.update_or_create!(data) }.to change { Finding::Article.count }.by 1
+  #     expect { @en = EvernoteExtraction.update_or_create!(data) }.to change { Finding::Article.count }.by 1
   #     expect(@en.article.id).to eq Finding::Article.first.id
   #   end
 
-  #   it 'should update existing evernote_article' do
-  #     expect(EvernoteArticle.count).to be 0
-  #     EvernoteArticle.update_or_create!(data)
-  #     expect(EvernoteArticle.count).to be 1
+  #   it 'should update existing evernote_extraction' do
+  #     expect(EvernoteExtraction.count).to be 0
+  #     EvernoteExtraction.update_or_create!(data)
+  #     expect(EvernoteExtraction.count).to be 1
 
   #     new_author = 'New author!'
   #     new_data    = data.merge(author: new_author)
   #     expect(new_data[:author]).to eq new_author
 
-  #     expect { @en = EvernoteArticle.update_or_create!(new_data) }.to change { EvernoteArticle.count }.by 0
+  #     expect { @en = EvernoteExtraction.update_or_create!(new_data) }.to change { EvernoteExtraction.count }.by 0
   #     expect(@en.author).to eq new_author
   #   end
 
-  #   it 'should update existing article associated with evernote_article' do
+  #   it 'should update existing article associated with evernote_extraction' do
   #     expect(Finding::Article.count).to be 0
-  #     EvernoteArticle.update_or_create!(data)
+  #     EvernoteExtraction.update_or_create!(data)
   #     expect(Finding::Article.count).to be 1
 
   #     new_title = 'New title!'
   #     new_data    = data.merge(title: new_title)
   #     expect(new_data[:title]).to eq new_title
 
-  #     expect { @en = EvernoteArticle.update_or_create!(new_data) }.to change { Finding::Article.count }.by 0
+  #     expect { @en = EvernoteExtraction.update_or_create!(new_data) }.to change { Finding::Article.count }.by 0
   #     expect(@en.article.title).to eq new_title
   #   end
   # end
 #######
-  # subject { build(:evernote_article) }
+  # subject { build(:evernote_extraction) }
 
   # it { should validate_presence_of(:guid)          }
   # it { should validate_presence_of(:article)       }

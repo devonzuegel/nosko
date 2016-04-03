@@ -1,6 +1,6 @@
-class CreateEvernoteArticles < ActiveRecord::Migration
+class CreateEvernoteExtractions < ActiveRecord::Migration
   def change
-    create_table    :evernote_articles do |t|
+    create_table :evernote_extractions do |t|
       t.string      :guid,            null: false, index: true, unique: true
       t.datetime    :en_created_at,   null: false
       t.datetime    :en_updated_at,   null: false

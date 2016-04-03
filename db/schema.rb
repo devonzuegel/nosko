@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20160325014738) do
 
   add_index "evernote_accounts", ["user_id"], name: "index_evernote_accounts_on_user_id"
 
-  create_table "evernote_articles", force: :cascade do |t|
+  create_table "evernote_extractions", force: :cascade do |t|
     t.string   "guid",          null: false
     t.datetime "en_created_at", null: false
     t.datetime "en_updated_at", null: false
@@ -43,8 +43,8 @@ ActiveRecord::Schema.define(version: 20160325014738) do
     t.datetime "updated_at",    null: false
   end
 
-  add_index "evernote_articles", ["article_id"], name: "index_evernote_articles_on_article_id"
-  add_index "evernote_articles", ["guid"], name: "index_evernote_articles_on_guid"
+  add_index "evernote_extractions", ["article_id"], name: "index_evernote_extractions_on_article_id"
+  add_index "evernote_extractions", ["guid"], name: "index_evernote_extractions_on_guid"
 
   create_table "highlights", force: :cascade do |t|
     t.integer  "article_id",   null: false

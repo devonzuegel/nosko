@@ -2,8 +2,7 @@ module Finding
   class Article < ActiveRecord::Base
     include Finding::Findable
 
-    belongs_to :user,          dependent: :destroy
-    has_one    :evernote_article, dependent: :destroy
+    belongs_to :user, dependent: :destroy
 
     private
 
