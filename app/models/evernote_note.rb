@@ -1,16 +1,12 @@
 class EvernoteNote < ActiveRecord::Base
-  belongs_to :article, :class_name => Finding::Article, dependent: :destroy
+  belongs_to :article, class_name: Finding::Article, dependent: :destroy
 
-  REQUIRED_FIELDS = %i(guid article en_created_at en_updated_at active notebook_guid author article)
-  OPTIONAL_FIELDS = %i()
-  FIELDS          = REQUIRED_FIELDS + OPTIONAL_FIELDS
+  validates_uniqueness_of :guid, :article
+
   HIGHLIGHT_TAGS  = {
     from: '<span style="-evernote-highlighted:true; background-color:#FFFFb0">',
     to:   '<span class="highlight en-highlight">'
   }
-
-  validates_presence_of   REQUIRED_FIELDS
-  validates_uniqueness_of :guid, :article
 
   def initialize(all_attributes)
     article_attributes, evernote_attributes = partition_attributes(all_attributes)

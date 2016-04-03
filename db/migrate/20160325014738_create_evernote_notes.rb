@@ -8,6 +8,8 @@ class CreateEvernoteNotes < ActiveRecord::Migration
       t.string      :notebook_guid,   null: false
       t.string      :author,          null: false
       t.references  :article,         null: false, index: true, foreign_key: true
+
+      t.timestamps null: false
     end
   end
 end

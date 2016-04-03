@@ -1,19 +1,12 @@
 module Findable
   extend ActiveSupport::Concern
 
-  include Permalinkable
+  include Permalinkable, FormEditable
 
   REQUIRED_FIELDS = %i(title source_url user_id)
 
   included do
-    validate :validate_required_fields
     before_save :clean_url, :save_user
-  end
-
-  def validate_required_fields
-    self.class.required_fields.each do |field|
-      errors.add(field, 'cannot be blank') if self[field].blank?
-    end
   end
 
   def save_user
