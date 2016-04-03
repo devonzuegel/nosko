@@ -1,4 +1,4 @@
-module Extraction
+module Extractor
   module Article
     class Instapaper < ActiveRecord::Base
     end

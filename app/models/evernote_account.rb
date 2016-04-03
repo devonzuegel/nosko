@@ -14,11 +14,6 @@ class EvernoteAccount < ActiveRecord::Base
     end
   end
 
-  def find_note_by_guid(guid)
-    en_client = EvernoteClient.new(auth_token: auth_token)
-    en_client.find_note_by_guid(guid)
-  end
-
   def connected?
     !!auth_token
   end
