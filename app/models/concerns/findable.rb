@@ -4,6 +4,7 @@ module Findable
   include Permalinkable, FormEditable
 
   REQUIRED_FIELDS = %i(title source_url user_id)
+  HIDDEN_FIELDS   = %i(id permalink_id created_at updated_at)
 
   included do
     before_save :clean_url, :save_user
@@ -23,7 +24,7 @@ module Findable
     end
 
     def hidden_fields
-      %i(id permalink_id created_at updated_at)
+      HIDDEN_FIELDS + self::HIDDEN_FIELDS
     end
   end
 end
