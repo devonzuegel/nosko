@@ -34,7 +34,7 @@ class EvernoteNote < ActiveRecord::Base
     if all_attributes[:user]
       all_attributes[:user_id] = all_attributes.delete(:user).id
     end
-    article_attributes  = all_attributes.slice(*Finding::Article.fields)
+    article_attributes  = all_attributes.slice(*Finding::Article.visible_fields)
     evernote_attributes = all_attributes.reject { |k,v| article_attributes.keys.include? k }
 
     return [replace_highlights(article_attributes), evernote_attributes]

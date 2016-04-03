@@ -16,7 +16,7 @@ module FormEditable
       raise NotImplementedError
     end
 
-    def fields
+    def visible_fields
       raise NotImplementedError
     end
 

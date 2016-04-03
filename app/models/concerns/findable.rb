@@ -22,7 +22,7 @@ module Findable
       self.column_names.map { |n| n.to_sym }
     end
 
-    def fields
+    def visible_fields
       all_fields - hidden_fields
     end
 
