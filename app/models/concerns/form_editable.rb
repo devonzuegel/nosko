@@ -13,11 +13,11 @@ module FormEditable
 
   module ClassMethods
     def all_fields
-      raise NotImplementedError
+      self.column_names.map { |n| n.to_sym }
     end
 
     def visible_fields
-      raise NotImplementedError
+      all_fields - hidden_fields
     end
 
     def required_fields
@@ -25,7 +25,7 @@ module FormEditable
     end
 
     def optional_fields
-      raise NotImplementedError
+      visible_fields - required_fields
     end
 
     def hidden_fields

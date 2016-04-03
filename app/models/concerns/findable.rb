@@ -18,20 +18,8 @@ module Findable
   end
 
   module ClassMethods
-    def all_fields
-      self.column_names.map { |n| n.to_sym }
-    end
-
-    def visible_fields
-      all_fields - hidden_fields
-    end
-
     def required_fields
       REQUIRED_FIELDS + self::REQUIRED_FIELDS
-    end
-
-    def optional_fields
-      fields - required_fields
     end
 
     def hidden_fields
