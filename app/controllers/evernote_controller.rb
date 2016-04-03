@@ -1,5 +1,5 @@
 class EvernoteController < ApplicationController
-  before_filter :check_status
+  before_filter :check_status, except: %i(sync)
 
   def new
     redirect_to '/auth/evernote'
@@ -12,6 +12,13 @@ class EvernoteController < ApplicationController
     end
     # TODO add error handling in case of bad account info
     redirect_to root_url, notice: 'Evernote connected!'
+  end
+
+  def sync
+    ActiveRecord::Base.transaction do
+      SyncEvernoteAccount.enqueue(current_user.evernote_account.id, run_at: 1.second.from_now)
+    end
+    redirect_to root_url, notice: 'Evernote sync in progress!'
   end
 
   private

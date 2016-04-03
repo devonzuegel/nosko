@@ -14,5 +14,6 @@ Rails.application.routes.draw do
 
   # Evernote connect
   get '/evernote/connect'        => 'evernote#new'
+  get '/evernote/sync'           => 'evernote#sync',     as: :sync_evernote
   get '/auth/evernote/callback'  => 'evernote#create'
 end

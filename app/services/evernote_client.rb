@@ -1,6 +1,3 @@
-# TODO refactor me!
-# TODO add many tests
-
 class EvernoteClient
   include EvernoteParsable
 
@@ -16,21 +13,9 @@ class EvernoteClient
     ping_evernote
   end
 
-  def notebooks
-    note_store.listNotebooks(@auth_token).map { |n| format_notebook(n) }
-  end
-
-  def notebook_counts(order: ORDER, ascending: ASCENDING, updated_interval: UPDATED_INTERVAL)
-    note_store.findNoteCounts(@auth_token, filter(order: order, ascending: ascending, updated_interval: updated_interval), false)
-  end
-
-  def en_user
-    user_store.getUser(@auth_token)
-  end
-
-  def notes_metadata(n_results: N_RESULTS, order: ORDER, ascending: ASCENDING, updated_interval: UPDATED_INTERVAL)
+  def notes_metadata(n_results: N_RESULTS, order: ORDER, offset: OFFSET, ascending: ASCENDING, updated_interval: UPDATED_INTERVAL)
     custom_filter = filter(order: order, ascending: ascending, updated_interval: updated_interval)
-    note_store.findNotesMetadata(custom_filter, OFFSET, n_results, notes_metadata_result_spec)
+    note_store.findNotesMetadata(custom_filter, offset, n_results, notes_metadata_result_spec)
   end
 
   def notes(n_results: N_RESULTS, order: ORDER, ascending: ASCENDING, updated_interval: UPDATED_INTERVAL)
@@ -45,10 +30,6 @@ class EvernoteClient
   end
 
   private
-
-  def user_store
-    @client.user_store
-  end
 
   def note_store
     @client.note_store
@@ -73,16 +54,7 @@ class EvernoteClient
   end
 
   def notes_metadata_result_spec
-    Evernote::EDAM::NoteStore::NotesMetadataResultSpec.new(
-      includeTitle:         true,
-      includeContentLength: true,
-      includeCreated:       true,
-      includeUpdated:       true,
-      includeDeleted:       true,
-      includeNotebookGuid:  true,
-      includeAttributes:    true,
-      includeTagGuids:      true
-    )
+    Evernote::EDAM::NoteStore::NotesMetadataResultSpec.new
   end
 
   def sort_order_value_map
