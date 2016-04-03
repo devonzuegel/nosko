@@ -1,5 +1,6 @@
 class EvernoteAccount < ActiveRecord::Base
   belongs_to :user
+
   validates  :user, presence: true
 
   scope :authorized, -> () { where.not(auth_token: nil) }
@@ -37,6 +38,6 @@ class EvernoteAccount < ActiveRecord::Base
   private
 
   def updated_interval  # Ensures conversion to utc
-    last_updated.nil? ? nil : last_updated.utc
+    last_accessed_at.nil? ? nil : last_accessed_at.utc
   end
 end

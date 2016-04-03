@@ -1,19 +1,22 @@
 require 'rails_helper'
 
 RSpec.describe EvernoteExtraction, type: :model do
-  describe 'basic model' do
-    it 'should be valid' do
-      expect(build(:evernote_extraction).valid?).to be true
-    end
+  it 'should be deleted!'
+end
 
-    it 'should create an evernote_extraction' do
-      expect { create(:evernote_extraction) }.to change { EvernoteExtraction.count }.by 1
-    end
+  # describe 'basic model' do
+  #   it 'should be valid' do
+  #     expect(build(:evernote_extraction).valid?).to be true
+  #   end
 
-    # it 'should create a corresponding article' do
-    #   expect { create(:evernote_extraction) }.to change { Finding::Article.count }.by 1
-    # end
-  end
+  #   it 'should create an evernote_extraction' do
+  #     expect { create(:evernote_extraction) }.to change { EvernoteExtraction.count }.by 1
+  #   end
+
+  #   # it 'should create a corresponding article' do
+  #   #   expect { create(:evernote_extraction) }.to change { Finding::Article.count }.by 1
+  #   # end
+  # end
 
   # describe 'update_or_create!' do
   #   let(:data) { {
@@ -79,4 +82,3 @@ RSpec.describe EvernoteExtraction, type: :model do
 
   # it { should validate_uniqueness_of(:guid)        }
   # it { should validate_uniqueness_of(:article)     }
-end
