@@ -18,7 +18,9 @@ gem 'unicorn-rails',        '2.2.0'
 gem 'sanitize',             '4.0.1'
 gem 'react-rails',          '~> 1.0'
 gem 'momentjs-rails'
+
 gem 'que'
+gem 'que-testing',          :require => false
 
 # Omniauth
 gem 'oauth',                '0.4.7'
