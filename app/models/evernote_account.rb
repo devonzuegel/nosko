@@ -9,9 +9,16 @@ class EvernoteAccount < ActiveRecord::Base
     loop do
       metadata = en_client.notes_metadata(offset: offset, n_results: 100)
       break if metadata.notes.empty?
-      metadata.notes.each { |note| yield note.guid }
+      metadata.notes.each do |note|
+        yield note.guid
+      end
       offset += metadata.notes.length
     end
+  end
+
+  def notes_metadata
+    en_client = EvernoteClient.new(auth_token: auth_token)
+    en_client.notes_metadata(n_results: 10).notes.map &:guid
   end
 
   def connected?

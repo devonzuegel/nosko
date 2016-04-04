@@ -1,12 +1,17 @@
 class SyncEvernoteAccount < Que::Job
   def run(en_account_id)
-    Sharing.create!(user: User.first)
-    # evernote_account = EvernoteAccount[en_account_id]
+    puts '> Syncing Evernote...'
+    en_account = EvernoteAccount.find(en_account_id)
 
-    # evernote_account.each_stale_guid do |stale_guid|
-    #   SyncEvernoteNote.enqueue(stale_guid, en_account_id)
-    # end
+    ap en_account
 
-    # # TODO: When all are done, update last_accessed_at
+    en_account.each_stale_guid do |stale_guid|
+      puts "> Enqueuing note ##{stale_guid}..."
+      SyncEvernoteNote.enqueue(stale_guid, en_account_id)
+      break
+    end
+    destroy
+
+    # TODO: When all are done, update last_accessed_at
   end
 end

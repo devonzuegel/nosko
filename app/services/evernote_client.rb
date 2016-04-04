@@ -5,7 +5,7 @@ class EvernoteClient
   N_RESULTS        = 10
   ORDER            = :updated
   ASCENDING        = false
-  UPDATED_INTERVAL = 1.day.ago
+  UPDATED_INTERVAL = 1.year.ago
 
   def initialize(attributes = {})
     @auth_token = attributes.fetch(:auth_token)

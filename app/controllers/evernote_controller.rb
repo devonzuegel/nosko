@@ -6,10 +6,8 @@ class EvernoteController < ApplicationController
   end
 
   def create
-    ActiveRecord::Base.transaction do
-      current_user.connect_evernote(request.env['omniauth.auth'])
-      SyncEvernoteAccount.enqueue(current_user.evernote_account.id)
-    end
+    current_user.connect_evernote(request.env['omniauth.auth'])
+
     # TODO add error handling in case of bad account info
     redirect_to root_url, notice: 'Evernote connected!'
   end
@@ -18,7 +16,6 @@ class EvernoteController < ApplicationController
     ActiveRecord::Base.transaction do
       SyncEvernoteAccount.enqueue(current_user.evernote_account.id)
     end
-    Que.wake_all!
     redirect_to root_url, notice: 'Evernote sync in progress!'
   end
 
