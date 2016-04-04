@@ -1,8 +1,12 @@
 # Nosko #
 
-## Running Jobs ##
+## Jobs ##
 
-[`Que` jobs](./app/jobs/) (including [`SyncEvernoteAccount`](./app/jobs/sync_evernote_account.rb), [`SyncEvernoteNote`](./app/jobs/sync_evernote_note.rb), and [`ExtractArticleFromEvernote`](./app/jobs/extract_article_from_evernote.rb.rb)) require you to run `$ que ./config/environment.rb`.
+- Jobs are runs with [`Que`](https://github.com/chanks/que), an alternative to DelayedJob/ActiveJob that manages jobs using advisory locks in PostgreSQL (rather than the traditional Redis). You can find a good primer on Que [here](http://jamonholmgren.com/easy-background-tasks-on-heroku-with-que/).
+- [`Que` jobs](./app/jobs/) include:
+    + [`SyncEvernoteAccount`](./app/jobs/sync_evernote_account.rb)
+    + [`SyncEvernoteNote`](./app/jobs/sync_evernote_note.rb)
+    + [`ExtractArticleFromEvernote`](./app/jobs/extract_article_from_evernote.rb.rb))
 
 ## Models Structure ##
 
