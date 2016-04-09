@@ -9,7 +9,7 @@ class EvernoteClient
 
   def initialize(attributes = {})
     @auth_token = attributes.fetch(:auth_token)
-    @client = EvernoteOAuth::Client.new(token: @auth_token, sandbox: true)#!Rails.env.production?)
+    @client = EvernoteOAuth::Client.new(token: @auth_token, sandbox: ENV['EN_SANDBOX'])
     ping_evernote
   end
 

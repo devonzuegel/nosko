@@ -18,7 +18,7 @@ class EvernoteAccount < ActiveRecord::Base
 
   def notes_metadata
     en_client = EvernoteClient.new(auth_token: auth_token)
-    en_client.notes_metadata(n_results: 10).notes.map &:guid
+    en_client.notes_metadata(n_results: 10).notes
   end
 
   def connected?
