@@ -1,7 +1,7 @@
 # Job to extract the note corresponding to a given guid.
 class SyncEvernoteNote < Que::Job
   def run(guid, en_account_id)
-    puts "\n\n2) -----------------------------------------------------------------\n\n"
+    puts "\n\n2) -----------------------------------------------------------------\n\n".black
     account         = EvernoteAccount.find(en_account_id)  # Raises error if no corresponding account.
     extractor_attrs = { guid: guid, evernote_account: account }
     extractor       = Extractor::Article::Evernote.find_by(extractor_attrs)
@@ -17,7 +17,7 @@ class SyncEvernoteNote < Que::Job
       end
     else
       # Handle update
-      raise NotImplementedError
+      # raise NotImplementedError
     end
   end
 end

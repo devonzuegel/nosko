@@ -35,9 +35,7 @@ describe User do
       expect(@user.evernote_account.auth_token).to eq @dummy_creds['credentials']['token']
     end
 
-    it 'should enque a SyncEvernoteAccount job' do
-
-    end
+    it 'should enque a SyncEvernoteAccount job'
   end
 
   describe 'creating a User' do
