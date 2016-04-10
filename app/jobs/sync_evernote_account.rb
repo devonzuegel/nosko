@@ -1,5 +1,6 @@
 class SyncEvernoteAccount < Que::Job
   def run(en_account_id)
+    puts "\n\n1) -----------------------------------------------------------------\n\n"
     puts '> Syncing Evernote...'
     en_account = EvernoteAccount.find(en_account_id)
 
