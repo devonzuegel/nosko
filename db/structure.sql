@@ -38,7 +38,7 @@ CREATE TABLE articles (
     user_id integer,
     permalink_id integer NOT NULL,
     title character varying,
-    source_url character varying NOT NULL,
+    source_url character varying,
     content text,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL

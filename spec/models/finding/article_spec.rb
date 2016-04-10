@@ -8,14 +8,14 @@ RSpec.describe Finding::Article, type: :model do
     end
 
     it 'requires expected required fields' do
-      expect(Finding::Article.required_fields).to match_array %i(title source_url content user_id)
+      expect(Finding::Article.required_fields).to match_array %i(title content user_id)
       Finding::Article.required_fields.each do |field|
         expect(build(:article, field => nil)).to_not be_valid
       end
     end
 
     it 'shouldn\'t require expected optional fields' do
-      expect(Finding::Article.optional_fields).to match_array %i()
+      expect(Finding::Article.optional_fields).to match_array %i(source_url)
       Finding::Article.optional_fields.each do |field|
         expect(build(:article, field => nil)).to be_valid
       end

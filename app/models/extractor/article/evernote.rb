@@ -4,17 +4,20 @@ module Extractor
       self.table_name = 'evernote_extractors'
 
       belongs_to :evernote_account
+      belongs_to :article, class_name: 'Finding::Article'
 
       validates_uniqueness_of %i(guid)
       validates *%i(guid evernote_account), blank: false
 
       def retrieve_note
-        note = evernote_account.find_note_by_guid(guid)
-        {
-          content:     note[:content],
-          source_url:  note[:source_url],
-          title:       note[:title],
-        }
+        en_client  = EvernoteClient.new(auth_token: evernote_account.auth_token)
+        note_attrs = en_client.find_note_by_guid(guid).slice(:content, :source_url, :title)
+
+        if article
+          article.update_attributes!(note_attrs)
+        else
+          Finding::Article.create!(note_attrs.merge(user: evernote_account.user))
+        end
       end
     end
   end

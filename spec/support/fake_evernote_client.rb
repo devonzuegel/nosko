@@ -16,4 +16,18 @@ class FakeEvernoteClient
       notes:      notes
     )
   end
+
+  def find_note_by_guid(guid)
+    {
+      active:        true,
+      author:        "devonzuegel_1",
+      content:       "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\">\n<en-note><div>blah blah blah</div></en-note>",
+      en_created_at: 3.days.ago,
+      en_updated_at: 3.days.ago,
+      guid:          Faker::Lorem.characters(30),
+      notebook_guid: Faker::Lorem.characters(30),
+      source_url:    nil,
+      title:         "This is a test"
+    }
+  end
 end

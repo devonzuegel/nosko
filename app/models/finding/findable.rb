@@ -4,7 +4,7 @@ module Finding
 
     include Permalinkable, FormEditable
 
-    REQUIRED_FIELDS = %i(title source_url user_id)
+    REQUIRED_FIELDS = %i(title user_id)
     HIDDEN_FIELDS   = %i(id permalink_id created_at updated_at)
 
     included do
@@ -17,7 +17,9 @@ module Finding
     end
 
     def clean_url
-      self.source_url = self.source_url.sub %r{^https?:(\/\/|\\\\)(www\.)?}i, ''
+      if self.source_url
+        self.source_url = self.source_url.sub %r{^https?:(\/\/|\\\\)(www\.)?}i, ''
+      end
     end
 
     module ClassMethods
