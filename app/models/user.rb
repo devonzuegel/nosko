@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   has_one :sharing,          dependent: :destroy
   accepts_nested_attributes_for :sharing, :evernote_account
 
-  after_create :default_associations
+  after_create :create_default_associations
 
   def self.create_with_omniauth(auth)
     create! do |user|
@@ -16,10 +16,10 @@ class User < ActiveRecord::Base
   end
 
   def connect_evernote(omniauth_response)
-    logger.debug '> Connecting evernote...'
+    puts '> Connecting evernote...'
     auth_token = omniauth_response['credentials']['token']
     evernote_account.update(auth_token: auth_token)
-    logger.debug '> Evernote connected!'
+    puts '> Evernote connected!'
     SyncEvernoteAccount.enqueue(evernote_account.id)
   end
 
@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
 
   private
 
-  def default_associations
+  def create_default_associations
     Sharing.create!(user: self)
     EvernoteAccount.create!(user: self)
   end

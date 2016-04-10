@@ -1,10 +1,12 @@
 class EvernoteAccount < ActiveRecord::Base
   belongs_to :user
   validates  :user, presence: true
+
   scope :connected, -> () { where.not(auth_token: nil) }
 
-  # Retrieves chunks of notes from the Evernote API. Surfaces an iterator on
-  # each individual note that hides that fact that it retrieves N at a time.
+  # TODO: Should retrieve only STALE notes; currently retrieving all.
+  # TODO: Refactor to rely on UnpagingFacade.
+  # Unpaging facade for retrieving guids of "stale" notes.
   def each_stale_guid
     en_client = EvernoteClient.new(auth_token: auth_token)
     offset    = 0
