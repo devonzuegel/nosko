@@ -18,6 +18,10 @@ class EvernoteClient
     note_store.findNotesMetadata(custom_filter, offset, n_results, notes_metadata_result_spec)
   end
 
+  # def notes_metadata_by_pages
+  #   EvernoteClient::Metadata.new(per_page: 100).each
+  # end
+
   def notes(n_results: N_RESULTS, order: ORDER, ascending: ASCENDING, updated_interval: UPDATED_INTERVAL)
     options    = { n_results: n_results, order: order, ascending: ascending, updated_interval: updated_interval }
     note_guids = notes_metadata(options).notes.map(&:guid)

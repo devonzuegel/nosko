@@ -1,6 +1,6 @@
 describe User do
 
-  describe 'basic model' do
+  describe 'initializing basic model' do
     before(:each) { @user = create(:user) }
 
     subject { @user }
@@ -17,26 +17,26 @@ describe User do
       expect(@user.evernote_account.auth_token).to be nil
       expect(@user.evernote_connected?).to         be false
     end
-
-    it 'should have an evernote_account' do
-      expect(create(:user, :evernote_connected).evernote_connected?).to be true
-    end
   end
 
   describe 'connecting to evernote' do
     before(:each) do
-      @user              = create(:user)
-      @dummy_credentials = { 'credentials' => { 'token' => Faker::Lorem.characters(20) } }
+      @user        = create(:user)
+      @dummy_creds = { 'credentials' => { 'token' => Faker::Lorem.characters(20) } }
     end
 
     it 'should say that evernote is connected' do
-      @user.connect_evernote(@dummy_credentials)
+      @user.connect_evernote(@dummy_creds)
       expect(@user.evernote_connected?).to be true
     end
 
     it 'should store the evernote credentials' do
-      @user.connect_evernote(@dummy_credentials)
-      expect(@user.evernote_account.auth_token).to eq @dummy_credentials['credentials']['token']
+      @user.connect_evernote(@dummy_creds)
+      expect(@user.evernote_account.auth_token).to eq @dummy_creds['credentials']['token']
+    end
+
+    it 'should enque a SyncEvernoteAccount job' do
+
     end
   end
 
@@ -54,5 +54,15 @@ describe User do
 
     it { should change(Sharing,         :count).by -1 }
     it { should change(EvernoteAccount, :count).by -1 }
+  end
+
+  describe '.evernote_connected?' do
+    it 'should be true if it has not been connected' do
+      expect(create(:user).evernote_connected?).to be false
+    end
+
+    it 'should be true if it has been connected' do
+      expect(create(:user, :evernote_connected).evernote_connected?).to be true
+    end
   end
 end

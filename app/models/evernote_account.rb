@@ -9,7 +9,7 @@ class EvernoteAccount < ActiveRecord::Base
     en_client = EvernoteClient.new(auth_token: auth_token)
     offset    = 0
     loop do
-      metadata = en_client.notes_metadata(offset: offset, n_results: N_RESULTS)
+      metadata = en_client.notes_metadata(offset: offset, n_results: 5)
       break if metadata.notes.empty?
       metadata.notes.each { |note| yield note.guid }
       offset += metadata.notes.length
@@ -31,8 +31,6 @@ class EvernoteAccount < ActiveRecord::Base
   end
 
   private
-
-  N_RESULTS = 100
 
   def updated_interval  # Ensures conversion to utc
     last_accessed_at.nil? ? nil : last_accessed_at.utc
