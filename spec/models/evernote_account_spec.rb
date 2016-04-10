@@ -1,32 +1,31 @@
 require 'rails_helper'
 
 RSpec.describe EvernoteAccount, type: :model do
+  before { evernote_client_mock }
+
   describe 'basic model' do
     it 'should require a user' do
       expect( build(:evernote_account, user: nil) ).to_not be_valid
     end
+
     it 'should test .expired?'
   end
 
-  describe 'each_stale_guid iterator' do
+  describe 'stale_guids mass retrieval' do
     let(:evernote_account) { create(:user).evernote_account }
 
-    before do
-      notes = 10.times.map { Evernote::EDAM::NoteStore::NoteMetadata.new(guid: Faker::Lorem.characters(10)) }
-      notes_metadata = Evernote::EDAM::NoteStore::NotesMetadataList.new(
-        notes:      notes,
-        startIndex: 0,
-        # totalNotes: Faker::Number.between(notes.length, 10*notes.length)
-      )
-      EvernoteClient.any_instance.stub(notes_metadata: notes_metadata, ping_evernote: nil)
-      # @en_client = EvernoteClient.new(auth_token: Faker::Lorem.characters(10))
+    it 'should retrieve the expected number of stale guids' do
+      guids = evernote_account.stale_guids
+      expect(guids.length).to be EvernoteClient::Mock::METADATA_MAX_LENGTH
     end
+  end
 
+  describe 'each_stale_guid iterator' do
+    let(:en_account) { create(:user).evernote_account }
 
     it 'should retrieve the expected number of stale guids' do
-      ap evernote_account.notes_metadata
-      evernote_account.each_stale_guid { |guid| ap guid }
-      # raise NotImplementedError
+      args = en_account.stale_guids
+      expect { |b| en_account.each_stale_guid(&b) }.to yield_successive_args(*args)
     end
   end
 end
