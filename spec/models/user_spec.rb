@@ -7,6 +7,7 @@ describe User do
 
     it { should respond_to(:name)             }
     it { should respond_to(:sharing)          }
+    it { should respond_to(:articles)         }
     it { should respond_to(:evernote_account) }
 
     it "#name returns a string" do
@@ -16,6 +17,10 @@ describe User do
     it 'should initially have an empty evernote_account' do
       expect(@user.evernote_account.auth_token).to be nil
       expect(@user.evernote_connected?).to         be false
+    end
+
+    it 'should initially not have any articles' do
+      expect(@user.articles).to match []
     end
   end
 

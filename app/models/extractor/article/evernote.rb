@@ -9,7 +9,7 @@ module Extractor
       validates *%i(guid evernote_account), blank: false
 
       def retrieve_note
-        note = evernote_account.find_note_by_guid(extractor.guid)
+        note = evernote_account.find_note_by_guid(guid)
         {
           content:     note[:content],
           source_url:  note[:source_url],

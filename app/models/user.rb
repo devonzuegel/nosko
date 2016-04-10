@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
-  has_one :evernote_account, dependent: :destroy
-  has_one :sharing,          dependent: :destroy
+  has_one  :evernote_account, dependent: :destroy
+  has_many :articles, class_name: 'Finding::Article', dependent: :destroy
+  has_one  :sharing,          dependent: :destroy
   accepts_nested_attributes_for :sharing, :evernote_account
 
   after_create :create_default_associations
