@@ -24,6 +24,10 @@ class EvernoteAccount < ActiveRecord::Base
     guids
   end
 
+  def notes_metadata
+    en_client.notes_metadata(offset: offset, n_results: 5)
+  end
+
   def connected?
     !!auth_token
   end

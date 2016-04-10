@@ -7,7 +7,7 @@ class VisitorsController < ApplicationController
     #   end
     #   @articles = Finding::Article.where(user: current_user)
     # else
-    @articles = []
+    @articles = Finding::Article.limit(10).map { |a| a.title }
     # end
   end
 end
