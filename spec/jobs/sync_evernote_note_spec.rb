@@ -7,7 +7,10 @@ describe "Testing SyncEvernoteNote job" do
     EvernoteAccount.any_instance.stub(:each_stale_guid).and_yield('guid1')
   end
 
-  after { SyncEvernoteNote.jobs.clear }
+  after do
+    SyncEvernoteNote.jobs.clear
+    ExtractArticleFromEvernote.jobs.clear
+  end
 
   describe 'SyncEvernoteNote.enqueue' do
     it 'enqueues one job' do

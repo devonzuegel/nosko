@@ -3,11 +3,7 @@ class SyncEvernoteNote < Que::Job
   def run(guid, en_account_id)
     account         = EvernoteAccount.find(en_account_id)
     extractor_attrs = { guid: guid, evernote_account: account }
-    extractor       = Extractor::Article::Evernote.find_by(extractor_attrs)
-
-    if extractor.nil?
-      extractor = Extractor::Article::Evernote.create(extractor_attrs)
-    end
+    extractor       = Extractor::Article::Evernote.find_or_create_by(extractor_attrs)
 
     ActiveRecord::Base.transaction do
       ExtractArticleFromEvernote.enqueue(extractor.id)

@@ -104,7 +104,9 @@ CREATE TABLE evernote_extractors (
     guid character varying,
     last_accessed_at timestamp without time zone,
     evernote_account_id integer,
-    article_id integer
+    article_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 

@@ -5,6 +5,8 @@ class CreateEvernoteExtractors < ActiveRecord::Migration
       t.datetime   :last_accessed_at
       t.references :evernote_account, index: true, foreign_key: true
       t.references :article,          index: true, foreign_key: true
+
+      t.timestamps null: false
     end
   end
 end
