@@ -18,6 +18,16 @@ RSpec.describe EvernoteAccount, type: :model do
     end
   end
 
+  describe '.sync' do
+    require 'que/testing'
+
+    let(:en_account) { create(:user).evernote_account }
+
+    it 'should enqueue a SyncEvernoteAccount job' do
+      expect { en_account.sync }.to change { SyncEvernoteAccount.jobs.length }.by 1
+    end
+  end
+
   describe 'stale guid iterator and mass retrieval' do
     let(:en_account) { create(:user).evernote_account }
 

@@ -36,6 +36,10 @@ class EvernoteAccount < ActiveRecord::Base
     raise NotImplementedError
   end
 
+  def sync
+    SyncEvernoteAccount.enqueue(id)
+  end
+
   private
 
   def updated_interval  # Ensures conversion to utc
