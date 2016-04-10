@@ -28,21 +28,53 @@ RSpec.describe EvernoteAccount, type: :model do
     end
   end
 
-  describe 'stale guid iterator and mass retrieval' do
-    let(:en_account) { create(:user).evernote_account }
+  describe 'guid iterator' do
+    let(:en_account)    { create(:user).evernote_account  }
+
+    before { stub_const('EvernoteClient', FakeEvernoteClient) }
+
+    it 'should retrieve all guids from Evernote' do
+      en_account.retrieve_each_guid do |guid|
+        expect(guid).to match /^(bleh )?blah \d{10}$/
+      end
+    end
+
+    it 'should support .to_a' do
+      expect(en_account.retrieve_each_guid.to_a.length).to eq 4
+      en_account.retrieve_each_guid.to_a.each do |guid|
+        expect(guid).to match /^(bleh )?blah \d{10}$/
+      end
+    end
+  end
+
+  describe 'stale guid iterator' do
+    let(:en_account)    { create(:user).evernote_account  }
+    let(:expected_args) { %w(blah blah) }
 
     before do
       stub_const('EvernoteClient', FakeEvernoteClient)
+      @all_notes = []
+      en_account.retrieve_each_note do |note|
+        @all_notes << note
+        Extractor::Article::Evernote.create!(
+          guid:             note.guid,
+          evernote_account: en_account,
+          last_accessed_at: 10.days.ago
+        )
+      end
     end
 
-    it 'should retrieve the expected number of stale guids' do
-      args = en_account.stale_guids
-      expect { |b| en_account.each_stale_guid(&b) }.to yield_successive_args(*args)
+    it '2 of the 4 extractors should be stale' do
+      n_stale = 0
+      @all_notes.each do |note|
+        ap note
+        n_stale += 1 if en_account.is_stale?(note)
+      end
+      expect(n_stale).to eq 2
     end
 
-    it 'should retrieve the expected number of stale guids' do
-      guids = en_account.stale_guids
-      expect(guids.length).to eq 5
+    it 'should support .to_a' do
+      expect(en_account.retrieve_each_stale_guid.to_a.length).to eq 4
     end
   end
 

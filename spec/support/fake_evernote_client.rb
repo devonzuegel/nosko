@@ -3,12 +3,20 @@ class FakeEvernoteClient
     @auth_token = attributes.fetch(:auth_token)
   end
 
-  def notes_metadata(offset:, **options)
-    total_n_notes = 5
+  def notes_metadata(offset: 0, **options)
+    total_n_notes = 4
 
     notes = []
     if (offset < total_n_notes)
-      notes << Evernote::EDAM::NoteStore::NoteMetadata.new(guid: 'blahblah')
+      notes += [
+        Evernote::EDAM::NoteStore::NoteMetadata.new(
+          guid:    "blah #{Faker::Number.number(10)}",
+          updated: 20.days.ago.to_i * 1000
+        ), Evernote::EDAM::NoteStore::NoteMetadata.new(
+          guid:    "bleh blah #{Faker::Number.number(10)}",
+          updated: 0.seconds.ago.to_i * 1000
+        )
+      ]
     end
 
     Evernote::EDAM::NoteStore::NotesMetadataList.new(

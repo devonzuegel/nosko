@@ -4,7 +4,7 @@ class SyncEvernoteAccount < Que::Job
     en_account = EvernoteAccount.find(en_account_id)
 
     count = 0
-    en_account.each_stale_guid do |stale_guid|
+    en_account.retrieve_each_stale_guid do |stale_guid|
       ActiveRecord::Base.transaction do
         puts "> Enqueuing note ##{stale_guid}..."
         SyncEvernoteNote.enqueue(stale_guid, en_account_id)

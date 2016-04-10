@@ -2,7 +2,7 @@ require 'que/testing'
 
 describe "Testing SyncEvernoteAccount job" do
   before do
-    EvernoteAccount.any_instance.stub(:each_stale_guid).and_yield('guid1')
+    EvernoteAccount.any_instance.stub(:retrieve_each_stale_guid).and_yield('guid1')
   end
 
   after do

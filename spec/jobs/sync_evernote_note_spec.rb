@@ -4,7 +4,7 @@ describe "Testing SyncEvernoteNote job" do
   let(:user) { create(:user, :evernote_connected) }
 
   before do
-    EvernoteAccount.any_instance.stub(:each_stale_guid).and_yield('guid1')
+    EvernoteAccount.any_instance.stub(:retrieve_each_stale_guid).and_yield('guid1')
   end
 
   after do

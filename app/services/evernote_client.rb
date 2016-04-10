@@ -58,7 +58,7 @@ class EvernoteClient
   end
 
   def notes_metadata_result_spec
-    Evernote::EDAM::NoteStore::NotesMetadataResultSpec.new
+    Evernote::EDAM::NoteStore::NotesMetadataResultSpec.new(includeUpdated: true)
   end
 
   def sort_order_value_map
