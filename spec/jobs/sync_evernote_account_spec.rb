@@ -1,4 +1,4 @@
-require "que/testing"
+require 'que/testing'
 
 describe "Testing SyncEvernoteAccount job" do
   let(:user) { create(:user, :evernote_connected) }
@@ -7,7 +7,10 @@ describe "Testing SyncEvernoteAccount job" do
     EvernoteAccount.any_instance.stub(:each_stale_guid).and_yield('guid1')
   end
 
-  after { SyncEvernoteAccount.jobs.clear }
+  after do
+    SyncEvernoteAccount.jobs.clear
+    SyncEvernoteNote.jobs.clear
+  end
 
   describe 'SyncEvernoteAccount.enqueue' do
     it 'enqueues one job' do
@@ -25,7 +28,7 @@ describe "Testing SyncEvernoteAccount job" do
 
       user.evernote_account.stale_guids.each_with_index do |guid, i|
         expected_args = [guid, user.evernote_account.id]
-        expect(SyncEvernoteNote.jobs[i]['args']).to eq expected_args
+        expect(SyncEvernoteNote.jobs[i][:args]).to eq expected_args
       end
     end
 
