@@ -4,11 +4,15 @@ class SyncEvernoteAccount < Que::Job
     en_account = EvernoteAccount.find(en_account_id)
 
     en_account.each_stale_guid do |stale_guid|
-      puts "> Enqueuing note ##{stale_guid}..."
-      SyncEvernoteNote.enqueue(stale_guid, en_account_id)
+      ActiveRecord::Base.transaction do
+        puts "> Enqueuing note ##{stale_guid}..."
+        SyncEvernoteNote.enqueue(stale_guid, en_account_id)
+      end
     end
-    destroy
 
-    # TODO: When all are done, update last_accessed_at
+    ActiveRecord::Base.transaction do
+      destroy
+      en_account.update_attributes(last_accessed_at: 0.seconds.ago)
+    end
   end
 end

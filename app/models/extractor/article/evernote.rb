@@ -18,6 +18,8 @@ module Extractor
         else
           Finding::Article.create!(note_attrs.merge(user: evernote_account.user))
         end
+
+        update(last_accessed_at: 0.seconds.ago)
       end
     end
   end
