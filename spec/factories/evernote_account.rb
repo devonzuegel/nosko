@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :evernote_account do
     user
 
-    trait :evernote_connected do
+    trait :connected do
       auth_token { Faker::Lorem.characters(10) }
     end
 

@@ -1,7 +1,7 @@
 class EvernoteAccount < ActiveRecord::Base
   belongs_to :user
   validates  :user, presence: true
-  scope :authorized, -> () { where.not(auth_token: nil) }
+  scope :connected, -> () { where.not(auth_token: nil) }
 
   # Retrieves chunks of notes from the Evernote API. Surfaces an iterator on
   # each individual note that hides that fact that it retrieves N at a time.
@@ -20,11 +20,6 @@ class EvernoteAccount < ActiveRecord::Base
     guids = []
     each_stale_guid { |g| guids << g }
     guids
-  end
-
-  def notes_metadata
-    en_client = EvernoteClient.new(auth_token: auth_token)
-    en_client.notes_metadata(n_results: 10).notes
   end
 
   def connected?

@@ -4,8 +4,8 @@ FactoryGirl.define do
     provider 'twitter'
 
     trait :evernote_connected do
-      after(:create) do |user|
-        create(:evernote_account, :evernote_connected, user: user)
+      after(:create) do |u|
+        u.evernote_account.update_attributes(auth_token: Faker::Lorem.characters(10))
       end
     end
   end

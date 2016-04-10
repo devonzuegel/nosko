@@ -8,6 +8,17 @@ RSpec.describe EvernoteAccount, type: :model do
       expect( build(:evernote_account, user: nil) ).to_not be_valid
     end
 
+    it 'should have an .authorized scope that surfaces only connected accounts' do
+      n_unconnected = Faker::Number.between(1,10)
+      n_connected   = Faker::Number.between(1,10)
+
+      n_unconnected.times { create(:user)                      }
+      n_connected.times   { create(:user, :evernote_connected) }
+
+      expect(EvernoteAccount.count).to eq(n_unconnected + n_connected)
+      expect(EvernoteAccount.connected.count).to eq n_connected
+    end
+
     it 'should test .expired?'
   end
 
