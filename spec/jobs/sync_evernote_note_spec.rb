@@ -15,7 +15,7 @@ describe "Testing SyncEvernoteNote job" do
   describe 'SyncEvernoteNote.enqueue' do
     it 'enqueues one job' do
       expect(SyncEvernoteNote.jobs.length).to eq 0
-      SyncEvernoteNote.enqueue(user.id)
+      SyncEvernoteNote.enqueue(Faker::Lorem.characters(20))
       expect(SyncEvernoteNote.jobs.length).to eq 1
     end
   end
