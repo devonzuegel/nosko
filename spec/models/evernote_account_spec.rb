@@ -66,10 +66,7 @@ RSpec.describe EvernoteAccount, type: :model do
 
     it '2 of the 4 extractors should be stale' do
       n_stale = 0
-      @all_notes.each do |note|
-        ap note
-        n_stale += 1 if en_account.is_stale?(note)
-      end
+      @all_notes.each { |note| n_stale += 1 if en_account.is_stale?(note) }
       expect(n_stale).to eq 2
     end
 

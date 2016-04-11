@@ -47,15 +47,12 @@ class EvernoteAccount < ActiveRecord::Base
     SyncEvernoteAccount.enqueue(id)
   end
 
+  # TODO refactor
   def is_stale?(note)
     extractor = Extractor::Article::Evernote.find_by(guid: note.guid)
     return true if extractor.nil?
 
     en_version_updated_at  = note.updated / 1000
-    puts "en_version_updated_at           = #{en_version_updated_at}"
-    puts "extractor.last_accessed_at.to_i = #{extractor.last_accessed_at.to_i}"
-    puts "is_stale?                       = #{(extractor.last_accessed_at.to_i - en_version_updated_at < 0)}"
-    puts
     (extractor.last_accessed_at.to_i - en_version_updated_at < 0)
   end
 
