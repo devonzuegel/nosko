@@ -31,9 +31,11 @@ describe "Testing SyncEvernoteAccount job" do
       SyncEvernoteAccount.run(@en_account.id)
       expect(SyncEvernoteNote.jobs.length).to eq 1
 
-      @en_account.retrieve_each_stale_guid.with_index do |*guid, i|
+      i = 0
+      @en_account.retrieve_each_stale_guid do |guid|
         expected_args = [guid, @en_account.id]
         expect(SyncEvernoteNote.jobs[i][:args]).to eq expected_args
+        i += 1
       end
     end
 
