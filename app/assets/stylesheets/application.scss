@@ -24,8 +24,12 @@ $dark-green: darken($green, 6%);
   // opacity: .9;
 }
 
-.fa-stack-text {
-  font-family: 'Lora' !important;
+* {
+  font-family: 'Karla', sans-serif;
+}
+
+pre, code {
+  font-family: 'Inconsolata XL', monospace;
 }
 
 li a {

@@ -2,17 +2,17 @@
 
 Hi Terry! Hope you're doing well. Just checking in to give you an update on my progress on Nosko.
 
-## WIM Requirement ##
+### WIM Requirement ###
 
 I’m a huge believer in writing as a way to explore ideas as much as medium for communicating with others. As a commitment mechanism for practicing what I preach, I’ve signed up for the “W” version of CS191, though I’ve already fulfilled my WIM requirement.
 
 The first step is to decide on the topic/format of the writing assignment. I’m thinking of writing a sort of “manifesto” on Tools for Thought rather than a technical summary of what I’ve done, because I think that’s a lot more interesting and meaningful, though I’ve yet to decide where I would begin. **I’d love to hear your thoughts on this idea and any expectations you might have for the assignment.**
 
-## Summary of Week 2 ##
+### Summary of Week 2 ###
 
 My main focus this week was ensuring that Nosko “findings” retrieved from Evernote are consistent with the state of notebooks in Evernote database. This had a number of different steps:
 
-### 1. Extractor Redesign ###
+**1. Extractor Redesign**
 
 After a long, fruitful conversation about API design with [John](twitter.com/backus), I completely overhauled my models and methods for extracting articles from various sources. I had previously written a single `Article` class. The initialization of a new `Article` required me to specify the source as an argument, and it then retrieved the data from that source. It then saved this data into the db along with a `:source` attribute to store that origin and its `api_token` (or whatever unique id required by the source to retrieve that resource).
 
@@ -49,13 +49,13 @@ module Extractor::Article
     :readability_account_id => :foreign_key
 ```
 
-### 2. Background Jobs ###
+**2. Background Jobs**
 
 I set up a queue to create, enqueue, and execute background jobs in parallel. I implemented `SyncEvernoteAccount` (which retrieves all Evernotes that belong to a particular account that have been created/updated since last sync), `SyncEvernoteNote` (which sets off a job to extract the note corresponding to a given guid), and `ExtractArticleFromEvernote` (which extracts the note corresponding to a given guid).
 
 I used a tool called [`Que`](https://github.com/chanks/que), an alternative to Rail's DelayedJob which uses PostgreSQL's advisory locks for speed and reliability. My infrastructure is currently functional, but for some reason that I need to debut it's extremely slow and crashes when processing large numbers of jobs. I may migrate over to some other framework, replacing `Que` with [`DelayedJob`](https://github.com/collectiveidea/delayed_job) or [`ActiveJob`](http://edgeguides.rubyonrails.org/active_job_basics.html).
 
-## Plans for week 3 ##
+### Plans for week 3 ###
 
 I plan to implement:
 
