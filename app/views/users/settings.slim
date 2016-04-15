@@ -1,8 +1,8 @@
-.container: .row
+.row
   h3 Settings
   .col-lg-8.col-lg-offset-2.col-md-10.col-md-offset-1
     - if current_user.evernote_connected?
-      button.btn.btn-primary.disabled Evernote already connected!
+      li= link_to 'Sync Evernote', sync_evernote_path
     - else
       a href='/evernote/connect'
         button.btn.btn-primary Connect your Evernote account

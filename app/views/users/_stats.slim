@@ -1,0 +1,9 @@
+- n_words = @user.articles.where('updated_at > :date', date: 1.week.ago).map { |a| a.content.split.length }.reduce(0, :+)
+- n_recs  = 12345
+- n_books = 12345
+
+hr
+
+p= "#{number_with_delimiter(n_words)} words this week"
+p= "#{number_with_delimiter(n_recs)} recommendations this month"
+p= "#{number_with_delimiter(n_books)} books this year"

@@ -1,11 +1,2 @@
-.container
-  .row
-    .col-lg-8.col-lg-offset-2.col-md-10.col-md-offset-1
-      pre= "Highlight.all = #{Highlight.all.as_json}"
-      pre
-        = '@articles = '
-        = JSON.pretty_generate(@articles)
-    / .col-lg-8.col-lg-offset-2.col-md-10.col-md-offset-1
-    /   - @articles.each do |article|
-    /     hr
-    /     = render partial: 'articles/article', locals: { article: article }
+- @articles.each do |article|
+  = render partial: 'articles/article', locals: { article: article }

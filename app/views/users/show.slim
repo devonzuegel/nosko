@@ -1,0 +1,9 @@
+hr
+.row
+  .col-sm-3
+    img src="#{Faker::Avatar.image}"
+    b= @user.name
+    = render partial: 'users/stats', locals: { article: @user }
+  .col-sm-9
+    - @user.articles.each do |article|
+      = render partial: 'articles/article', locals: { article: article }

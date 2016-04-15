@@ -7,12 +7,16 @@ nav.navbar.navbar-inverse.navbar-fixed-top
         span.icon-bar
         span.icon-bar
         span.icon-bar
-      = link_to 'Home', root_path, class: 'navbar-brand'
     .collapse.navbar-collapse
-      ul.nav.navbar-nav.pull-right
-        - if user_signed_in?
-          li= link_to 'Sign out',      signout_path
-          li= link_to 'Settings',      settings_path
-          li= link_to 'Sync Evernote', sync_evernote_path
-        - else
-          li= link_to 'Sign in', signin_path
+        ul.nav.navbar-nav.pull-left
+          li= link_to 'Home', root_path, class: 'navbar-brand'
+          - if user_signed_in?
+            li= link_to 'Notifications', '#'
+            li= link_to 'Queue',         '#'
+        ul.nav.navbar-nav.pull-right
+          - if user_signed_in?
+            li= link_to 'Sign out',      signout_path
+            li= link_to 'Settings',      settings_path
+            li= link_to current_user.name.split.first,  user_path(current_user)
+          - else
+            li= link_to 'Sign in', signin_path
