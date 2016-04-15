@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   root to: 'visitors#index'
 
-  resources :highlights, :findings, :users, only: %i(create update destroy)
+  resources :highlights, :findings, only: %i(create update destroy)
+  resources :users
+
   get '/settings'                => 'users#settings'
 
   # OAuth failure (for all strategies)
