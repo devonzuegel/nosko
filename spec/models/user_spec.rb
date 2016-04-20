@@ -36,6 +36,7 @@ describe User do
 
   describe 'connecting to evernote' do
     before(:each) do
+      stub_const('EvernoteClient', FakeEvernoteClient)
       @user        = create(:user)
       @dummy_creds = { 'credentials' => { 'token' => Faker::Lorem.characters(20) } }
     end
