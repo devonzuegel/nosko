@@ -130,6 +130,39 @@ ALTER SEQUENCE evernote_extractors_id_seq OWNED BY evernote_extractors.id;
 
 
 --
+-- Name: followings; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE followings (
+    id integer NOT NULL,
+    leader_id integer NOT NULL,
+    follower_id integer NOT NULL,
+    unfollowed_at timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: followings_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE followings_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: followings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE followings_id_seq OWNED BY followings.id;
+
+
+--
 -- Name: highlights; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -337,6 +370,13 @@ ALTER TABLE ONLY evernote_extractors ALTER COLUMN id SET DEFAULT nextval('everno
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY followings ALTER COLUMN id SET DEFAULT nextval('followings_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY highlights ALTER COLUMN id SET DEFAULT nextval('highlights_id_seq'::regclass);
 
 
@@ -390,6 +430,14 @@ ALTER TABLE ONLY evernote_accounts
 
 ALTER TABLE ONLY evernote_extractors
     ADD CONSTRAINT evernote_extractors_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: followings_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY followings
+    ADD CONSTRAINT followings_pkey PRIMARY KEY (id);
 
 
 --
@@ -458,6 +506,20 @@ CREATE INDEX index_evernote_extractors_on_article_id ON evernote_extractors USIN
 --
 
 CREATE INDEX index_evernote_extractors_on_evernote_account_id ON evernote_extractors USING btree (evernote_account_id);
+
+
+--
+-- Name: index_followings_on_follower_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_followings_on_follower_id ON followings USING btree (follower_id);
+
+
+--
+-- Name: index_followings_on_leader_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_followings_on_leader_id ON followings USING btree (leader_id);
 
 
 --
@@ -560,4 +622,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160324171930');
 INSERT INTO schema_migrations (version) VALUES ('20160403051932');
 
 INSERT INTO schema_migrations (version) VALUES ('20160403080010');
+
+INSERT INTO schema_migrations (version) VALUES ('20160420054125');
 
