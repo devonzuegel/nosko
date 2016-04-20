@@ -5,7 +5,7 @@ module Omniauth
       OmniAuth.config.mock_auth[:twitter] = {
         'provider' => 'twitter',
         'uid' => '123545',
-        'user_info' => {
+        'info' => {
           'name' => 'mockuser'
         },
         'credentials' => {
