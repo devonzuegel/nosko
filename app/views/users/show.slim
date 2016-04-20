@@ -1,7 +1,7 @@
 hr
 .row
   .col-sm-3
-    img src="#{Faker::Avatar.image}"
+    img src='http://artsci.ucla.edu/sites/artsci.ucla.edu.TEST/files//artsci_member.gif'
     b= @user.name
     = render partial: 'users/stats', locals: { article: @user }
   .col-sm-9
