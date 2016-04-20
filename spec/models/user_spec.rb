@@ -9,6 +9,8 @@ describe User do
     it { should respond_to(:sharing)          }
     it { should respond_to(:articles)         }
     it { should respond_to(:evernote_account) }
+    it { should respond_to(:followers) }
+    it { should respond_to(:followings) }
 
     it "#name returns a string" do
       expect(@user.name).to match 'Test User'
@@ -21,6 +23,14 @@ describe User do
 
     it 'should initially not have any articles' do
       expect(@user.articles).to match []
+    end
+
+    it 'should initially not have any followers' do
+      expect(@user.followers).to match []
+    end
+
+    it 'should initially not have any followings' do
+      expect(@user.followings).to match []
     end
   end
 
@@ -71,6 +81,34 @@ describe User do
 
     it 'should be true if it has been connected' do
       expect(create(:user, :evernote_connected).evernote_connected?).to be true
+    end
+  end
+
+  describe 'following another user' do
+    before(:each) do
+      @follower = create(:user)
+      @leader   = create(:user)
+    end
+
+    it 'should have a single following' do
+      expect(@follower.followings).to match []
+      Following.create!(leader: @leader, follower: @follower)
+      @follower = User.find(@follower.id)
+      expect(@follower.followings.map(&:leader_id)).to match [@leader.id]
+    end
+  end
+
+  describe 'being followed by another user' do
+    before(:each) do
+      @follower = create(:user)
+      @leader   = create(:user)
+    end
+
+    it 'should have a single following' do
+      expect(@leader.followers).to match []
+      Following.create!(leader: @leader, follower: @follower)
+      @leader = User.find(@leader.id)
+      expect(@leader.followers.map(&:follower_id)).to match [@follower.id]
     end
   end
 end

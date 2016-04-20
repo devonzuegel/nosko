@@ -7,3 +7,6 @@ hr
 p= "#{number_with_delimiter(n_words)} words this week"
 p= "#{number_with_delimiter(n_recs)} recommendations this month"
 p= "#{number_with_delimiter(n_books)} books this year"
+
+- @user.followers.each do |f|
+  pre= f.as_json

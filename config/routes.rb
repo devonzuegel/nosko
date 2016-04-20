@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   root to: 'visitors#index'
 
   resources :highlights, :findings, only: %i(create update destroy)
-  resources :users
+  resources :users do
+    get 'follow', on: :member
+  end
 
   get '/settings'                => 'users#settings'
 

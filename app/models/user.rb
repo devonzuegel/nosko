@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   has_one  :evernote_account, dependent: :destroy
-  has_many :articles, class_name: 'Finding::Article', dependent: :destroy
+  has_many :articles,   class_name: 'Finding::Article', dependent: :destroy
+  has_many :followers,  class_name: 'Following', foreign_key: 'leader_id'
+  has_many :followings, class_name: 'Following', foreign_key: 'follower_id'
   has_one  :sharing,          dependent: :destroy
   accepts_nested_attributes_for :sharing, :evernote_account
 

@@ -24,6 +24,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def follow
+    @leader = User.find(params[:id])
+    Following.create!(leader: @leader, follower: current_user)
+    redirect_to :back, notice: "Followed user ##{@leader.id}"
+  end
+
   private
 
   def user_params
