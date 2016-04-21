@@ -52,7 +52,7 @@ describe User do
     end
 
     it 'should enqueue a SyncEvernoteAccount job' do
-      require 'que/testing'
+      # require 'que/testing'
 
       connect = -> { @user.connect_evernote(@dummy_creds) }
       expect { connect.call }.to change { SyncEvernoteAccount.jobs.length }.by 1
