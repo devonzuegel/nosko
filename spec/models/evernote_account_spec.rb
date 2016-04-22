@@ -1,6 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe EvernoteAccount, type: :model do
+  before do
+    Que.mode = :off
+    stub_const('EvernoteClient', FakeEvernoteClient)
+  end
+
+  after do
+    Que.mode = :sync
+    SyncEvernoteAccount.jobs.clear
+    SyncEvernoteNote.jobs.clear
+  end
+
   describe 'basic model' do
     it 'should require a user' do
       expect( build(:evernote_account, user: nil) ).to_not be_valid
@@ -31,8 +42,6 @@ RSpec.describe EvernoteAccount, type: :model do
   describe 'guid iterator' do
     let(:en_account)    { create(:user).evernote_account  }
 
-    before { stub_const('EvernoteClient', FakeEvernoteClient) }
-
     it 'should retrieve all guids from Evernote' do
       en_account.retrieve_each_guid do |guid|
         expect(guid).to match /^(bleh )?blah \d{10}$/
@@ -51,9 +60,7 @@ RSpec.describe EvernoteAccount, type: :model do
     let(:en_account)    { create(:user).evernote_account  }
     let(:expected_args) { %w(blah blah) }
 
-    before do
-      stub_const('EvernoteClient', FakeEvernoteClient)
-      @all_notes = []
+    before do      @all_notes = []
       en_account.retrieve_each_note do |note|
         @all_notes << note
         Extractor::Article::Evernote.create!(

@@ -2,19 +2,22 @@ require 'que/testing'
 
 describe "Testing SyncEvernoteAccount job" do
   before do
-    EvernoteAccount.any_instance.stub(:retrieve_each_stale_guid).and_yield('guid1')
+    Que.mode = :off
+    stub_const('EvernoteClient', FakeEvernoteClient)
   end
 
   after do
+    Que.mode = :sync
     SyncEvernoteAccount.jobs.clear
     SyncEvernoteNote.jobs.clear
   end
 
   describe 'SyncEvernoteAccount.enqueue' do
+    before { @en_account = create(:evernote_account) }
+
     it 'enqueues one job' do
-      expect(SyncEvernoteAccount.jobs.length).to eq 0
-      SyncEvernoteAccount.enqueue(123123)
-      expect(SyncEvernoteAccount.jobs.length).to eq 1
+      id = @en_account.id
+      expect { SyncEvernoteAccount.enqueue(id) }.to change { SyncEvernoteAccount.jobs.count }.by 1
     end
   end
 
@@ -27,16 +30,9 @@ describe "Testing SyncEvernoteAccount job" do
     let(:time_since_last_accessed) { -> { Time.now - @en_account.last_accessed_at.to_time } }
 
     it 'enqueues one SyncEvernoteNote job' do
-      expect(SyncEvernoteNote.jobs.length).to eq 0
+      expect(SyncEvernoteNote.jobs.count).to eq 0
       SyncEvernoteAccount.run(@en_account.id)
-      expect(SyncEvernoteNote.jobs.length).to eq 1
-
-      i = 0
-      @en_account.retrieve_each_stale_guid do |guid|
-        expected_args = [guid, @en_account.id]
-        expect(SyncEvernoteNote.jobs[i][:args]).to eq expected_args
-        i += 1
-      end
+      expect(SyncEvernoteNote.jobs.count).to eq 4
     end
 
     it 'updates last_accessed_at to reflect sync time' do

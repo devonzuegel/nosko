@@ -50,13 +50,6 @@ describe User do
       @user.connect_evernote(@dummy_creds)
       expect(@user.evernote_account.auth_token).to eq @dummy_creds['credentials']['token']
     end
-
-    it 'should enqueue a SyncEvernoteAccount job' do
-      # require 'que/testing'
-
-      connect = -> { @user.connect_evernote(@dummy_creds) }
-      expect { connect.call }.to change { SyncEvernoteAccount.jobs.length }.by 1
-    end
   end
 
   describe 'creating a User' do

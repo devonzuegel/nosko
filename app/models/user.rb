@@ -24,10 +24,12 @@ class User < ActiveRecord::Base
   end
 
   def connect_evernote(omniauth_response)
-    puts '> Connecting evernote...'
+    Rails.logger.debug '> Connecting evernote...'
     auth_token = omniauth_response['credentials']['token']
+
     evernote_account.update(auth_token: auth_token)
-    puts '> Evernote connected!'
+    Rails.logger.debug '> Evernote connected!'
+
     SyncEvernoteAccount.enqueue(evernote_account.id)
   end
 

@@ -6,9 +6,12 @@ class SyncEvernoteNote < Que::Job
       attrs     = { guid: guid, evernote_account: account }
       extractor = Extractor::Article::Evernote.find_or_create_by(attrs)
 
-      ExtractArticleFromEvernote.enqueue(extractor.id)
+      ActiveRecord::Base.transaction do
+        extractor.retrieve_note
 
-      destroy
+        Rails.logger.debug "> Note ##{guid} synced!..."
+        destroy
+      end
     end
   end
 end

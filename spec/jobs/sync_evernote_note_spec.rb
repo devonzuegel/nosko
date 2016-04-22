@@ -4,12 +4,13 @@ describe "Testing SyncEvernoteNote job" do
   let(:user) { create(:user, :evernote_connected) }
 
   before do
-    EvernoteAccount.any_instance.stub(:retrieve_each_stale_guid).and_yield('guid1')
+    Que.mode = :off
+    stub_const('EvernoteClient', FakeEvernoteClient)
   end
 
   after do
+    Que.mode = :sync
     SyncEvernoteNote.jobs.clear
-    ExtractArticleFromEvernote.jobs.clear
   end
 
   describe 'SyncEvernoteNote.enqueue' do
@@ -22,17 +23,9 @@ describe "Testing SyncEvernoteNote job" do
 
   describe 'Running a SyncEvernoteNote job' do
     let(:guid)    { Faker::Lorem.characters(20) }
-    let(:run_job) { -> { SyncEvernoteNote.run(guid, user.id) } }
+    let(:run_job) { -> { SyncEvernoteNote.run(guid, user.evernote_account.id) } }
 
     describe 'when the an extractor with the guid/account pair doesnt exist yet' do
-      it 'should enqueue ExtractArticleFromEvernote job' do
-        extraction_jobs = ExtractArticleFromEvernote.jobs
-        expect(run_job).to change { extraction_jobs.length }.by 1
-
-        job_args = extraction_jobs.last[:args]
-        expect(job_args).to eq([ Extractor::Article::Evernote.find_by(guid: guid).id ])
-      end
-
       it 'should create new extractor' do
         expect(run_job).to change { Extractor::Article::Evernote.count }.by 1
       end
@@ -43,16 +36,8 @@ describe "Testing SyncEvernoteNote job" do
         Extractor::Article::Evernote.create!(guid: guid, evernote_account: user.evernote_account)
       end
 
-      it 'should not create new extractor pair' do
+      it 'should not create new extractor' do
         expect(run_job).to change { Extractor::Article::Evernote.count }.by 0
-      end
-
-      it 'should enqueue ExtractArticleFromEvernote job if guid/account pair already exists' do
-        extraction_jobs = ExtractArticleFromEvernote.jobs
-        expect(run_job).to change { extraction_jobs.length }.by 1
-
-        job_args = extraction_jobs.last[:args]
-        expect(job_args).to eq([ Extractor::Article::Evernote.find_by(guid: guid).id ])
       end
 
       it 'raises an error when given a non-existent user id' do

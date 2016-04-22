@@ -6,7 +6,6 @@
 - [`Que` jobs](./app/jobs/) include:
     + [`SyncEvernoteAccount`](./app/jobs/sync_evernote_account.rb)
     + [`SyncEvernoteNote`](./app/jobs/sync_evernote_note.rb)
-    + [`ExtractArticleFromEvernote`](./app/jobs/extract_article_from_evernote.rb.rb))
 
 ## Models Structure ##
 
