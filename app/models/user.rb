@@ -6,8 +6,11 @@ class User < ActiveRecord::Base
   has_many :articles,   class_name: 'Finding::Article', dependent: :destroy
 
   # Followings
-  has_many :followers,  class_name: 'Following', foreign_key: 'leader_id'
-  has_many :followings, class_name: 'Following', foreign_key: 'follower_id'
+  has_many :active_relationships,  class_name: 'Following', foreign_key: 'follower_id', dependent: :destroy
+  has_many :leaders, through: :active_relationships,  source: :leader
+
+  has_many :passive_relationships, class_name: 'Following', foreign_key: 'leader_id',   dependent: :destroy
+  has_many :followers, through: :passive_relationships, source: :follower
 
   # Sharing preferences
   has_one :sharing, dependent: :destroy

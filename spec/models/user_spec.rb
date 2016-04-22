@@ -9,8 +9,8 @@ describe User do
     it { should respond_to(:sharing)          }
     it { should respond_to(:articles)         }
     it { should respond_to(:evernote_account) }
-    it { should respond_to(:followers) }
-    it { should respond_to(:followings) }
+    it { should respond_to(:followers)        }
+    it { should respond_to(:leaders)          }
 
     it "#name returns a string" do
       expect(@user.name).to match 'Test User'
@@ -29,8 +29,8 @@ describe User do
       expect(@user.followers).to match []
     end
 
-    it 'should initially not have any followings' do
-      expect(@user.followings).to match []
+    it 'should initially not have any leaders' do
+      expect(@user.leaders).to match []
     end
   end
 
@@ -84,25 +84,18 @@ describe User do
       @leader   = create(:user)
     end
 
-    it 'should have a single following' do
-      expect(@follower.followings).to match []
+    it 'should make that follower have a single leader' do
+      expect(@follower.leaders).to match []
       Following.create!(leader: @leader, follower: @follower)
       @follower = User.find(@follower.id)
-      expect(@follower.followings.map(&:leader_id)).to match [@leader.id]
-    end
-  end
-
-  describe 'being followed by another user' do
-    before(:each) do
-      @follower = create(:user)
-      @leader   = create(:user)
+      expect(@follower.leaders).to match [@leader]
     end
 
-    it 'should have a single following' do
+    it 'should make that leader have a single follower' do
       expect(@leader.followers).to match []
       Following.create!(leader: @leader, follower: @follower)
       @leader = User.find(@leader.id)
-      expect(@leader.followers.map(&:follower_id)).to match [@follower.id]
+      expect(@leader.followers).to match [@follower]
     end
   end
 end

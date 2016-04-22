@@ -8,5 +8,12 @@ p= "#{number_with_delimiter(n_words)} words this week"
 p= "#{number_with_delimiter(n_recs)} recommendations this month"
 p= "#{number_with_delimiter(n_books)} books this year"
 
-- @user.followers.each do |f|
-  pre= f.as_json
+h3 Following
+ul
+  - @user.leaders.each do |leader|
+    li: a(href=user_path(leader.id))= leader.name
+
+h3 Followers
+ul
+  - @user.followers.each do |follower|
+    li: a(href=user_path(follower.id))= follower.name
