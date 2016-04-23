@@ -16,7 +16,6 @@ class UsersController < ApplicationController
 
   def update
     @user = current_user
-    ap modified_params
     if @user.update(modified_params)
       render json: @user
     else
@@ -25,6 +24,12 @@ class UsersController < ApplicationController
   end
 
   def follow
+    @leader = User.find(params[:id])
+    Following.create!(leader: @leader, follower: current_user)
+    redirect_to :back, notice: "Followed user ##{@leader.id}"
+  end
+
+  def unfollow
     @leader = User.find(params[:id])
     Following.create!(leader: @leader, follower: current_user)
     redirect_to :back, notice: "Followed user ##{@leader.id}"
