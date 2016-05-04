@@ -44,18 +44,20 @@ class User < ActiveRecord::Base
     leaders.include? user
   end
 
-  def follow!(user)
-    Following.create!(leader: user, follower: self)
+  def follow!(leader)
+    matches = Following.where(leader: leader, follower: self)
+    return false if !matches.empty?
+
+    Following.create!(leader: leader, follower: self)
+    true
   end
 
   def unfollow!(leader)
     matches = Following.where(leader: leader, follower: self)
-    if matches.empty?
-      false
-    else
-      matches.first.destroy!
-      true
-    end
+    return false if matches.empty?
+
+    matches.first.destroy!
+    true
   end
 
   private
