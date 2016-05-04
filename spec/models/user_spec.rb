@@ -6,13 +6,15 @@ describe User do
     subject { @user }
 
     it { should respond_to(:name)             }
-    it { should respond_to(:sharing)          }
-    it { should respond_to(:articles)         }
-    it { should respond_to(:evernote_account) }
-    it { should respond_to(:followers)        }
-    it { should respond_to(:leaders)          }
+    it { should respond_to(:provider)         }
 
-    it "#name returns a string" do
+    it { should respond_to(:evernote_account) }
+    it { should respond_to(:articles)         }
+    it { should respond_to(:leaders)          }
+    it { should respond_to(:followers)        }
+    it { should respond_to(:sharing)          }
+
+    it '#name returns a string' do
       expect(@user.name).to match 'Test User'
     end
 
