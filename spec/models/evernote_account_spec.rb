@@ -18,14 +18,11 @@ RSpec.describe EvernoteAccount, type: :model do
     end
 
     it 'should have an .authorized scope that surfaces only connected accounts' do
-      n_unconnected = Faker::Number.between(1,10)
-      n_connected   = Faker::Number.between(1,10)
+      2.times { create(:user)                      }
+      5.times { create(:user, :evernote_connected) }
 
-      n_unconnected.times { create(:user)                      }
-      n_connected.times   { create(:user, :evernote_connected) }
-
-      expect(EvernoteAccount.count).to eq(n_unconnected + n_connected)
-      expect(EvernoteAccount.connected.count).to eq n_connected
+      expect(EvernoteAccount.count).to eq(7)
+      expect(EvernoteAccount.connected.count).to eq 5
     end
   end
 
