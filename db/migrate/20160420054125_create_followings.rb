@@ -3,7 +3,6 @@ class CreateFollowings < ActiveRecord::Migration
     create_table :followings do |t|
       t.references :leader,   references: :users, null: false, index: true
       t.references :follower, references: :users, null: false, index: true
-      t.timestamp  :unfollowed_at
 
       t.timestamps null: false
     end

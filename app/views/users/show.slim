@@ -3,8 +3,13 @@ hr
   .col-sm-3
     img src='http://artsci.ucla.edu/sites/artsci.ucla.edu.TEST/files//artsci_member.gif'
     b= @user.name
-    a href="/users/#{@user.id}/follow"
-      button.btn.btn-primary Follow
+    - if current_user != @user
+      - if current_user.follows? @user
+        a href="/users/#{@user.id}/unfollow"
+          button.btn.btn-primary Unfollow
+      - else
+        a href="/users/#{@user.id}/follow"
+          button.btn.btn-primary Follow
     = render partial: 'users/stats', locals: { article: @user }
   .col-sm-9
     - @user.articles.each do |article|

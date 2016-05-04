@@ -40,6 +40,10 @@ class User < ActiveRecord::Base
     evernote_account.connected?
   end
 
+  def follows?(user)
+    leaders.include? user
+  end
+
   private
 
   def create_default_associations

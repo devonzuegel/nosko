@@ -56,12 +56,22 @@ describe UsersController, :omniauth do
   end
 
   describe '/users/:id/follow' do
-    it 'should redirect to ...'
+    it 'should redirect to root if user not logged in' do
+      get :follow, id: @other_user
+      assert_response :redirect
+      assert_redirected_to root_url
+    end
+
     it 'ADD MORE SPECS'
   end
 
   describe '/users/:id/unfollow' do
-    it 'should redirect to ...'
+    it 'should redirect to root if user not logged in' do
+      get :unfollow, id: @other_user
+      assert_response :redirect
+      assert_redirected_to root_url
+    end
+
     it 'ADD MORE SPECS'
   end
 end

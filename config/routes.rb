@@ -3,7 +3,8 @@ Rails.application.routes.draw do
 
   resources :highlights, :findings, only: %i(create update destroy)
   resources :users do
-    get 'follow', on: :member
+    get 'follow',   on: :member
+    get 'unfollow', on: :member
   end
 
   get '/settings'                => 'users#settings'

@@ -137,7 +137,6 @@ CREATE TABLE followings (
     id integer NOT NULL,
     leader_id integer NOT NULL,
     follower_id integer NOT NULL,
-    unfollowed_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
