@@ -44,6 +44,20 @@ class User < ActiveRecord::Base
     leaders.include? user
   end
 
+  def follow!(user)
+    Following.create!(leader: user, follower: self)
+  end
+
+  def unfollow!(leader)
+    matches = Following.where(leader: leader, follower: self)
+    if matches.empty?
+      false
+    else
+      matches.first.destroy!
+      true
+    end
+  end
+
   private
 
   def create_default_associations

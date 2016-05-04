@@ -13,6 +13,8 @@ RSpec.describe EvernoteAccount, type: :model do
   end
 
   describe 'basic model' do
+    before { EvernoteAccount.destroy_all }
+
     it 'should require a user' do
       expect( build(:evernote_account, user: nil) ).to_not be_valid
     end

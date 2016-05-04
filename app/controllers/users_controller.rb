@@ -25,23 +25,26 @@ class UsersController < ApplicationController
 
   def follow
     @leader = User.find(params[:id])
-    matches = Following.where(leader: @leader, follower: current_user)
-    if matches.empty?
-      Following.create!(leader: @leader, follower: current_user)
-      redirect_to :back, notice: "Followed user ##{@leader.id}"
+
+    if @leader == current_user
+      redirect_to :back, alert: "You can't follow yourself, silly!"
     else
-      redirect_to :back, notice: "You're already following user ##{@leader.id}"
+      matches = Following.where(leader: @leader, follower: current_user)
+      if matches.empty?
+        Following.create!(leader: @leader, follower: current_user)
+        redirect_to :back, notice: "Followed user ##{@leader.id}"
+      else
+        redirect_to :back, alert: "You're already following user ##{@leader.id}"
+      end
     end
   end
 
   def unfollow
     @leader = User.find(params[:id])
-    matches = Following.where(leader: @leader, follower: current_user)
-    if matches.empty?
-      redirect_to :back, alert: "You weren't following user ##{@leader.id}"
-    else
-      matches.first.destroy!
+    if current_user.unfollow!(@leader)
       redirect_to :back, notice: "Unfollowed user ##{@leader.id}"
+    else
+      redirect_to :back, alert: "You weren't following user ##{@leader.id}"
     end
   end
 

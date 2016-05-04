@@ -78,24 +78,32 @@ describe User do
     end
   end
 
-  describe 'following another user' do
+  describe '(un)following another user' do
     before(:each) do
       @follower = create(:user)
       @leader   = create(:user)
     end
 
-    it 'should make that follower have a single leader' do
+    it 'should make sure that follower has a single leader & leader has a single follower' do
       expect(@follower.leaders).to match []
-      Following.create!(leader: @leader, follower: @follower)
-      @follower = User.find(@follower.id)
+      expect(@leader.followers).to match []
+
+      @follower.follow!(@leader)
+      @follower.reload
+      @leader.reload
+
       expect(@follower.leaders).to match [@leader]
+      expect(@leader.followers).to match [@follower]
     end
 
-    it 'should make that leader have a single follower' do
+    it 'should make sure that after unfollowing, the follower has 0 leaders & the leader has 0 followers' do
+      @follower.follow!(@leader)
+      @follower.reload
+
+      @follower.unfollow!(@leader)
+      @follower.reload
+      expect(@follower.leaders).to match []
       expect(@leader.followers).to match []
-      Following.create!(leader: @leader, follower: @follower)
-      @leader = User.find(@leader.id)
-      expect(@leader.followers).to match [@follower]
     end
   end
 end
