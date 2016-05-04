@@ -5,10 +5,10 @@ hr
     b= @user.name
     - if current_user != @user
       - if current_user.follows? @user
-        a href="/users/#{@user.id}/unfollow"
+        a href="/unfollow/#{@user.id}"
           button.btn.btn-primary Unfollow
       - else
-        a href="/users/#{@user.id}/follow"
+        a href="/follow/#{@user.id}"
           button.btn.btn-primary Follow
     = render partial: 'users/stats', locals: { article: @user }
   .col-sm-9
