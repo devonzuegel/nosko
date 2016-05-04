@@ -33,4 +33,7 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    def flash_errors(obj)
+      obj.errors.full_messages.join("\n")
+    end
 end

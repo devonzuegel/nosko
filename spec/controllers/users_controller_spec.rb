@@ -65,7 +65,7 @@ describe UsersController, :omniauth do
     end
   end
 
-  describe 'PUT /users/:id/follow' do
+  describe 'PUT /users/:id/follow', :focus do
     before(:each) do
       Following.destroy_all
       @user.reload

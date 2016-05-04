@@ -26,12 +26,10 @@ class UsersController < ApplicationController
   def follow
     @leader = User.find(params[:id])
 
-    if @leader == current_user
-      redirect_to :back, alert: "You can't follow yourself, silly!"
-    elsif current_user.follow!(@leader)
+    if current_user.follow!(@leader)
       redirect_to :back, notice: "Followed user ##{@leader.id}"
     else
-      redirect_to :back, alert: "You're already following user ##{@leader.id}"
+      redirect_to :back, alert: flash_errors(current_user)
     end
   end
 
@@ -41,7 +39,7 @@ class UsersController < ApplicationController
     if current_user.unfollow!(@leader)
       redirect_to :back, notice: "Unfollowed user ##{@leader.id}"
     else
-      redirect_to :back, alert: "You weren't following user ##{@leader.id}"
+      redirect_to :back, alert: flash_errors(current_user)
     end
   end
 

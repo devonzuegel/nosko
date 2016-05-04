@@ -45,8 +45,16 @@ class User < ActiveRecord::Base
   end
 
   def follow!(leader)
+    if leader == self
+      errors[:base] << "You can't follow yourself, silly!"
+      return false
+    end
+
     matches = Following.where(leader: leader, follower: self)
-    return false if !matches.empty?
+    if !matches.empty?
+      errors[:base] << "You're already following user ##{leader.id}"
+      return false
+    end
 
     Following.create!(leader: leader, follower: self)
     true
@@ -54,7 +62,11 @@ class User < ActiveRecord::Base
 
   def unfollow!(leader)
     matches = Following.where(leader: leader, follower: self)
-    return false if matches.empty?
+
+    if matches.empty?
+      errors[:base] << "You weren't following user ##{@leader.id}"
+      return false
+    end
 
     matches.first.destroy!
     true
