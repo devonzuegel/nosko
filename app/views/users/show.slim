@@ -9,7 +9,7 @@ hr
           button.btn.btn-primary Unfollow
       - else
         a href="/follow/#{@user.id}"
-          button.btn.btn-primary Follow
+        = react_component 'FollowUnfollowButton', { user: @user.attributes }
     = render partial: 'users/stats', locals: { article: @user }
   .col-sm-9
     - @user.articles.each do |article|
