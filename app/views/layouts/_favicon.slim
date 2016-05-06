@@ -1,0 +1,8 @@
+- if Rails.env.development?
+  = favicon_link_tag 'owl_favicon_2-green.ico'
+
+- if Rails.env.staging?
+  = favicon_link_tag 'owl_favicon_2-black.ico'
+
+- if Rails.env.production?
+  = favicon_link_tag 'owl_favicon_2-dark-grey.ico'
