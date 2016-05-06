@@ -15,11 +15,9 @@ class FollowingsController < ApplicationController
     @leader = User.find(params[:id])
 
     if current_user.unfollow!(@leader)
-      # render json: "Unfollowed user ##{@leader.id}"
-      redirect_to :back, notice: "Unfollowed user ##{@leader.id}"
+      head :ok
     else
-      # render json: flash_errors(current_user)
-      redirect_to :back, alert: flash_errors(current_user)
+      render json: current_user.errors, status: :unprocessable_entity
     end
   end
 end

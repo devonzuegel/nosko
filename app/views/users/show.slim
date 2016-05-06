@@ -3,13 +3,11 @@ hr
   .col-sm-3
     img src='http://artsci.ucla.edu/sites/artsci.ucla.edu.TEST/files//artsci_member.gif'
     b= @user.name
+
     - if current_user != @user
-      - if current_user.follows? @user
-        a href="/unfollow/#{@user.id}"
-          button.btn.btn-primary Unfollow
-      - else
-        a href="/follow/#{@user.id}"
-        = react_component 'FollowUnfollowButton', { user: @user.attributes }
+      = react_component 'FollowUnfollowButton', user:      @user.attributes,
+                                                following: current_user.follows?(@user)
+
     = render partial: 'users/stats', locals: { article: @user }
   .col-sm-9
     - @user.articles.each do |article|
