@@ -19,6 +19,7 @@ gem 'sanitize',                '4.0.1'
 gem 'react-rails',             '~> 1.0'
 gem 'momentjs-rails',          '2.11.0'
 gem 'que',                     '0.11.4'
+gem 'draper',                  '~> 1.3'
 
 # Omniauth
 gem 'oauth',                   '0.4.7'
