@@ -2,11 +2,13 @@ hr
 .row
   .col-sm-3
     img src='http://artsci.ucla.edu/sites/artsci.ucla.edu.TEST/files//artsci_member.gif'
+
     b= @user.name
 
-    - if current_user != @user
-      = react_component 'FollowUnfollowButton', user:      @user.attributes,
-                                                following: current_user.follows?(@user)
+    = react_component 'UserStats', user:          @user.attributes,
+                                   followers:     @user.followers,
+                                   current_user:  current_user,
+                                   following:     current_user.follows?(@user)
 
     = render partial: 'users/stats', locals: { article: @user }
   .col-sm-9

@@ -1,7 +1,8 @@
 @FollowUnfollowButton = React.createClass
   propTypes:
-    user:      React.PropTypes.object.isRequired,
-    following: React.PropTypes.bool.isRequired
+    user:         React.PropTypes.object.isRequired,
+    following:    React.PropTypes.bool.isRequired,
+    propogation:  React.PropTypes.func
 
   getInitialState: ->
     following:  @props.following
@@ -10,6 +11,7 @@
 
   handleClick: (e) ->
     e.preventDefault()
+    if @props.propogation then @props.propogation()
     $.get @url(), success: (following) =>
       @setState(following: !@state.following)
 
