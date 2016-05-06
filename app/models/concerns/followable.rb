@@ -10,7 +10,7 @@ module Followable
   end
 
   def follows?(user)
-    leaders.include? user
+    leaders.map(&:id).include? user.id
   end
 
   def follow!(leader)

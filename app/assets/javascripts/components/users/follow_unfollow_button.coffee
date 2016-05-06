@@ -1,8 +1,10 @@
 @FollowUnfollowButton = React.createClass
   propTypes:
-    user:         React.PropTypes.object.isRequired,
     following:    React.PropTypes.bool.isRequired,
-    propogation:  React.PropTypes.func
+    propogation:  React.PropTypes.func,
+    user:         React.PropTypes.shape({
+      id: React.PropTypes.number.isRequired,
+    }).isRequired
 
   getInitialState: ->
     following:  @props.following
