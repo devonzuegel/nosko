@@ -7,6 +7,7 @@
 
   getInitialState: ->
     following:  @props.following
+    followers:  @props.followers
 
   update_followers: ->
     alert()
@@ -16,7 +17,9 @@
   getNumBooks: -> 333
 
   render: ->
-    # console.log @props.followers
+    console.log @props.followers
+    console.log @props.current_user
+    console.log @props.user
     React.DOM.div null,
       if @props.user.id != @props.current_user.id
         React.createElement FollowUnfollowButton,
@@ -27,3 +30,5 @@
         React.DOM.p null, "#{@getNumWords()} words this week"
         React.DOM.p null, "#{@getNumRecs()} recommendations this month"
         React.DOM.p null, "#{@getNumBooks()} books this year"
+      React.createElement FollowersList,
+        followers: @state.followers

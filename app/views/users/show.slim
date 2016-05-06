@@ -2,19 +2,16 @@ hr
 .row
   .col-sm-3
     img src='http://artsci.ucla.edu/sites/artsci.ucla.edu.TEST/files//artsci_member.gif'
-
+    b= @user.name
     ul
-      li= @user.name
+      li= @user.href
       li= @user.followers
-      li= current_user
-      li= current_user.follows?(@user)
-
-    = react_component 'UserStats', user:          @user.attributes,
+    = react_component 'UserStats', user:          @user.as_prop,
                                    followers:     @user.followers,
                                    current_user:  current_user.decorate,
                                    following:     current_user.follows?(@user)
 
   /   = render partial: 'users/stats', locals: { article: @user }
-  / .col-sm-9
-  /   - @user.articles.each do |article|
-  /     = render partial: 'articles/article', locals: { article: article }
+  .col-sm-9
+    - @user.articles.each do |article|
+      = render partial: 'articles/article', locals: { article: article }
