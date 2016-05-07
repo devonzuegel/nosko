@@ -1,4 +1,4 @@
-@UserStats = React.createClass
+@UserSidebar = React.createClass
   propTypes:
     following:    React.PropTypes.bool.isRequired,
     current_user: React.PropTypes.UserFacade,
@@ -10,16 +10,17 @@
     followers:  @props.followers
 
   update_followers: ->
-    alert()
+    following = !@state.following
+    followers = if following then @state.followers.concat([ @props.current_user ]) else @state.followers.filter ((f) -> f.id != @props.current_user.id).bind(this)
+    @setState
+      following: following
+      followers: followers
 
-  getNumWords: -> 111
-  getNumRecs:  -> 222
-  getNumBooks: -> 333
+  num_words: -> 111
+  num_recs:  -> 222
+  num_books: -> 333
 
   render: ->
-    console.log @props.followers
-    console.log @props.current_user
-    console.log @props.user
     React.DOM.div null,
       if @props.user.id != @props.current_user.id
         React.createElement FollowUnfollowButton,
@@ -27,8 +28,8 @@
           following:    @state.following
           propogation:  @update_followers
       React.DOM.div id: 'stats',
-        React.DOM.p null, "#{@getNumWords()} words this week"
-        React.DOM.p null, "#{@getNumRecs()} recommendations this month"
-        React.DOM.p null, "#{@getNumBooks()} books this year"
+        React.DOM.p null, "#{@num_words()} words this week"
+        React.DOM.p null, "#{@num_recs()} recommendations this month"
+        React.DOM.p null, "#{@num_books()} books this year"
       React.createElement FollowersList,
         followers: @state.followers

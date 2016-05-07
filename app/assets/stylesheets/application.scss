@@ -14,8 +14,7 @@
  *= require_self
  */
 
-$green: #27d096;
-$dark-green: darken($green, 6%);
+@import 'variables';
 
 .alert {
   position: relative;
@@ -41,6 +40,11 @@ li a {
 
 .container {
   padding: 0 40px;
+
+  // &.body {
+  //   margin-top: 30px;
+  // }
+
   &.small {
     max-width: 600px;
   }
