@@ -2,8 +2,10 @@ module Permalinkable
   extend ActiveSupport::Concern
 
   included do
-    before_create :generate_permalink
     belongs_to :permalink
+    validates_presence_of :permalink
+
+    after_initialize :generate_permalink
   end
 
   def generate_permalink

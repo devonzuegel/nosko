@@ -7,6 +7,10 @@ RSpec.describe Finding::Article, type: :model do
       expect { create(:article) }.to change { Finding::Article.count }.by 1
     end
 
+    it 'should generate a permalink on creation' do
+      expect { create(:article) }.to change { Permalink.count }.by 1
+    end
+
     it 'requires expected required fields' do
       expect(Finding::Article.required_fields).to match_array %i(title content user_id)
       Finding::Article.required_fields.each do |field|
@@ -27,11 +31,20 @@ RSpec.describe Finding::Article, type: :model do
       article.trash!
       expect(article.trashed?).to be true
     end
+  end
 
-    it 'should generate a permalink on creation' do
-      expect { create(:article) }.to change { Permalink.count }.by 1
+  describe 'generating permalink' do
+    it 'generate_permalink should not create a new permalink if the Article already has one' do
+      a = create(:article)
+      expect { a.generate_permalink }.to change { Permalink.count }.by 0
     end
 
+    it 'generate_permalink! should create a new permalink even if the Article already has one' do
+      a = create(:article)
+      expect { a.generate_permalink! }.to change { Permalink.count }.by 1
+    end
+
+    it 'generate_permalink! should update the article\'s permalink and mark the old one as trashed'
   end
 
   describe 'Retrieving articles' do
