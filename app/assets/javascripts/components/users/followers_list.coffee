@@ -8,9 +8,3 @@
       React.DOM.div className: 'list-group',
         @props.followers.map (f) ->
           React.DOM.a href: f.href, type: 'button', className: 'list-group-item', key: f.id, f.name
-
-
-      # React.DOM.ul null,
-      #   @props.followers.map (f) ->
-      #     React.DOM.li key: f.id,
-      #       React.DOM.a href: f.href, f.name
