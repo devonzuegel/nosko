@@ -9,6 +9,7 @@ Bundler.require(*Rails.groups)
 module Nosko
   class Application < Rails::Application
     config.assets.paths << Rails.root.join(*%w(app assets stylesheets partials))
+    config.assets.paths << Rails.root.join(*%w(app assets stylesheets fonts))
 
     config.autoload_paths += %W(
       #{config.root}/app/controllers/concerns/**/
