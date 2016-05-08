@@ -34,17 +34,23 @@ RSpec.describe Finding::Article, type: :model do
   end
 
   describe 'generating permalink' do
+    before(:all) do
+      @article = create(:article)
+    end
+
     it 'generate_permalink should not create a new permalink if the Article already has one' do
-      a = create(:article)
-      expect { a.generate_permalink }.to change { Permalink.count }.by 0
+      expect { @article.generate_permalink }.to change { Permalink.count }.by 0
     end
 
     it 'generate_permalink! should create a new permalink even if the Article already has one' do
-      a = create(:article)
-      expect { a.generate_permalink! }.to change { Permalink.count }.by 1
+      expect { @article.generate_permalink! }.to change { Permalink.count }.by 1
     end
 
-    it 'generate_permalink! should update the article\'s permalink and mark the old one as trashed'
+    it 'generate_permalink! should update the article\'s permalink and mark the old one as trashed' do
+      old_permalink = @article.permalink
+      @article.generate_permalink!
+      expect(@article.permalink.id).to_not eq old_permalink.id
+    end
   end
 
   describe 'Retrieving articles' do

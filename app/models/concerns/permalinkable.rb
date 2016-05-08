@@ -9,7 +9,7 @@ module Permalinkable
   end
 
   def generate_permalink
-    return unless permalink_id.nil?
+    return unless permalink.nil?
     generate_permalink!
   end
 
