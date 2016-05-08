@@ -33,7 +33,7 @@ module Followable
     matches = Following.where(leader: leader, follower: self)
 
     if matches.empty?
-      errors[:base] << "You weren't following user ##{@leader.id}"
+      errors[:base] << "You weren't following user ##{leader.id}"
       return false
     end
 

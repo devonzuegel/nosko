@@ -1,4 +1,4 @@
-class FollowingsController < ApplicationController
+class FollowingsController < APIController
   before_action :authenticate_user!
 
   def follow
@@ -7,7 +7,7 @@ class FollowingsController < ApplicationController
     if current_user.follow!(@leader)
       head :ok
     else
-      render json: current_user.errors, status: :unprocessable_entity
+      render json: { errors: current_user.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -17,7 +17,7 @@ class FollowingsController < ApplicationController
     if current_user.unfollow!(@leader)
       head :ok
     else
-      render json: current_user.errors, status: :unprocessable_entity
+      render json: { errors: current_user.errors.full_messages }, status: :unprocessable_entity
     end
   end
 end

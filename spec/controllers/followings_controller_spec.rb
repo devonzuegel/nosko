@@ -4,17 +4,16 @@ describe FollowingsController, :omniauth do
     @other_user = create(:user)
   end
 
-  describe 'PUT /follow/:id', :focus do
+  describe 'PUT /follow/:id'  do
     before(:each) do
       Following.destroy_all
       @user.reload
       @other_user.reload
     end
 
-    it 'should redirect to root if user not logged in' do
+    it 'should return an error if user not logged in' do
       get :follow, id: @other_user
-      assert_response :redirect
-      assert_redirected_to root_url
+      assert_response :unauthorized
     end
 
     it 'should allow you to follow another person' do
@@ -23,11 +22,8 @@ describe FollowingsController, :omniauth do
       expect(@user.leaders).to         eq []
       expect(@other_user.followers).to eq []
 
-      request.env['HTTP_REFERER'] = root_url  # To test `redirect_to :back`
       get :follow, id: @other_user
-
-      assert_redirected_to root_url
-      expect(flash[:notice]).to eq "Followed user ##{@other_user.id}"
+      assert_response :success
 
       @user.reload
       @other_user.reload
@@ -42,11 +38,9 @@ describe FollowingsController, :omniauth do
       expect(@user.leaders).to   eq []
       expect(@user.followers).to eq []
 
-      request.env['HTTP_REFERER'] = root_url  # To test `redirect_to :back`
       get :follow, id: @user
-
-      assert_redirected_to root_url
-      expect(flash[:alert]).to eq "You can't follow yourself, silly!"
+      assert_response :unprocessable_entity
+      expect(JSON.parse(response.body)).to eq({ 'errors' => ["You can't follow yourself, silly!"] })
 
       @user.reload
 
@@ -61,11 +55,9 @@ describe FollowingsController, :omniauth do
       expect(@user.leaders).to         match [@other_user]
       expect(@other_user.followers).to match [@user]
 
-      request.env['HTTP_REFERER'] = root_url  # To test `redirect_to :back`
       get :follow, id: @other_user
-
-      assert_redirected_to root_url
-      expect(flash[:alert]).to eq "You're already following user ##{@other_user.id}"
+      assert_response :unprocessable_entity
+      expect(JSON.parse(response.body)).to eq({ 'errors' => ["You're already following user ##{@other_user.id}"] })
 
       @user.reload
 
@@ -81,10 +73,9 @@ describe FollowingsController, :omniauth do
       @other_user.reload
     end
 
-    it 'should redirect to root if user not logged in' do
+    it 'should return an error if user not logged in' do
       get :unfollow, id: @other_user
-      assert_response :redirect
-      assert_redirected_to root_url
+      assert_response :unauthorized
     end
 
     it 'should allow you to unfollow a person if youre already following them' do
@@ -94,11 +85,8 @@ describe FollowingsController, :omniauth do
       expect(@user.leaders).to         eq [@other_user]
       expect(@other_user.followers).to eq [@user]
 
-      request.env['HTTP_REFERER'] = root_url  # To test `redirect_to :back`
       get :unfollow, id: @other_user
-
-      assert_redirected_to root_url
-      expect(flash[:notice]).to eq "Unfollowed user ##{@other_user.id}"
+      assert_response :success
 
       @user.reload
       @other_user.reload
@@ -113,11 +101,9 @@ describe FollowingsController, :omniauth do
       expect(@user.leaders).to         eq []
       expect(@other_user.followers).to eq []
 
-      request.env['HTTP_REFERER'] = root_url  # To test `redirect_to :back`
       get :unfollow, id: @other_user
-
-      assert_redirected_to root_url
-      expect(flash[:alert]).to eq "You weren't following user ##{@other_user.id}"
+      assert_response :unprocessable_entity
+      expect(JSON.parse(response.body)).to eq({ 'errors' => ["You weren't following user ##{@other_user.id}"] })
 
       @user.reload
       @other_user.reload
