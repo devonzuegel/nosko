@@ -14,7 +14,9 @@
  *= require_self
  */
 
-@import 'variables';
+@import 'font-awesome-sprockets';
+@import 'font-awesome';
+@import 'all_partials';
 
 .alert {
   position: relative;
@@ -22,28 +24,12 @@
   width: 97%;
 }
 
-* {
-  font-family: 'Karla', sans-serif;
-}
-
-pre, code {
-  font-family: 'Inconsolata XL', monospace;
-}
-
-li a {
-  text-decoration: none !important;
-}
-
-.larger-font {
-  font-size: 1.2em;
-}
-
 .container {
   padding: 0 40px;
 
-  // &.body {
-  //   margin-top: 30px;
-  // }
+  &.body {
+    margin-top: 30px;
+  }
 
   &.small {
     max-width: 600px;

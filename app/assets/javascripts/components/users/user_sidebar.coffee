@@ -10,11 +10,15 @@
     followers:  @props.followers
 
   update_followers: ->
-    following = !@state.following
-    followers = if following then @state.followers.concat([ @props.current_user ]) else @state.followers.filter ((f) -> f.id != @props.current_user.id).bind(this)
     @setState
-      following: following
-      followers: followers
+      following: !@state.following
+      followers: @followers()
+
+  followers: ->
+    if !@state.following
+      @state.followers.concat([ @props.current_user ])
+    else
+      @state.followers.filter ((f) -> f.id != @props.current_user.id).bind(this)
 
   num_words: -> 111
   num_recs:  -> 222
@@ -28,6 +32,8 @@
           following:    @state.following
           propogation:  @update_followers
       React.DOM.div id: 'stats',
+        # React.DOM.i className:'fa fa-spinner fa-spin',
+        #     'asldkfj'
         React.DOM.p null, "#{@num_words()} words this week"
         React.DOM.p null, "#{@num_recs()} recommendations this month"
         React.DOM.p null, "#{@num_books()} books this year"

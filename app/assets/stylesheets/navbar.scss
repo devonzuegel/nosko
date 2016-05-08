@@ -1,5 +1,26 @@
+@import 'variables';
+
 .navbar-nav {
-  li a {
-    font-size: 1.1em;
+  li a, .icon-text {
+    font-family:   'Karla', sans-serif !important;
+    display:       inline-block;
+  }
+
+  li {
+    height:        $nav-height;
+
+    a {
+      font-size:     1em;
+    }
+  }
+
+  .icon-text {
+    float:         left;
+    font-size:     1em;
+    margin-left:   7px;
+  }
+
+  .ion-icon {
+    float:         left;
   }
 }
