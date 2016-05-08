@@ -7,14 +7,23 @@ nav.navbar.navbar-inverse.navbar-fixed-top
         span.icon-bar
         span.icon-bar
     .collapse.navbar-collapse
-        ul.nav.navbar-nav.pull-left
-          li= link_to 'Home', root_path, class: 'navbar-brand'
-          - if user_signed_in?
-            li= link_to 'Notifications', '#'
-            li= link_to 'Queue',         '#'
-        ul.nav.navbar-nav.pull-right
-          - if user_signed_in?
-            li= icon_link('gear-a',  settings_path, 'Settings')
-            li= icon_link('log-out', signout_path,  'Sign out')
-          - else
-            li= icon_link('log-in',  signin_path,  'Sign in')
+      ul.nav.navbar-nav.navbar-left
+        li= link_to 'Home', root_path, class: 'navbar-brand'
+        - if user_signed_in?
+          li= link_to 'Notifications', '#'
+          li= link_to 'Queue',         '#'
+      ul.nav.navbar-nav.navbar-right
+        - if user_signed_in?
+          li.dropdown.inverse
+            a#user-menu-dropdown.dropdown-toggle aria-expanded='true' aria-haspopup='true' data-toggle='dropdown' href='#'
+              .icon-to-right
+                = content_tag(:div, nil, :class => "ion-icon ion-android-arrow-dropdown")
+                = content_tag(:div, current_user.name, :class => 'icon-text')
+            ul.dropdown-menu aria-labelledby='user-menu-dropdown'
+              li: a href="#{user_path(current_user)}"  My profile
+              li: a href="#{settings_path}"            Settings
+              li.divider role="separator"
+              li: a href="#{signout_path}"             Sign out
+
+        - else
+          li= link_to 'Sign in', signin_path

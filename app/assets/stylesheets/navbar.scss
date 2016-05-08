@@ -1,6 +1,9 @@
 @import 'variables';
 
-.navbar-nav {
+$navbar-background: #222;
+
+.navbar.navbar-inverse {
+
   li a, .icon-text {
     font-family:   'Karla', sans-serif !important;
     display:       inline-block;
@@ -14,13 +17,33 @@
     }
   }
 
-  .icon-text {
-    float:         left;
-    font-size:     1em;
-    margin-left:   7px;
-  }
+  .dropdown.inverse {
+    .dropdown-menu {
+      padding:          0;
+      background-color: $navbar-background;
+      border-color:     #080808;
+      right:            0;
+      left:             0;
 
-  .ion-icon {
-    float:         left;
+      & > li {
+        height: auto;
+        a {
+          width:   100%;
+          color:   #999;
+          padding: 10px 20px;
+
+          &:hover, &:focus, &:active {
+            color:            #fff;
+            background-color: #000;
+          }
+        }
+      }
+
+      .divider {
+        background-color: #000;
+        height:           1px;
+        margin:           0;
+      }
+    }
   }
 }

@@ -14,8 +14,6 @@
  *= require_self
  */
 
-@import 'font-awesome-sprockets';
-@import 'font-awesome';
 @import 'all_partials';
 
 .alert {
@@ -39,7 +37,7 @@
 @media (max-width: 768px) {
   .navbar-inverse {
     border: none;
-    background-color: rgba(0,0,0,0.3);
+    // background-color: rgba(0,0,0,0.3);
   }
 
   .navbar-collapse {
