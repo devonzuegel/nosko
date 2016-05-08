@@ -1,5 +1,6 @@
 describe UsersController, :omniauth do
   before(:all) do
+    User.destroy_all
     @user       = create(:user)
     @other_user = create(:user)
   end
@@ -15,7 +16,7 @@ describe UsersController, :omniauth do
       session[:user_id] = @user.id
       get :index
       assert_response :success
-      expect(assigns(:users)).to eq [ @user, @other_user ]
+      expect(assigns(:users).map(&:id)).to eq [ @user, @other_user ].map(&:id)
     end
   end
 
