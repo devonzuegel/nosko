@@ -183,6 +183,9 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-byebug (3.3.0)
+      byebug (~> 8.0)
+      pry (~> 0.10)
     pry-rails (0.3.4)
       pry (>= 0.9.10)
     que (0.11.4)
@@ -356,6 +359,7 @@ DEPENDENCIES
   omniauth-evernote (= 1.2.1)
   omniauth-twitter (= 1.2.1)
   pg (= 0.18.4)
+  pry-byebug
   pry-rails (= 0.3.4)
   que (= 0.11.4)
   que-testing (= 0.1.1)

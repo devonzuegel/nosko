@@ -42,6 +42,7 @@ group :development, :test do
   gem 'faker',                 '1.6.1'
   gem 'rspec-rails',           '3.4.0'
   gem 'pry-rails',             '0.3.4'
+  gem 'pry-byebug'
   gem 'awesome_print',         '1.6.1'
   gem 'colorize',              '0.7.7'
   gem 'fuubar',                '2.0.0'
