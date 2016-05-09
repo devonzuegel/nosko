@@ -54,7 +54,21 @@ RSpec.describe Finding::Article, type: :model do
   end
 
   describe 'Retrieving articles' do
-    it 'should retrieve only live (untrashed) articles'
-    it 'should retrieve only trashed articles'
+    before(:all) do
+      create(:article)
+      create(:article, :trashed)
+    end
+
+    it 'should retrieve only live (untrashed) articles' do
+      active = Finding::Article.active
+      expect(active.count).to eq 1
+      active.each { |a| expect(a.trashed?).to eq false }
+    end
+
+    it 'should retrieve only trashed articles' do
+      trashed = Finding::Article.trashed
+      expect(trashed.count).to eq 1
+      trashed.each { |a| expect(a.trashed?).to eq true }
+    end
   end
 end

@@ -6,7 +6,10 @@ module Permalinkable
     validates_presence_of :permalink
 
     after_initialize :generate_permalink
+    scope :active,  -> { all.select { |p| !p.trashed? } }
+    scope :trashed, -> { all.select { |p|  p.trashed? } }
   end
+
 
   def generate_permalink
     return unless permalink.nil?
