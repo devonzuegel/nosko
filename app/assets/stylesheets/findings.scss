@@ -1,24 +1,59 @@
 @import 'all_partials';
 
-$article-height: 190px;
+$card-color:       white;
+$card-hover-color: white;
+$article-height:   190px;
+$fade-height:      55px;
+$fade-top:         140px;
 
+.card {
+  @extend .well;
+  background-color: $card-color;
+  border:           $default-border;
+  &:hover {
+    background-color:  $card-hover-color;
+    // border:            1px solid $light-grey;
+    box-shadow:        $lighter-box-shadow;
+  }
+  .markdown-body {
+    h1:first-child {
+      margin-top:   0;
+    }
+  }
+}
+#filled-div {
+  position: relative;
+  a#fill-div {
+    position:         absolute;
+    width:            100%;
+    height:           100%;
+    top:              0;
+    left:             0;
+    text-decoration:  none;
+    z-index:          10;
+    background-color: white;
+    opacity:          0;
+    filter:           alpha(opacity = 1);
+  }
+}
 .date {
   text-transform: uppercase;
   color:          $light-grey;
 }
-
 #article-body {
   position:   relative;
   overflow:   hidden;
   max-height: $article-height;
-
   &:after {
-    content:    "";
+    content:    '';
     position:   absolute;
-    top:        110px;
     left:       0;
-    height:     90px;
     width:      100%;
-    background: linear-gradient(rgba(0,0,0,0), #f5f5f5);
+    height:     $fade-height;
+    top:        $fade-top;
+    background: linear-gradient(rgba(0,0,0,0), $card-color);
+    &:hover {
+      background: linear-gradient(rgba(0,0,0,0), $card-hover-color);
+    }
   }
 }

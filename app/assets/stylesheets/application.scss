@@ -16,29 +16,18 @@
 
 @import 'all_partials';
 
+main {
+  background-color: $background-color;
+  padding-top: 10px;
+  margin: 0;
+}
+
 .container {
   padding: 0 40px;
-
-  &.body {
-    margin-top: 30px;
-  }
+  margin: 0 auto;
 
   &.small {
     max-width: 600px;
-  }
-}
-
-.tint {
-  position: relative;
-  &:before {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba($lightest-grey,0.3);
   }
 }
 
