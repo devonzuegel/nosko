@@ -66,7 +66,7 @@ describe FollowingsController, :omniauth do
     end
   end
 
-  describe 'PUT /unfollow/:id' do
+  describe 'GET /unfollow/:id' do
     before(:each) do
       Following.destroy_all
       @user.reload

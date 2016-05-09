@@ -4,9 +4,14 @@ Rails.application.routes.draw do
   resources :highlights, :findings, only: %i(create update destroy)
   resources :users
 
+  # Findings
+  get '/finding/:permalink'      => 'findings#show'
+
+  # Follow / unfollow
   get '/follow/:id'              => 'followings#follow'
   get '/unfollow/:id'            => 'followings#unfollow'
 
+  # User settings
   get '/settings'                => 'users#settings'
 
   # OAuth failure (for all strategies)
