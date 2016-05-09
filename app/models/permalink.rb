@@ -19,7 +19,7 @@ class Permalink < ActiveRecord::Base
 
   def unique_path
     while true
-      random_str = SecureRandom.urlsafe_base64
+      random_str = SecureRandom.hex
       return random_str if Permalink.where(path: random_str).empty?
     end
   end

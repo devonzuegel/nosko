@@ -12,12 +12,11 @@ html
     = csrf_meta_tags
     == render 'layouts/favicon'
 
-  body
-    .wrapper
-      header
-        == render 'layouts/navigation'
-      main role='main'
-        == render 'layouts/messages'
-        .container.body= yield
-        .push
-    == render 'layouts/footer'
+  body: .wrapper
+    header
+      == render 'layouts/navigation'
+    main role='main'
+      == render 'layouts/messages'
+      .container.body= yield
+      / .push
+    / == render 'layouts/footer'

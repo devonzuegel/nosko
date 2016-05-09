@@ -12,6 +12,10 @@ module Finding
       before_save :clean_url, :save_user
     end
 
+    def to_param
+      permalink.path
+    end
+
     def save_user
       user.save!
     end

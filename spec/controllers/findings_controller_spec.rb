@@ -8,11 +8,11 @@ describe FindingsController do
   end
 
   describe 'GET /finding/:permalink => #show' do
-    describe 'when not signed in' do
+    describe 'when not signed in', :focus do
       it 'should surface a public finding' do
         get :show, permalink: @article.permalink.path
-        ap response.status
         ap JSON.parse(response.body)
+        assert_response :success
       end
 
       it 'should not surface a person\'s friend-only finding'

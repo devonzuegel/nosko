@@ -55,6 +55,7 @@ RSpec.describe Finding::Article, type: :model do
 
   describe 'Retrieving articles' do
     before(:all) do
+      Finding::Article.destroy_all
       create(:article)
       create(:article, :trashed)
     end

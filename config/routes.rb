@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   root to: 'visitors#index'
 
-  resources :highlights, :findings, only: %i(create update destroy)
+  resources :highlights, only: %i(create update destroy)
   resources :users
 
   # Findings
-  get '/finding/:permalink'      => 'findings#show'
+  get '/finding/:permalink'      => 'findings#show',  as: :finding
 
   # Follow / unfollow
   get '/follow/:id'              => 'followings#follow'
