@@ -1,4 +1,4 @@
-describe FollowingsController, :omniauth do
+describe FollowingsController do
   before(:all) do
     @user       = create(:user)
     @other_user = create(:user)

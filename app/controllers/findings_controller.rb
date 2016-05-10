@@ -1,13 +1,17 @@
 class FindingsController < ApplicationController
   def show
     permalink      = Permalink.find_by_path(params[:permalink])
-    @article       = Finding::Article.find_by(permalink: permalink)
-    @other_finding = nil
-
-    @finding = @article || @other_finding
-    respond_to do |format|
-      format.html { render_404 if @finding.nil? }
-      format.json { render json: @finding, status: :ok }
+    if permalink.nil?
+      respond_to do |format|
+        format.html { render_404 }
+        format.json { head :not_found }
+      end
+    else
+      @article = Finding::Article.find_by(permalink: permalink).decorate
+      respond_to do |format|
+        format.html
+        format.json { render json: @article.as_prop, status: :ok }
+      end
     end
   end
 end
