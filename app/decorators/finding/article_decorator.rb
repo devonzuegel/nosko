@@ -1,17 +1,19 @@
 class Finding::ArticleDecorator < Draper::Decorator
-  delegate *%i(id content title source_url updated_at)
+  delegate_all
 
   def href
-    h.finding_path(object)
+    path = h.finding_path(object)[1..-1]
+    "#{h.root_url}#{path}"
   end
 
   def as_prop
     {
       id:          id,
       title:       title,
-      content:     content,
+      content:     content.gsub("\r\n","<br/>"),
       source_url:  source_url,
-      href:        href
+      href:        href,
+      updated_at:  h.time_ago_in_words(updated_at)
     }
   end
 end

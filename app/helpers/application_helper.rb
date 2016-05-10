@@ -3,10 +3,8 @@ module ApplicationHelper
     icon = content_tag(:div, nil, :class => "ion-icon ion-#{icon_name}")
     text = content_tag(:div, text, :class => 'icon-text')
 
-    link_to link do
-      content_tag :div, :class => classes.join(' '), id: id do
-        icon + text
-      end
+    link_to link, :class => classes.join(' '), id: id do
+      icon + text
     end
   end
 end

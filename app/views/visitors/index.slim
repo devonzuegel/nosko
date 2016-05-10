@@ -1,2 +1,2 @@
 - @articles.each do |article|
-  = render partial: 'articles/article', locals: { article: article }
+  = react_component 'FindingCard', article: article

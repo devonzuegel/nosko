@@ -6,6 +6,6 @@ class VisitorsController < ApplicationController
     #   end
     #   @articles = Finding::Article.where(user: current_user)
     # end
-    @articles = Finding::Article.limit(10)
+    @articles = Finding::Article.limit(10).map { |a| a.decorate.as_prop }
   end
 end

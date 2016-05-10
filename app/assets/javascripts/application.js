@@ -20,4 +20,3 @@
 //= require_tree ./components
 //= require bootstrap-sprockets
 //= require_tree .
-
