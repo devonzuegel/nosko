@@ -1,7 +1,6 @@
 - if !@article.nil?
-  .markdown-body
-    h1= @article.title
-    .date= "#{time_ago_in_words(@article.updated_at)} ago"
-    = @article.content.gsub("\r\n","<br/>").html_safe
+  h1= @article.title
+  .date= "#{time_ago_in_words(@article.updated_at)} ago"
+  .markdown-body= @article.content.gsub("\r\n","<br/>").html_safe
 - else
   p.grey Not yet implemented

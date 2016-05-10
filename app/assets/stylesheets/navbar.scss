@@ -1,10 +1,12 @@
 @import 'all_partials';
+
+$nav-background-color:  $lightest-grey;
 $nav-link-color:        $link-color;
 $nav-link-hover-color:  $link-hover-color;
 $nav-link-padding-top-bottom: 10px;
 $nav-link-padding-left-right: 15px;
+
 .navbar {
-  background-color: rgba($nav-background-color, 0.95);
   margin-bottom: 0 !important;
   @media (max-width: 768px) {
     border: none;
@@ -18,26 +20,26 @@ $nav-link-padding-left-right: 15px;
       font-size:     1em;
       padding: $nav-link-padding-left-right $nav-link-padding-top-bottom;
       &:hover {
-        background-color:  $nav-background-color !important;
+        background-color:  $background-color !important;
       }
     }
   }
   .dropdown, .dropdown.open {
     .dropdown-menu {
+      border-radius:    2px;
       box-shadow:       $default-box-shadow;
       border:           $default-border;
       padding:          0;
-      right:            0;
       left:             0;
-      top:              45px;
+      top:              47px;
       background-color: white;
       & > li {
         height: auto;
         a {
           color: $nav-link-color;
           &:hover, &:active, &:focus {
-            background-color: $nav-background-color;
             color: $nav-link-hover-color;
+            background-color: $nav-background-color !important;
           }
           width:   100%;
           padding: 10px 20px;
@@ -63,12 +65,13 @@ $nav-link-padding-left-right: 15px;
   }
   .navbar-collapse {
     border: none !important;
+    padding: 0;
     @media (max-width: 768px) {
       box-shadow: none;
     }
   }
 }
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
-  background-color: $nav-background-color !important;
+  background-color: $background-color     !important;
   color:            $nav-link-hover-color !important;
 }

@@ -1,8 +1,5 @@
 .card#filled-div
   a#fill-div href=finding_path(article)
-  .markdown-body
-    h1= article.title
-    .date= "#{time_ago_in_words(article.updated_at)} ago"
-    #article-body= article.content.gsub("\r\n","<br/>").html_safe
-
-    /#article-body= simple_format(article.content.gsub('<br>',''))
+  h1= article.title
+  .date= "#{time_ago_in_words(article.updated_at)} ago"
+  .markdown-body= article.content.gsub("\r\n","<br/>").html_safe
