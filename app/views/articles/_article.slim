@@ -1,5 +1,21 @@
-.card#filled-div
-  a#fill-div href=finding_path(article)
-  h1= article.title
-  .date= "#{time_ago_in_words(article.updated_at)} ago"
-  .markdown-body= article.content.gsub("\r\n","<br/>").html_safe
+.card
+  #filled-div
+    a#fill-div href=finding_path(article)
+    #article-body.collapsed
+      h1= article.title
+      .markdown-body= article.content.gsub("\r\n","<br/>").html_safe
+  .card-buttons
+    .right
+      /.card-button= icon_link('close', '#', id: "collapse-#{article.to_param}", classes: %w(smaller top-margin-tiny))
+      .card-button= icon_link('more',  '#', id: "expand-#{article.to_param}")
+      .card-button= icon_link('eye',   '#', id: "make-private-#{article.to_param}")
+      .card-button= icon_link('link',  '#', id: "permalink-#{article.to_param}")
+    .left
+      .card-button: .date= "#{time_ago_in_words(article.updated_at)} ago"
+
+/ coffee:
+/   $ ->
+/     console.log("#{article}")
+/     $('#expand').click (e) ->
+/       e.preventDefault()
+/       console.log('expand')

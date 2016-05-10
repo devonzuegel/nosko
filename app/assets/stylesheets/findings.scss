@@ -2,18 +2,49 @@
 
 $card-color:       white;
 $card-hover-color: white;
-$article-height:   190px;
+$article-height:   230px;
 $fade-height:      55px;
-$fade-top:         140px;
+$fade-top:         185px;
+$card-padding:     20px;
+$card-border:      $default-border;
 
 .card {
-  @extend .well;
+  border-radius: 4px;
+  padding:  $card-padding;
+  margin-bottom: 10px;
   background-color: $card-color;
-  border:           $default-border;
+  border:           $card-border;
   &:hover {
     background-color:  $card-hover-color;
-    // border:            1px solid $light-grey;
     box-shadow:        $lighter-box-shadow;
+  }
+  .card-buttons {
+    border-top: $card-border;
+    margin: 0 (-$card-padding) (-$card-padding) (-$card-padding);
+    padding: (0.2 * $card-padding) ($card-padding);
+    .card-button {
+      display: inline-block;
+      .ion-icon {
+        font-size: 1em;
+      }
+      .top-margin-tiny {
+        margin-top: 1px;
+      }
+      .smaller {
+        font-size: 0.9em;
+      }
+    }
+    .left {
+      .card-button {
+        margin-right: 2*$card-padding;
+      }
+    }
+    .right {
+      .card-button {
+        float:        right;
+        margin-left:  2*$card-padding;
+      }
+    }
   }
 }
 #filled-div {
@@ -38,17 +69,19 @@ $fade-top:         140px;
 #article-body {
   position:   relative;
   overflow:   hidden;
-  max-height: $article-height;
-  &:after {
-    content:    '';
-    position:   absolute;
-    left:       0;
-    width:      100%;
-    height:     $fade-height;
-    top:        $fade-top;
-    background: linear-gradient(rgba(0,0,0,0), $card-color);
-    &:hover {
-      background: linear-gradient(rgba(0,0,0,0), $card-hover-color);
+  &.collapsed {
+    max-height: $article-height;
+    &:after {
+      content:    '';
+      position:   absolute;
+      left:       0;
+      width:      100%;
+      height:     $fade-height;
+      top:        $fade-top;
+      background: linear-gradient(rgba(0,0,0,0), $card-color);
+      &:hover {
+        background: linear-gradient(rgba(0,0,0,0), $card-hover-color);
+      }
     }
   }
 }
