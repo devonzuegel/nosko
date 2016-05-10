@@ -35800,67 +35800,49 @@ li a {
 }
 @font-face {
   font-family: 'Calibre';
-  src: url("fonts/CalibreWeb-Regular.woff");
+  src: url(/assets/CalibreWeb-Regular.woff) format("woff");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'Calibre';
-  src: url("fonts/CalibreWeb-Medium.woff");
+  src: url(/fonts/CalibreWeb-Medium.woff) format("woff");
   font-weight: bold;
   font-style: normal;
 }
 @font-face {
   font-family: 'Tiempos';
-  src: url("fonts/Tiempos-Regular.woff");
+  src: url(/fonts/Tiempos-Regular.woff) format("woff");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'Tiempos';
-  src: url("fonts/Tiempos-RegularItalic.woff");
+  src: url(/fonts/Tiempos-RegularItalic.woff) format("woff");
   font-weight: normal;
   font-style: italic;
 }
 @font-face {
   font-family: 'Inconsolata';
-  src: url("fonts/Inconsolata.otf");
+  src: url(/fonts/Inconsolata.otf) format("otf");
   font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Apercu';
-  src: url("fonts/Apercu Pro Medium-webfont.woff");
-  font-weight: bold;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Apercu';
-  src: url("fonts/Apercu Pro Regular-webfont.woff");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Apercu';
-  src: url("fonts/Apercu Pro Light-webfont.woff");
-  font-weight: light;
   font-style: normal;
 }
 @font-face {
   font-family: 'Supria Sans';
-  src: url("fonts/supriasans-black-web.woff");
+  src: url(/fonts/supriasans-black-web.woff) format("woff");
   font-weight: bolder;
   font-style: normal;
 }
 @font-face {
   font-family: 'Supria Sans';
-  src: url("fonts/supriasans-bold-web.woff");
+  src: url(/fonts/supriasans-bold-web.woff) format("woff");
   font-weight: bold;
   font-style: normal;
 }
 @font-face {
   font-family: 'Supria Sans';
-  src: url("fonts/supriasans-light-web.woff");
+  src: url(/fonts/supriasans-light-web.woff) format("woff");
   font-weight: normal;
   font-style: normal;
 }
@@ -36012,67 +35994,49 @@ li a {
 }
 @font-face {
   font-family: 'Calibre';
-  src: url("fonts/CalibreWeb-Regular.woff");
+  src: url(/assets/CalibreWeb-Regular.woff) format("woff");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'Calibre';
-  src: url("fonts/CalibreWeb-Medium.woff");
+  src: url(/fonts/CalibreWeb-Medium.woff) format("woff");
   font-weight: bold;
   font-style: normal;
 }
 @font-face {
   font-family: 'Tiempos';
-  src: url("fonts/Tiempos-Regular.woff");
+  src: url(/fonts/Tiempos-Regular.woff) format("woff");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: 'Tiempos';
-  src: url("fonts/Tiempos-RegularItalic.woff");
+  src: url(/fonts/Tiempos-RegularItalic.woff) format("woff");
   font-weight: normal;
   font-style: italic;
 }
 @font-face {
   font-family: 'Inconsolata';
-  src: url("fonts/Inconsolata.otf");
+  src: url(/fonts/Inconsolata.otf) format("otf");
   font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Apercu';
-  src: url("fonts/Apercu Pro Medium-webfont.woff");
-  font-weight: bold;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Apercu';
-  src: url("fonts/Apercu Pro Regular-webfont.woff");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: 'Apercu';
-  src: url("fonts/Apercu Pro Light-webfont.woff");
-  font-weight: light;
   font-style: normal;
 }
 @font-face {
   font-family: 'Supria Sans';
-  src: url("fonts/supriasans-black-web.woff");
+  src: url(/fonts/supriasans-black-web.woff) format("woff");
   font-weight: bolder;
   font-style: normal;
 }
 @font-face {
   font-family: 'Supria Sans';
-  src: url("fonts/supriasans-bold-web.woff");
+  src: url(/fonts/supriasans-bold-web.woff) format("woff");
   font-weight: bold;
   font-style: normal;
 }
 @font-face {
   font-family: 'Supria Sans';
-  src: url("fonts/supriasans-light-web.woff");
+  src: url(/fonts/supriasans-light-web.woff) format("woff");
   font-weight: normal;
   font-style: normal;
 }
