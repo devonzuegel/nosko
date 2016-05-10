@@ -87,4 +87,4 @@ pickle-email-*.html
 # Ignore application configuration
 /config/application.yml
 
-/app/assets/images/psds
+/psds

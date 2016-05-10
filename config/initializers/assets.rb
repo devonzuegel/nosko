@@ -11,4 +11,3 @@ Rails.application.config.assets.version = '1.0'
 # Rails.application.config.assets.precompile += %w( search.js )
 
 Rails.application.config.assets.paths << Rails.root.join(*%w(app assets stylesheets partials))
-Rails.application.config.assets.paths << Rails.root.join(*%w(app assets stylesheets fonts))
