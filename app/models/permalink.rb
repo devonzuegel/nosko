@@ -19,7 +19,7 @@ class Permalink < ActiveRecord::Base
 
   def unique_path
     while true
-      random_str = SecureRandom.hex
+      random_str = '%010d' % rand(10**16)
       return random_str if Permalink.where(path: random_str).empty?
     end
   end

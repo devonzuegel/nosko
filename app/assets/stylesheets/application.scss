@@ -16,6 +16,10 @@
 
 @import 'all_partials';
 
+.wrapper {
+  background-color: $background-color;
+}
+
 main {
   background-color: $background-color;
   padding-top: 10px;
