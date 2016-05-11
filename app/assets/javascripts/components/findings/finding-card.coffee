@@ -1,13 +1,10 @@
 @FindingCard = React.createClass
-  # propTypes:
-    # following:    React.PropTypes.bool.isRequired,
-    # current_user: React.PropTypes.UserFacade,
-    # user:         React.PropTypes.UserFacade,
-    # followers:    React.PropTypes.arrayOf(React.PropTypes.UserFacade).isRequired
+  propTypes:
+    article: React.PropTypes.ArticleFacade
 
   getInitialState: ->
-    console.log @props.article
-    expanded: false
+    expanded:     false
+    overflowing:  true
 
   ion_icon_link: (name, onclick, classes='') ->
     React.DOM.a className: "card-button #{classes}", onClick: onclick,
