@@ -8,11 +8,11 @@ class Finding::ArticleDecorator < Draper::Decorator
 
   def as_prop
     {
-      id:          id,
       title:       title,
       content:     content.gsub("\r\n","<br/>"),
       source_url:  source_url,
       href:        href,
+      to_param:    to_param,
       updated_at:  h.time_ago_in_words(updated_at)
     }
   end

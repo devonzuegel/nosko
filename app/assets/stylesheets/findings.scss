@@ -18,6 +18,11 @@ $card-border:      $default-border;
     background-color:  $card-hover-color;
     box-shadow:        $lighter-box-shadow;
   }
+  .top {
+    z-index: 2;
+    position: relative;
+    cursor: pointer;
+  }
   .card-buttons {
     border-top: $card-border;
     margin: 0 (-$card-padding) (-$card-padding) (-$card-padding);
@@ -58,7 +63,7 @@ $card-border:      $default-border;
     top:              0;
     left:             0;
     text-decoration:  none;
-    z-index:          10;
+    z-index:          1;
     background-color: white;
     opacity:          0;
     filter:           alpha(opacity = 1);
@@ -68,7 +73,7 @@ $card-border:      $default-border;
   text-transform: uppercase;
   color:          $lightish-grey;
 }
-#article-body {
+.article-body {
   position:   relative;
   overflow:   hidden;
   &.collapsed {
