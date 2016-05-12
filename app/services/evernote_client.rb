@@ -2,14 +2,14 @@ class EvernoteClient
   include EvernoteParsable
 
   OFFSET           = 0
-  N_RESULTS        = 10
+  N_RESULTS        = 15
   ORDER            = :updated
   ASCENDING        = false
   UPDATED_INTERVAL = 1.year.ago
 
   def initialize(attributes = {})
     @auth_token = attributes.fetch(:auth_token)
-    @client = EvernoteOAuth::Client.new(token: @auth_token, sandbox: ENV['EN_SANDBOX'])
+    @client = EvernoteOAuth::Client.new(token: @auth_token, sandbox: sandbox?)
     ping_evernote
   end
 
@@ -75,5 +75,13 @@ class EvernoteClient
       raise Exception, msg
     end
     value_map[order]
+  end
+
+  def sandbox?
+    case ENV['en_sandbox']
+      when 'true', true     then true
+      when 'false', false   then false
+      else                  true
+    end
   end
 end

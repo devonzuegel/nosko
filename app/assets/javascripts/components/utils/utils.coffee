@@ -2,6 +2,9 @@
   puts: (to_print) ->
     console.log(JSON.stringify(to_print))
 
+  numberWithCommas: (x) ->
+    x.toString().replace /\B(?=(\d{3})+(?!\d))/g, ','
+
   copyToClipboard: (text) ->
     textArea = document.createElement('textarea')
     #

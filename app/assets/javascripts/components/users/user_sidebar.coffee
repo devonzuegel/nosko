@@ -20,8 +20,8 @@
     else
       @state.followers.filter ((f) -> f.id != @props.current_user.id).bind(this)
 
-  num_words:     -> 111
-  num_findigns:  -> 222
+  num_words:     -> @props.user.num_words_this_week
+  num_findings:  -> @props.user.num_findings_this_month
   num_books:     -> 333
 
   render: ->
@@ -38,7 +38,7 @@
             React.DOM.td null, "#{@num_words()} words this week"
           React.DOM.tr null,
             React.DOM.td className: 'ion-icon ion-ios-star'
-            React.DOM.td null, "#{@num_findigns()} findings this month"
+            React.DOM.td null, "#{@num_findings()} findings this month"
           React.DOM.tr null,
             # React.DOM.td className: 'ion-icon ion-ios-book'
             # React.DOM.td null, "#{@num_books()} books this year"
