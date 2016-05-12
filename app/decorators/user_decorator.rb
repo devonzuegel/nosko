@@ -1,21 +1,32 @@
 class UserDecorator < Draper::Decorator
-  delegate *%i(id name articles)
+  delegate *%i(id name)
 
   def followers
     object.followers.map(&:decorate).map(&:as_prop)
+  end
+
+  def articles(offset: 0, limit: 4)
+    object.articles.limit(limit).offset(offset)
   end
 
   def href
     h.user_path(object)
   end
 
+  def findings_this_month
+    object.articles.where(created_at: Time.zone.now.all_month)
+  end
+
+  def findings_this_week
+    object.articles.where(created_at: Time.zone.now.all_week)
+  end
+
   def num_findings_this_month
-    num = articles.where(created_at: Time.zone.now.all_month).count
-    h.number_with_delimiter(num)
+    h.number_with_delimiter(findings_this_month.count)
   end
 
   def num_words_this_week
-    num = articles.map { |a| a.content.length }.reduce(&:+)
+    num = findings_this_week.map { |a| a.content.length }.reduce(&:+)
     h.number_with_delimiter(num)
   end
 
