@@ -12,6 +12,18 @@ module Finding
       before_save :clean_url, :save_user
     end
 
+    def locked?
+      locked
+    end
+
+    def lock!
+      update(locked: true)
+    end
+
+    def unlock!
+      update(locked: false)
+    end
+
     def to_param
       permalink.path
     end

@@ -77,4 +77,20 @@ RSpec.describe Finding::Article, type: :model do
       trashed.each { |a| expect(a.trashed?).to eq true }
     end
   end
+
+  describe '(un)locking a model' do
+    it 'should allow you to lock the model' do
+      article = create(:article)
+      expect(article.locked?).to eq false
+      article.lock!
+      expect(article.locked?).to eq true
+    end
+
+    it 'should allow you to unlock the model' do
+      article = create(:article, :locked)
+      expect(article.locked?).to eq true
+      article.unlock!
+      expect(article.locked?).to eq false
+    end
+  end
 end
