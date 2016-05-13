@@ -6,6 +6,7 @@ describe FindingsController, :omniauth do
   end
 
   let(:article) { create(:article, user: @stranger) }
+  let(:my_article) { create(:article, user: @stranger) }
 
   context 'json format'do
     describe 'GET /finding/:permalink => #show' do
@@ -49,6 +50,37 @@ describe FindingsController, :omniauth do
       end
 
       it 'should handle other types of findings too (which havent yet been implemented)'
+    end
+
+    describe 'GET /finding/:permalink/lock => #lock' do
+      it 'should not allow you to lock a finding when you are not signed in'
+      it 'should not allow you to lock a finding when it doesnt belong to you'
+      it 'should lock the finding when it belongs to you' do
+        session[:user_id] = @user
+        expect(my_article.locked).to eq false
+
+        get :lock, permalink: my_article.to_param, format: :json
+
+        assert_response :success
+        my_article.reload
+        expect(my_article.locked).to eq true
+      end
+    end
+
+    describe 'GET /finding/:permalink/unlock => #unlock' do
+      let(:locked_article) { create(:article, :locked, user: @user) }
+      it 'should not allow you to unlock a finding when you are not signed in'
+      it 'should not allow you to unlock a finding when it doesnt belong to you'
+      it 'should unlock the finding when it belongs to you' do
+        session[:user_id] = @user
+        expect(locked_article.locked).to eq true
+
+        get :unlock, permalink: locked_article.to_param, format: :json
+
+        assert_response :success
+        locked_article.reload
+        expect(locked_article.locked).to eq false
+      end
     end
   end
 

@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   resources :users
 
   # Findings
-  get '/finding/:permalink'      => 'findings#show',    as: :finding
+  get '/finding/:permalink'        => 'findings#show',   as: :finding
+  get '/finding/:permalink/lock'   => 'findings#lock',   as: :lock_finding
+  get '/finding/:permalink/unlock' => 'findings#unlock', as: :unlock_finding
 
   # Follow / unfollow
   get '/follow/:id'              => 'followings#follow'
