@@ -61,6 +61,7 @@ group :development do
   gem 'rb-inotify',            '0.9.5', :require => false
   gem 'spring-commands-rspec', '1.0.4'
   gem 'rack-mini-profiler'
+  gem 'flamegraph'
 end
 
 group :test do

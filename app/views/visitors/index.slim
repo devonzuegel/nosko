@@ -1,4 +1,2 @@
-ol
-  - @articles.each do |article|
-    li: a(href=article[:href])= article[:title]
-    /= react_component 'FindingCard', article: article
+- @articles.each do |article|
+  = react_component 'FindingCard', article: article

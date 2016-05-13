@@ -6,7 +6,7 @@ class VisitorsController < ApplicationController
     #   end
     #   @articles = Finding::Article.where(user: current_user)
     # end
-    #
-    @articles = Finding::Article.take(30).map { |a| a.decorate.as_prop }
+
+    @articles = Finding::Article.first(20).map { |a| a.decorate.as_prop }
   end
 end
