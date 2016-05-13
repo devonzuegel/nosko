@@ -1,6 +1,6 @@
 class FindingsController < ApplicationController
   def show
-    permalink      = Permalink.find_by_path(params[:permalink])
+    permalink = Permalink.find_by_path(params[:permalink])
     if permalink.nil?
       respond_to do |format|
         format.html { render_404 }

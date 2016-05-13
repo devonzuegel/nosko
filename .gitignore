@@ -88,3 +88,4 @@ pickle-email-*.html
 /config/application.yml
 
 /psds
+/kill_server.rb
