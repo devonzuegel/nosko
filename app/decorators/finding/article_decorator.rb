@@ -12,6 +12,7 @@ class Finding::ArticleDecorator < Draper::Decorator
       content:     content.gsub("\r\n","<br/>"),
       source_url:  source_url,
       href:        href,
+      locked:      locked?,
       to_param:    to_param,
       updated_at:  h.time_ago_in_words(updated_at)
     }

@@ -22,7 +22,9 @@ class FindingsController < ApplicationController
     if permalink.nil?
       head :not_found
     else
-      Finding::Article.find_by(permalink: permalink).lock!
+      a = Finding::Article.find_by(permalink: permalink)
+      a.lock!
+      ap a
       head :ok
     end
   end
@@ -33,7 +35,9 @@ class FindingsController < ApplicationController
     if permalink.nil?
       head :not_found
     else
-      Finding::Article.find_by(permalink: permalink).unlock!
+      a = Finding::Article.find_by(permalink: permalink)
+      a.unlock!
+      ap a
       head :ok
     end
   end

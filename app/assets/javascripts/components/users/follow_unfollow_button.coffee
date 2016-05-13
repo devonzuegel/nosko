@@ -8,10 +8,8 @@
 
   handleClick: (e) ->
     e.preventDefault()
-    $.get @url(), success: (following) =>
+    $.get @url(), success: =>
       if @props.propogation then @props.propogation()
-      Utils.puts('now following')
-      # @setState(following: !@props.following)
 
   url: ->
     if @props.following

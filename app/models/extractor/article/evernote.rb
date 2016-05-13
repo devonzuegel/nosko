@@ -13,7 +13,7 @@ module Extractor
         en_client  = EvernoteClient.new(auth_token: evernote_account.auth_token)
         note_attrs = en_client.find_note_by_guid(guid).slice(:content, :source_url, :title)
 
-        if article
+        if article && !article.locked?
           article.update_attributes!(note_attrs)
         else
           article = Finding::Article.create!(note_attrs.merge(user: evernote_account.user))

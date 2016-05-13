@@ -1,6 +1,7 @@
 @Utils =
   puts: (to_print) ->
-    console.log(JSON.stringify(to_print))
+    console.log(to_print)
+    # console.log(JSON.stringify(to_print))
 
   numberWithCommas: (x) ->
     x.toString().replace /\B(?=(\d{3})+(?!\d))/g, ','

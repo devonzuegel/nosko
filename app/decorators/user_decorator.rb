@@ -5,8 +5,8 @@ class UserDecorator < Draper::Decorator
     object.followers.map(&:decorate).map(&:as_prop)
   end
 
-  def articles(offset: 0, limit: 4)
-    object.articles.limit(limit).offset(offset)
+  def articles(offset: 0, limit: 10)
+    object.articles.first(limit).map { |a| a.decorate.as_prop }
   end
 
   def href

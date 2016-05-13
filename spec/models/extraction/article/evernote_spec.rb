@@ -12,4 +12,7 @@ RSpec.describe Extractor::Article::Evernote, type: :model do
     it 'should require a unique article_extraction'
     it 'should require a unique api_token'
   end
+
+  it 'should update an article if it is unlocked'
+  it 'should not update an article if it is locked'
 end
