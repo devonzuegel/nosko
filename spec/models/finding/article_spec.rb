@@ -12,7 +12,7 @@ RSpec.describe Finding::Article, type: :model do
     end
 
     it 'requires expected required fields' do
-      expect(Finding::Article.required_fields).to match_array %i(title content user_id)
+      expect(Finding::Article.required_fields).to match_array %i(title content user_id locked)
       Finding::Article.required_fields.each do |field|
         expect(build(:article, field => nil)).to_not be_valid
       end
@@ -30,6 +30,11 @@ RSpec.describe Finding::Article, type: :model do
       expect(article.trashed?).to be false
       article.trash!
       expect(article.trashed?).to be true
+    end
+
+    it 'should be not locked by default' do
+      article = create(:article)
+      expect(article.locked).to eq false
     end
   end
 

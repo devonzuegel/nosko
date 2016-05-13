@@ -41,7 +41,8 @@ CREATE TABLE articles (
     source_url character varying,
     content text,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    locked boolean DEFAULT false
 );
 
 
@@ -623,4 +624,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160403051932');
 INSERT INTO schema_migrations (version) VALUES ('20160403080010');
 
 INSERT INTO schema_migrations (version) VALUES ('20160420054125');
+
+INSERT INTO schema_migrations (version) VALUES ('20160513010347');
 

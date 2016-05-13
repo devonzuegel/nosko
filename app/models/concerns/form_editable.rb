@@ -7,7 +7,7 @@ module FormEditable
 
   def validate_required_fields
     self.class.required_fields.each do |field|
-      errors.add(field, 'cannot be blank') if self[field].blank?
+      errors.add(field, 'cannot be blank') if self[field].blank? && self[field] != false
     end
   end
 
