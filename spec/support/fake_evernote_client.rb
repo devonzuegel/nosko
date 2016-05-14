@@ -1,23 +1,4 @@
 class FakeEvernoteClient
-  DUMMY_CONTENT = <<-END
-    <?xml version="1.0" encoding="UTF-8"?>
-    <!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
-    <en-note>
-      <div>blah blah blah</div>
-      <div>
-        <span style="-evernote-highlighted:true; background-color:#FFFFb0">
-          This is a highlight
-        </span>
-        <p>
-          This is a regular paragraph
-        </p>
-        <span style="-evernote-highlighted:true; background-color:#FFFFb0">
-          This is a second highlight
-        </span>
-      </div>
-    </en-note>
-  END
-
   def initialize(attributes = {})
     @auth_token = attributes.fetch(:auth_token)
   end
@@ -48,7 +29,7 @@ class FakeEvernoteClient
     {
       active:        true,
       author:        "devonzuegel_1",
-      content:       DUMMY_CONTENT,
+      content:       UNPARSED_DUMMY_CONTENT,
       en_created_at: 3.days.ago,
       en_updated_at: 3.days.ago,
       guid:          Faker::Lorem.characters(30),
@@ -57,4 +38,42 @@ class FakeEvernoteClient
       title:         "This is a test"
     }
   end
+
+  UNPARSED_DUMMY_CONTENT = '''
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+    <en-note>
+      <div>blah blah blah</div>
+      <div>
+        <span style="-evernote-highlighted:true; background-color:#FFFFb0">
+          This is a highlight
+        </span>
+        <p>
+          This is a regular paragraph
+        </p>
+        <span style="-evernote-highlighted:true; background-color:#FFFFb0">
+          This is a second highlight
+        </span>
+      </div>
+    </en-note>
+  '''.freeze
+
+  PARSED_DUMMY_CONTENT = '''
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+    <en-note>
+      <div>blah blah blah</div>
+      <div>
+        <span class="highlight en-highlight">
+          This is a highlight
+        </span>
+        <p>
+          This is a regular paragraph
+        </p>
+        <span class="highlight en-highlight">
+          This is a second highlight
+        </span>
+      </div>
+    </en-note>
+  '''.freeze
 end
