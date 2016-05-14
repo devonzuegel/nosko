@@ -60,4 +60,16 @@ RSpec.describe Extractor::Article::Evernote, type: :model do
       expect(extractor.last_accessed_at).to be_within(1.second).of Time.now
     end
   end
+
+  describe 'HIGHLIGHT_TAGS regex', :focus do
+    subject(:regex) { Extractor::Article::Evernote::HIGHLIGHT_TAGS[:from] }
+
+    it { should match('<span style="-evernote-highlighted:true; background-color:#FFFFb0">') }
+    it { should match('<span style="-evernote-highlighted:true; background-color:#FFFFb0;">') }
+    it { should match('<span style="-evernote-highlighted:true; background-color:#ffffb0">') }
+    it { should match('<span style="-evernote-highlighted:true; background-color:#ffffb0;">') }
+    it { should match('<span style="-evernote-highlighted: true; background-color: #aaaaaa">') }
+    it { should match('<span style="-evernote-highlighted: true; background-color: #ffffb0;">') }
+    it { should_not match('<span style="-evernote-highlighted: true; background-color: #zzzzzz;">') }
+  end
 end
