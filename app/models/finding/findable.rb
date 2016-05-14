@@ -16,6 +16,10 @@ module Finding
       locked
     end
 
+    def unlocked?
+      !locked?
+    end
+
     def lock!
       update(locked: true)
     end

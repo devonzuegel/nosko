@@ -1,4 +1,6 @@
 class FakeEvernoteClient
+  DUMMY_CONTENT = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\">\n<en-note><div>blah blah blah</div></en-note>"
+
   def initialize(attributes = {})
     @auth_token = attributes.fetch(:auth_token)
   end
@@ -29,7 +31,7 @@ class FakeEvernoteClient
     {
       active:        true,
       author:        "devonzuegel_1",
-      content:       "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\">\n<en-note><div>blah blah blah</div></en-note>",
+      content:       DUMMY_CONTENT,
       en_created_at: 3.days.ago,
       en_updated_at: 3.days.ago,
       guid:          Faker::Lorem.characters(30),
