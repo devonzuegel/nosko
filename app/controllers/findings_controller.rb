@@ -24,7 +24,6 @@ class FindingsController < ApplicationController
     else
       a = Finding::Article.find_by(permalink: permalink)
       a.lock!
-      ap a
       head :ok
     end
   end
@@ -37,7 +36,6 @@ class FindingsController < ApplicationController
     else
       a = Finding::Article.find_by(permalink: permalink)
       a.unlock!
-      ap a
       head :ok
     end
   end
