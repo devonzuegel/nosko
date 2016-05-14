@@ -10,7 +10,7 @@ class Extractor::Article::Evernote < ActiveRecord::Base
   NOTE_ATTRS = %i(content source_url title)
 
   HIGHLIGHT_TAGS  = {
-    from: '<span style="-evernote-highlighted:true; background-color:#FFFFb0">',
+    from: /<span[ \t]+style="-evernote-highlighted:[ \t]*true;[ \t]+background-color:#FFFFb0">/,
     to:   '<span class="highlight en-highlight">'
   }
 
@@ -42,6 +42,6 @@ class Extractor::Article::Evernote < ActiveRecord::Base
 
   def replace_highlights!
     old_val = @note_attrs[:content]
-    @note_attrs[:content] = old_val.gsub(HIGHLIGHT_TAGS[:from], HIGHLIGHT_TAGS[:to])
+    @note_attrs[:content] = old_val.gsub(/#{HIGHLIGHT_TAGS[:from]}/i, HIGHLIGHT_TAGS[:to])
   end
 end
