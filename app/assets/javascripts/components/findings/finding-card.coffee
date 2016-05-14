@@ -3,7 +3,6 @@
     article: React.PropTypes.ArticleFacade
 
   componentDidMount: ->
-    Utils.puts @props.article
     @setState
       overflowing:  @overflowing()
 

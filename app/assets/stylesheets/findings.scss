@@ -82,19 +82,33 @@ $card-border:      $default-border;
 .article-body {
   position:   relative;
   overflow:   hidden;
+
+  @include transition(all 0.3s ease-out);
+
+  &.expanded {
+    max-height: 5000px;
+    &:after {
+      opacity: 0;
+      @include transition(opacity 0.1s ease-in);  // Immediately remove the fade
+    }
+  }
   &.collapsed {
     max-height: $article-height;
-    &:after {
-      content:    '';
-      position:   absolute;
-      left:       0;
-      width:      100%;
-      height:     $fade-height;
-      top:        $fade-top;
-      background: linear-gradient(rgba(0,0,0,0), $card-color);
-      &:hover {
-        background: linear-gradient(rgba(0,0,0,0), $card-hover-color);
-      }
+  }
+  &:after {
+    opacity: 1;
+    content:    '';
+    position:   absolute;
+    left:       0;
+    width:      100%;
+    height:     $fade-height;
+    top:        $fade-top;
+    background: linear-gradient(rgba(0,0,0,0), $card-color);
+
+    @include transition(opacity 0.3s ease-in 0.1s);
+
+    &:hover {
+      background: linear-gradient(rgba(0,0,0,0), $card-hover-color);
     }
   }
 }
