@@ -61,8 +61,8 @@ RSpec.describe Extractor::Article::Evernote, type: :model do
     end
   end
 
-  describe 'HIGHLIGHT_TAGS regex', :focus do
-    subject(:regex) { Extractor::Article::Evernote::HIGHLIGHT_TAGS[:from] }
+  describe 'EN_HIGHLIGHT_TAG regex', :focus do
+    subject(:regex) { Extractor::Article::Evernote::EN_HIGHLIGHT_TAG }
 
     it { should match('<span style="-evernote-highlighted:true; background-color:#FFFFb0">') }
     it { should match('<span style="-evernote-highlighted:true; background-color:#FFFFb0;">') }

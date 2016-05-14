@@ -9,10 +9,14 @@ class Extractor::Article::Evernote < ActiveRecord::Base
 
   NOTE_ATTRS = %i(content source_url title)
 
-  HIGHLIGHT_TAGS  = {
-    from: /\<span[ \t]+style\=\"-evernote\-highlighted\:[ \t]*true;[ \t]+background-color\:[ \t]*\#\h+(\;)?\"\>/i,
-    to:   '<span class="highlight en-highlight">'
-  }
+  EN_HIGHLIGHT_TAG = %r{
+    <span[ \t]+                                   # Open span tag
+      style="-evernote\-highlighted\:[ \t]*true;  # Evernote highlighted attribute
+      [ \t]+                                      # Arbitrary white space
+      background-color\:[ \t]*\#\h+               # Background color must be a hex value
+      (;)?"                                       # Optional semicolon at the end
+    >                                             # Close span tag
+  }ix                                             # Case-insensitive, allow multi-line regex
 
   def retrieve_note
     if article.nil?
@@ -41,7 +45,11 @@ class Extractor::Article::Evernote < ActiveRecord::Base
   end
 
   def replace_highlights!
-    old_val = @note_attrs[:content]
-    @note_attrs[:content] = old_val.gsub(HIGHLIGHT_TAGS[:from], HIGHLIGHT_TAGS[:to])
+    old_content = @note_attrs[:content]
+    @note_attrs[:content] = old_content.gsub(EN_HIGHLIGHT_TAG).with_index { |_, i| highlight_replacement(i) }
+  end
+
+  def highlight_replacement(id)
+    %Q(<span class="highlight en-highlight" id="en-highlight-#{id}">)
   end
 end

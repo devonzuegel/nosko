@@ -64,13 +64,13 @@ class FakeEvernoteClient
     <en-note>
       <div>blah blah blah</div>
       <div>
-        <span class="highlight en-highlight">
+        <span class="highlight en-highlight" id="en-highlight-0">
           This is a highlight
         </span>
         <p>
           This is a regular paragraph
         </p>
-        <span class="highlight en-highlight">
+        <span class="highlight en-highlight" id="en-highlight-1">
           This is a second highlight
         </span>
       </div>
