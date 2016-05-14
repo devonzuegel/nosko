@@ -1,7 +1,10 @@
 .btn-toolbar
   .btn-group.pull-right role='group'
-    button.btn.btn-secondary type='button'= icon_link('grid', '#',    'Cards')
-    button.btn.btn-secondary type='button'= icon_link('navicon', '#', 'Title Only')
+    button.btn.btn-secondary= icon_link('grid',             '#', 'Cards')
+    button.btn.btn-secondary= icon_link('navicon',          '#', 'Title Only')
+    button.btn.btn-secondary= icon_link('ios-help-outline', '#', 'Hot keys')
 
-- @articles.each do |article|
-  = react_component 'FindingCard', article: article
+p
+  kbd.mine Ctrl + A
+/- @articles.each do |article|
+/  = react_component 'FindingCard', article: article
