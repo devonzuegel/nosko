@@ -1,5 +1,22 @@
 class FakeEvernoteClient
-  DUMMY_CONTENT = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE en-note SYSTEM \"http://xml.evernote.com/pub/enml2.dtd\">\n<en-note><div>blah blah blah</div></en-note>"
+  DUMMY_CONTENT = <<-END
+    <?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE en-note SYSTEM "http://xml.evernote.com/pub/enml2.dtd">
+    <en-note>
+      <div>blah blah blah</div>
+      <div>
+        <span style="-evernote-highlighted:true; background-color:#FFFFb0">
+          This is a highlight
+        </span>
+        <p>
+          This is a regular paragraph
+        </p>
+        <span style="-evernote-highlighted:true; background-color:#FFFFb0">
+          This is a second highlight
+        </span>
+      </div>
+    </en-note>
+  END
 
   def initialize(attributes = {})
     @auth_token = attributes.fetch(:auth_token)
