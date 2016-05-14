@@ -42,3 +42,17 @@ pre {
 .grey {
   color: $lightish-grey;
 }
+
+.btn-secondary {
+  background: none;
+
+  a {
+    .ion-icon {
+      font-size: 1em;
+    }
+    .icon-text {
+      display: inline-block;
+      margin: 0 10px;
+    }
+  }
+}
