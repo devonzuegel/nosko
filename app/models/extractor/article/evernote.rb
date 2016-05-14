@@ -7,7 +7,7 @@ class Extractor::Article::Evernote < ActiveRecord::Base
   validates_uniqueness_of %i(guid)
   validates_presence_of *%i(guid evernote_account), allow_blank: false
 
-  NOTE_ATTRS = %i(content source_url title)
+  ARTICLE_ATTRIBUTES = %i(content source_url title)
 
   EN_HIGHLIGHT_TAG = %r{
     <span[ \t]+                                   # Open span tag
@@ -22,31 +22,41 @@ class Extractor::Article::Evernote < ActiveRecord::Base
     if article.nil?
       update(article: create_article!)
     elsif article.unlocked?
-      article.update_attributes!(note_attrs)
+      update_article_parsed!
     end
 
     update(last_accessed_at: 0.seconds.ago)
   end
 
+  def update_article_parsed!
+    article.update_attributes!(parsed_article_attrs)
+  end
+
   private
 
   def create_article!
-    Finding::Article.create!(note_attrs.merge(user: evernote_account.user))
+    Finding::Article.create!(parsed_article_attrs)
   end
 
   def en_client
     @en_client ||= EvernoteClient.new(auth_token: evernote_account.auth_token)
   end
 
-  def note_attrs
-    @note_attrs ||= en_client.find_note_by_guid(guid).slice(*NOTE_ATTRS)
-    replace_highlights!
-    @note_attrs
+  def article_attrs
+    old_attrs = article.nil? ? {} : article.attributes.deep_symbolize_keys.slice(*ARTICLE_ATTRIBUTES).compact
+    new_attrs = en_client.find_note_by_guid(guid).slice(*ARTICLE_ATTRIBUTES)
+    if article && article.locked?
+      @article_attrs = old_attrs.reverse_merge(new_attrs)
+    else
+      @article_attrs = old_attrs.merge(new_attrs)
+    end
+    @article_attrs.merge!(user: evernote_account.user)
   end
 
-  def replace_highlights!
-    old_content = @note_attrs[:content]
-    @note_attrs[:content] = old_content.gsub(EN_HIGHLIGHT_TAG).with_index { |_, i| highlight_replacement(i) }
+  def parsed_article_attrs
+    old_content = article_attrs[:content]
+    @article_attrs[:content] = old_content.gsub(EN_HIGHLIGHT_TAG).with_index { |_, i| highlight_replacement(i) }
+    @article_attrs
   end
 
   def highlight_replacement(id)

@@ -34,7 +34,7 @@ RSpec.describe Extractor::Article::Evernote, type: :model do
       expect(extractor.article).to_not be_nil
     end
 
-    it 'should update article if one with guid exists and is unlocked', :focus do
+    it 'should update article if one with guid exists and is unlocked' do
       old_content = 'asdlkfjaslkdfja'
       extractor = create(:extractor_article_evernote, article: create(:article, content: old_content))
       expect(extractor.article).to_not be_nil
@@ -61,7 +61,7 @@ RSpec.describe Extractor::Article::Evernote, type: :model do
     end
   end
 
-  describe 'EN_HIGHLIGHT_TAG regex', :focus do
+  describe 'EN_HIGHLIGHT_TAG regex' do
     subject(:regex) { Extractor::Article::Evernote::EN_HIGHLIGHT_TAG }
 
     it { should match('<span style="-evernote-highlighted:true; background-color:#FFFFb0">') }
@@ -71,5 +71,27 @@ RSpec.describe Extractor::Article::Evernote, type: :model do
     it { should match('<span style="-evernote-highlighted: true; background-color: #aaaaaa">') }
     it { should match('<span style="-evernote-highlighted: true; background-color: #ffffb0;">') }
     it { should_not match('<span style="-evernote-highlighted: true; background-color: #zzzzzz;">') }
+  end
+
+  describe 'update_article_parsed!' do
+    let(:stale_content)      { "#{FakeEvernoteClient::UNPARSED_DUMMY_CONTENT} blah"         }
+
+    let(:article)            { create(:article, content: stale_content)                     }
+    let(:extractor)          { create(:extractor_article_evernote, article: article)        }
+
+    let(:locked_article)     { create(:article, :locked, content: stale_content)            }
+    let(:locked_extractor)   { create(:extractor_article_evernote, article: locked_article) }
+
+    it 'should retrieve updated data from Evernote (if unlocked) and forceably update stale tags' do
+      expect(extractor.article.content).to eq stale_content
+      extractor.update_article_parsed!
+      expect(extractor.article.content).to eq FakeEvernoteClient::PARSED_DUMMY_CONTENT
+    end
+
+    it 'should not retrieve updated data from Evernote (if locked) but still forceably update stale tags' do
+      expect(locked_extractor.article.content).to eq stale_content
+      locked_extractor.update_article_parsed!
+      expect(locked_extractor.article.content).to eq "#{FakeEvernoteClient::PARSED_DUMMY_CONTENT} blah"
+    end
   end
 end
