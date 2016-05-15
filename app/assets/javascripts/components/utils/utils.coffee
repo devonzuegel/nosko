@@ -6,9 +6,14 @@
   numberWithCommas: (x) ->
     x.toString().replace /\B(?=(\d{3})+(?!\d))/g, ','
 
+  ion_icon_link: (name, onclick, text=null, classes='') ->
+    React.DOM.a className: "card-button #{classes}", onClick: onclick,
+      React.DOM.div className: "ion-icon ion-#{name}"
+      if text
+        React.DOM.div className: "icon-text", text
+
   copyToClipboard: (text) ->
     textArea = document.createElement('textarea')
-    #
     # *** This styling is an extra step which is likely not required. ***
     #
     # Why is it here? To ensure:

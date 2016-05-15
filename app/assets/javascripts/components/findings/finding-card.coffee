@@ -11,10 +11,6 @@
     overflowing:  true
     locked:       @props.article.locked
 
-  ion_icon_link: (name, onclick, classes='') ->
-    React.DOM.a className: "card-button #{classes}", onClick: onclick,
-      React.DOM.div className: "ion-icon ion-#{name}"
-
   permalink_to_clipboard: ->
     alert("#{@props.article.href} has been copied to your clipboard!")
     Utils.copyToClipboard(@props.article.href)
@@ -33,13 +29,13 @@
   resize_btn: ->
     if @state.overflowing
       icon_name = if @state.expanded then 'arrow-shrink' else 'arrow-resize'
-      @ion_icon_link(icon_name,  @toggle_collapse)
+      Utils.ion_icon_link(icon_name, @toggle_collapse)
 
   lock_btn: ->
     if @state.locked
-      @ion_icon_link('android-lock', @toggle_lock, 'locked-btn-activated')
+      Utils.ion_icon_link('android-lock', @toggle_lock, null, 'locked-btn-activated')
     else
-      @ion_icon_link('android-unlock', @toggle_lock)
+      Utils.ion_icon_link('android-unlock', @toggle_lock)
 
   render: ->
     React.DOM.div className: 'card',
@@ -52,8 +48,8 @@
       React.DOM.div className: 'card-buttons',
         React.DOM.div className: 'right',
           @lock_btn()
-          @ion_icon_link('eye',  @overflow_test)
-          @ion_icon_link('link', @permalink_to_clipboard)
+          Utils.ion_icon_link('eye',  @overflow_test)
+          Utils.ion_icon_link('link', @permalink_to_clipboard)
         React.DOM.div className: 'left',
           React.DOM.div className: 'card-button',
             React.DOM.div className: 'date', "#{@props.article.updated_at} ago"

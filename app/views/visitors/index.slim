@@ -1,10 +1,4 @@
-.btn-toolbar.findings-stream: .btn-group.pull-right role='group'
-  button.btn.btn-secondary
-    = icon_link('grid', '#', 'Cards')
-  button.btn.btn-secondary
-    = icon_link('navicon', '#', 'Title Only')
-  button.btn.btn-secondary data-toggle='modal' href='#hotkeys-modal'
-    = icon_link('ios-help-outline', '#', 'Hot keys')
+= react_component 'FindingsStream', articles: @articles
 
 #hotkeys-modal.modal.fade: .modal-dialog: .modal-content
   .modal-header
@@ -17,5 +11,14 @@
         td             = shortcut[:key_name]
         td             = shortcut[:action]
 
-- @articles.each do |article|
- = react_component 'FindingCard', article: article
+/
+  .findings-stream
+    .btn-toolbar
+      .btn-group.pull-right role='group'
+        button.btn.btn-secondary= icon_link('grid', '#', 'Cards')
+        button.btn.btn-secondary= icon_link('navicon', '#', 'Title Only')
+        button.btn.btn-secondary data-toggle='modal' href='#hotkeys-modal'
+          = icon_link('ios-help-outline', '#', 'Hot keys')
+
+    - @articles.each do |article|
+     = react_component 'FindingCard', article: article
