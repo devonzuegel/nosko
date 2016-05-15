@@ -7,4 +7,40 @@ module ApplicationHelper
       icon + text
     end
   end
+
+  def hotkeys
+    [
+      {
+        keypress: 'up',
+        symbol:   '↑',
+        key_name: 'Up arrow',
+        action:   'Advance to next finding or highlight'
+      }, {
+        keypress: 'down',
+        symbol:   '↓',
+        key_name: 'Down arrow',
+        action:   'Move to previous finding or highlight'
+      }, {
+        keypress: 'right',
+        symbol:   '→', # ←
+        key_name: 'Right arrow',
+        action:   'Star current finding or highlight'
+      # }, {
+      #   keypress: 's',
+      #   symbol:   's', # ←
+      #   key_name: 'S key',
+      #   action:   'Star current finding or highlight'
+      # }, {
+      #   keypress: 'shift+up',
+      #   symbol:   '⇧ + ↑', # ←
+      #   key_name: 'Shift + up arrow',
+      #   action:   'Go to first finding or highlight'
+      # }, {
+      #   keypress: 'shift+down',
+      #   symbol:   '⇧ + ↓', # ←
+      #   key_name: 'Shift + down arrow',
+      #   action:   'Go to last finding or highlight'
+      }
+    ]
+  end
 end

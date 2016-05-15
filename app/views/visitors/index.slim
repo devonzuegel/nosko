@@ -1,10 +1,21 @@
-.btn-toolbar
-  .btn-group.pull-right role='group'
-    button.btn.btn-secondary= icon_link('grid',             '#', 'Cards')
-    button.btn.btn-secondary= icon_link('navicon',          '#', 'Title Only')
-    button.btn.btn-secondary= icon_link('ios-help-outline', '#', 'Hot keys')
+.btn-toolbar: .btn-group.pull-right role='group'
+  button.btn.btn-secondary
+    = icon_link('grid', '#', 'Cards')
+  button.btn.btn-secondary
+    = icon_link('navicon', '#', 'Title Only')
+  button.btn.btn-secondary data-toggle='modal' href='#hotkeys-modal'
+    = icon_link('ios-help-outline', '#', 'Hot keys')
 
-p
-  kbd.mine Ctrl + A
+#hotkeys-modal.modal.fade: .modal-dialog: .modal-content
+  .modal-header
+    button.close aria-hidden='true' data-dismiss='modal' type='button'  ×
+    h4.modal-title Hot keys
+  .modal-body: table.table.hotkeys
+    - hotkeys.each do |shortcut|
+      tr
+        td: kbd.hotkey = shortcut[:symbol]
+        td             = shortcut[:key_name]
+        td             = shortcut[:action]
+
 /- @articles.each do |article|
 /  = react_component 'FindingCard', article: article

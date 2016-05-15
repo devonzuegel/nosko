@@ -1,0 +1,26 @@
+@import 'all_partials'
+
+kbd
+  font-family:  'Inconsolata', monospace
+  font-weight:  normal
+
+  &.hotkey
+    padding:    2px 5px
+    font-size:  1.3em !important
+
+.no-top-border
+  tr:first-child
+    td
+      border-top: none
+
+table.table.hotkeys
+  margin: 0
+  @extend .no-top-border
+  font-size: 1.1em !important
+  tbody tr td
+    vertical-align: middle
+
+.modal
+  .modal-header, .modal-body
+    padding:  15px 25px
+    margin:   0
