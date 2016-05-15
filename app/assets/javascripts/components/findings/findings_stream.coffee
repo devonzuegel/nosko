@@ -5,8 +5,6 @@
   getInitialState: ->
     active_finding_id: 0
 
-  num_articles: -> @props.articles.length
-
   buttons: ->
     React.DOM.div className: 'btn-toolbar',
       React.DOM.div className: 'btn-group pull-right', role: 'group',
@@ -20,14 +18,14 @@
           href:           '#hotkeys-modal'
           Utils.ion_icon_link('ios-help-outline', null, 'Hot keys')
 
-  finding_state_classes: (id) ->
-    if (@state.active_finding_id == id) then 'selected' else 'unselected'
+  num_articles:               -> @props.articles.length
+  is_selected:           (id) -> @state.active_finding_id == id
+  finding_state_classes: (id) -> if @is_selected(id) then 'selected' else 'unselected'
 
   findings: ->
-    finding_state_classes = @finding_state_classes
-    @props.articles.map (article, i) ->
-      React.DOM.div id: "finding-#{i}", className: finding_state_classes(i), key: i,
-        React.createElement FindingCard, article: article
+    @props.articles.map (article, id) =>
+      React.DOM.div id: "finding-#{id}", className: @finding_state_classes(id), key: id,
+        React.createElement FindingCard, article: article, selected: @is_selected(id)
 
   to_next_finding: ->
     if @state.active_finding_id < @num_articles() - 1

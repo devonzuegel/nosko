@@ -1,6 +1,7 @@
 @FindingCard = React.createClass
   propTypes:
-    article: React.PropTypes.ArticleFacade
+    article:  React.PropTypes.ArticleFacade.isRequired
+    selected: React.PropTypes.bool.isRequired
 
   componentDidMount: ->
     @setState
@@ -38,6 +39,13 @@
       Utils.ion_icon_link('android-unlock', @toggle_lock)
 
   render: ->
+    if @props.selected
+      console.log 'selected'
+      Mousetrap.bind 'space', (e) =>
+        e.preventDefault()
+        @toggle_collapse()
+    else
+      console.log 'not selected'
     React.DOM.div className: 'card',
       React.DOM.div className: 'pull-right top', @resize_btn()
       React.DOM.div className: 'filled-div',
@@ -48,9 +56,8 @@
       React.DOM.div className: 'card-buttons',
         React.DOM.div className: 'right',
           @lock_btn()
-          Utils.ion_icon_link('eye',  @overflow_test)
+          Utils.ion_icon_link('eye',  null)
           Utils.ion_icon_link('link', @permalink_to_clipboard)
         React.DOM.div className: 'left',
           React.DOM.div className: 'card-button',
             React.DOM.div className: 'date', "#{@props.article.updated_at} ago"
-            # React.DOM.div null, "locked = #{@state.locked}"

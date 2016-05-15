@@ -6,4 +6,4 @@ React.PropTypes.ArticleFacade = React.PropTypes.shape({
   locked:       React.PropTypes.bool.isRequired,
   to_param:     React.PropTypes.string.isRequired,
   updated_at:   React.PropTypes.string.isRequired
-}).isRequired
+})

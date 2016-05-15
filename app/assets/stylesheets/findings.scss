@@ -18,11 +18,14 @@ $card-border:      $default-border;
   background-color:  $card-hover-color;
   box-shadow:        $lighter-box-shadow;
 }
+.unselected .card {
+  border:            $default-border;
+}
 .card {
   border-radius: 4px;
   padding:  $card-padding;
   margin-bottom: 10px;
-  background-color: $card-color;
+  background-color:  rgba($card-color, 0.9);
   border:           $card-border;
   &:hover {
     background-color:  $card-hover-color;

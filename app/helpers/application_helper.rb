@@ -22,9 +22,15 @@ module ApplicationHelper
         action:   'Move to previous finding or highlight'
       }, {
         keypress: 'right',
-        symbol:   '→', # ←
+        symbol:   '→',
         key_name: 'Right arrow',
         action:   'Star current finding or highlight'
+      }, {
+        keypress: 'space',
+        symbol:   'Space',
+        key_name: 'Spacebar',
+        action:   'Expand selected finding'
+
       # }, {
       #   keypress: 's',
       #   symbol:   's', # ←
