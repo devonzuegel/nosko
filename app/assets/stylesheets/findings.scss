@@ -8,6 +8,13 @@ $fade-top:         185px;
 $card-padding:     20px;
 $card-border:      $default-border;
 
+.btn-toolbar.findings-stream {
+  button.btn.btn-secondary {
+    &:focus, &:active, &:hover, &:visited {
+      outline: none !important;
+    }
+  }
+}
 .card {
   border-radius: 4px;
   padding:  $card-padding;
