@@ -19,12 +19,18 @@ $card-border:      $default-border;
     background-color:  $card-hover-color;
     box-shadow:        $lighter-box-shadow;
   }
-  &:focus {
-    outline: none;
+  &:focus, &:active, &:hover, &:visited {
+    outline: none !important;
   }
 }
-.unselected .card {
-  border:            $default-border;
+.unselected {
+  &:focus, &:active, &:hover, &:visited {
+    outline:  none !important;
+  }
+  .card {
+    outline:  none !important;
+    border:   $default-border;
+  }
 }
 .card {
   border-radius: 4px;

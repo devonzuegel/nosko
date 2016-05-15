@@ -30,6 +30,11 @@ module ApplicationHelper
         symbol:   'Space',
         key_name: 'Spacebar',
         action:   'Expand selected finding'
+      }, {
+        keypress: 'h',
+        symbol:   'h',
+        key_name: 'H key',
+        action:   'Open or close the hot keys help'
 
       # }, {
       #   keypress: 's',
