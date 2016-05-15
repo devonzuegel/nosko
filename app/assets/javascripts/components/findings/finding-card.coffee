@@ -38,26 +38,32 @@
     else
       Utils.ion_icon_link('android-unlock', @toggle_lock)
 
+  hotkey_bindings: ->
+    return unless @props.selected
+    Mousetrap.bind 'space', (e) =>
+      e.preventDefault()
+      @toggle_collapse()
+
+  card_body: ->
+    React.DOM.div className: 'filled-div',
+      React.DOM.a className: 'fill-div', href: @props.article.href
+      React.DOM.div id: @id(), className: "#{@toggled_collapsed_class()} article-body",
+        React.DOM.h1 null, @props.article.title
+        React.DOM.div className: 'markdown-body', dangerouslySetInnerHTML: { __html: @props.article.content }
+
+  card_buttons: ->
+    React.DOM.div className: 'card-buttons',
+      React.DOM.div className: 'right',
+        @lock_btn()
+        Utils.ion_icon_link('eye',  null)
+        Utils.ion_icon_link('link', @permalink_to_clipboard)
+      React.DOM.div className: 'left',
+        React.DOM.div className: 'card-button',
+          React.DOM.div className: 'date', "#{@props.article.updated_at} ago"
+
   render: ->
-    if @props.selected
-      console.log 'selected'
-      Mousetrap.bind 'space', (e) =>
-        e.preventDefault()
-        @toggle_collapse()
-    else
-      console.log 'not selected'
+    @hotkey_bindings()
     React.DOM.div className: 'card',
       React.DOM.div className: 'pull-right top', @resize_btn()
-      React.DOM.div className: 'filled-div',
-        React.DOM.a className: 'fill-div', href: @props.article.href
-        React.DOM.div id: @id(), className: "#{@toggled_collapsed_class()} article-body",
-          React.DOM.h1 null, @props.article.title
-          React.DOM.div className: 'markdown-body', dangerouslySetInnerHTML: { __html: @props.article.content }
-      React.DOM.div className: 'card-buttons',
-        React.DOM.div className: 'right',
-          @lock_btn()
-          Utils.ion_icon_link('eye',  null)
-          Utils.ion_icon_link('link', @permalink_to_clipboard)
-        React.DOM.div className: 'left',
-          React.DOM.div className: 'card-button',
-            React.DOM.div className: 'date', "#{@props.article.updated_at} ago"
+      @card_body()
+      @card_buttons()

@@ -13,10 +13,15 @@ $card-border:      $default-border;
     outline: none !important;
   }
 }
-.selected .card {
-  border:            1px solid $lightish-border-grey;
-  background-color:  $card-hover-color;
-  box-shadow:        $lighter-box-shadow;
+.selected {
+  .card {
+    border:            1px solid $lightish-grey;
+    background-color:  $card-hover-color;
+    box-shadow:        $lighter-box-shadow;
+  }
+  &:focus {
+    outline: none;
+  }
 }
 .unselected .card {
   border:            $default-border;
