@@ -41,6 +41,6 @@ class UserDecorator < Draper::Decorator
   end
 
   def as_settings_prop
-    object.attributes.merge(sharing: object.sharing.attributes)
+    object.attributes.merge(sharing: object.sharing.as_json)
   end
 end

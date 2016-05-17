@@ -1,7 +1,12 @@
 var SettingsForm = React.createClass({
   propTypes: {
-    user:                         React.PropTypes.UserFacade.isRequired,
-    reminders_frequency_options:  React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+    user:   React.PropTypes.UserFacade.isRequired,
+
+    reminders_frequency_options:  React.PropTypes.arrayOf(React.PropTypes.shape({
+      label:   React.PropTypes.string.isRequired,
+      val:     React.PropTypes.string.isRequired
+    })).isRequired,
+
     share_by_default_options:     React.PropTypes.arrayOf(React.PropTypes.shape({
       label:   React.PropTypes.string.isRequired,
       val:     React.PropTypes.string.isRequired
@@ -34,7 +39,6 @@ var SettingsForm = React.createClass({
                   options      = { this.props.reminders_frequency_options }
                   className    = 'form-control' validations={[ { fn: required } ]}
           />
-
         </div>
       </Form>
     );
