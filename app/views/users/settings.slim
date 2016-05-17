@@ -11,5 +11,7 @@
   .col-lg-8.col-lg-offset-2.col-md-10.col-md-offset-1
     = react_component 'SettingsForm',
       user:                         @user.decorate.as_settings_prop,
-      share_by_default_options:     Sharing.share_by_default_options,
-      reminders_frequency_options:  Sharing.reminders_frequency_options
+      share_by_default_options:     Shareable::share_by_default_options,
+      reminders_frequency_options:  Shareable::reminders_frequency_options
+
+  pre= Shareable::SHARE_BY_DEFAULT_ENUM

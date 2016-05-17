@@ -12,7 +12,7 @@ RSpec.describe Finding::Article, type: :model do
     end
 
     it 'requires expected required fields' do
-      expect(Finding::Article.required_fields).to match_array %i(title content user_id locked)
+      expect(Finding::Article.required_fields).to match_array %i(title content user_id locked visibility)
       Finding::Article.required_fields.each do |field|
         expect(build(:article, field => nil)).to_not be_valid
       end
