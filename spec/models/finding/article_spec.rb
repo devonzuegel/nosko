@@ -94,19 +94,28 @@ RSpec.describe Finding::Article, type: :model do
     end
   end
 
-  describe 'the sharing status' do
-    let(:private_user) { create(:user) }
-    let(:public_user)  { create(:user, :public_by_default) }
+  describe 'visibility' do
+    let(:private_user)  { create(:user)                           }
+    let(:friends_user)  { create(:user, :only_friends_by_default) }
+    let(:public_user)   { create(:user, :public_by_default)       }
 
-    it 'should be "just me" by default if the user\'s sharing preferences indicate "just me" by default' do
-
+    it 'should be "Only me" by default if the user\'s sharing preferences indicate "Only me" by default' do
+      article = create(:article, user: private_user)
+      expect(article.visibility).to eq 'Only me'
     end
-    it 'should be "public" by default if the user\'s sharing preferences indicate "public" by default' do
 
+    it 'should be "Friends" by default if the user\'s sharing preferences indicate "Friends" by default' do
+      article = create(:article, user: friends_user)
+      expect(article.visibility).to eq 'Friends'
     end
 
-    it 'should allow me to change the status from "just me" to "public"'
+    it 'should be "Public" by default if the user\'s sharing preferences indicate "Public" by default' do
+      article = create(:article, user: public_user)
+      expect(article.visibility).to eq 'Public'
+    end
 
-    it 'should allow me to change the status from "public" to "just me"'
+
+    it 'should allow me to change the status from "Only me" to "public"'
+    it 'should allow me to change the status from "public" to "Only me"'
   end
 end
