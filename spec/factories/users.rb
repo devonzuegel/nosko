@@ -8,5 +8,11 @@ FactoryGirl.define do
         u.evernote_account.update_attributes(auth_token: Faker::Lorem.characters(10))
       end
     end
+
+    trait :public_by_default do
+      after(:create) do |u|
+        u.sharing.update_attributes(:public => true)
+      end
+    end
   end
 end

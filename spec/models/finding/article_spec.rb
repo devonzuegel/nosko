@@ -78,19 +78,35 @@ RSpec.describe Finding::Article, type: :model do
     end
   end
 
-  describe '(un)locking a model' do
-    it 'should allow you to lock the model' do
+  describe '(un)locking' do
+    it 'should allow you to lock the article' do
       article = create(:article)
       expect(article.locked?).to eq false
       article.lock!
       expect(article.locked?).to eq true
     end
 
-    it 'should allow you to unlock the model' do
+    it 'should allow you to unlock the article' do
       article = create(:article, :locked)
       expect(article.locked?).to eq true
       article.unlock!
       expect(article.locked?).to eq false
     end
+  end
+
+  describe 'the sharing status' do
+    let(:private_user) { create(:user) }
+    let(:public_user)  { create(:user, :public_by_default) }
+
+    it 'should be "just me" by default if the user\'s sharing preferences indicate "just me" by default' do
+
+    end
+    it 'should be "public" by default if the user\'s sharing preferences indicate "public" by default' do
+
+    end
+
+    it 'should allow me to change the status from "just me" to "public"'
+
+    it 'should allow me to change the status from "public" to "just me"'
   end
 end

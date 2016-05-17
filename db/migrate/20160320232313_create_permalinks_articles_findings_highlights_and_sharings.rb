@@ -31,7 +31,7 @@ class CreatePermalinksArticlesFindingsHighlightsAndSharings < ActiveRecord::Migr
 
     create_table :sharings do |t|
       t.boolean    :share_by_default, default: false
-      t.string     :reminders_frequency, default: 'daily'
+      t.string     :reminders_frequency, default: 'Daily'
       t.references :user, index: true, foreign_key: true
 
       t.timestamps null: false
