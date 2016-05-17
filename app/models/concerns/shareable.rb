@@ -8,7 +8,7 @@ module Shareable
     enum visibility: SHARE_BY_DEFAULT_ENUM
     belongs_to :user
     validates_presence_of :user
-    before_save :set_visibility_from_default
+    before_create :set_visibility_from_default
   end
 
   def self.share_by_default_options
