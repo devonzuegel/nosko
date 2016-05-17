@@ -21,7 +21,7 @@ var SettingsForm = React.createClass({
             { fn: required }
           ]}/>
 
-          <label>Share by default?</label>
+          <label>Who can see my future findings by default?</label>
           <Select name         = 'sharing_attributes[share_by_default]'
                   defaultValue = { ''+this.props.user.sharing.share_by_default }
                   options      = { this.props.share_by_default_options }

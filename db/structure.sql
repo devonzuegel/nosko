@@ -285,8 +285,8 @@ CREATE TABLE schema_migrations (
 
 CREATE TABLE sharings (
     id integer NOT NULL,
-    share_by_default boolean DEFAULT false,
-    reminders_frequency character varying DEFAULT 'Daily'::character varying,
+    share_by_default integer DEFAULT 0,
+    reminders_frequency integer DEFAULT 0,
     user_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
