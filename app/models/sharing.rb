@@ -4,8 +4,8 @@ class Sharing < ActiveRecord::Base
 
   UPDATEABLE_ATTRIBUTES = %i(share_by_default reminders_frequency)
 
-  enum share_by_default:    { 'Only me' => 0,  'Friends'        => 1,  'Public' => 2 }
-  enum reminders_frequency: { 'Daily'   => 0,  'Every two days' => 1,  'Weekly' => 2 }
+  enum share_by_default:    Shareable::SHARE_BY_DEFAULT_ENUM
+  enum reminders_frequency: { 'Daily' => 0, 'Every two days' => 1, 'Weekly' => 2 }
 
   def self.share_by_default_options
     self.share_by_defaults.keys
