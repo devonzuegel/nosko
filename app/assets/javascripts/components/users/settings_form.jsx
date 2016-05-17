@@ -1,6 +1,11 @@
 var SettingsForm = React.createClass({
   propTypes: {
-    user: React.PropTypes.object.isRequired
+    user:                         React.PropTypes.UserFacade.isRequired,
+    reminders_frequency_options:  React.PropTypes.arrayOf(React.PropTypes.string).isRequired,
+    share_by_default_options:     React.PropTypes.arrayOf(React.PropTypes.shape({
+      label:   React.PropTypes.string.isRequired,
+      val:     React.PropTypes.string.isRequired
+    })).isRequired,
   },
 
   handleUpdate: function (data) { },
@@ -19,14 +24,14 @@ var SettingsForm = React.createClass({
           <label>Share by default?</label>
           <Select name         = 'sharing_attributes[share_by_default]'
                   defaultValue = { ''+this.props.user.sharing.share_by_default }
-                  options      = { [{ label: 'No', val: 'false' }, { label: 'Yes', val: 'true' }] }
+                  options      = { this.props.share_by_default_options }
                   className    = 'form-control' validations={[ { fn: required } ]}
           />
 
           <label>Email digest frequency</label>
           <Select name         = 'sharing_attributes[reminders_frequency]'
                   defaultValue = { ''+this.props.user.sharing.reminders_frequency }
-                  options      = { ['Daily', 'Every two days', 'Weekly'] }
+                  options      = { this.props.reminders_frequency_options }
                   className    = 'form-control' validations={[ { fn: required } ]}
           />
 

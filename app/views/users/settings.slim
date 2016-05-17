@@ -9,4 +9,7 @@
         button.btn.btn-primary Connect your Evernote account
 
   .col-lg-8.col-lg-offset-2.col-md-10.col-md-offset-1
-    = react_component 'SettingsForm', { user: @user.attributes.merge(sharing: @user.sharing.attributes) }
+    = react_component 'SettingsForm',
+      user:                         @user.decorate.as_settings_prop,
+      share_by_default_options:     Sharing::SHARE_BY_DEFAULT_OPTIONS,
+      reminders_frequency_options:  Sharing::REMINDERS_FREQUENCY_OPTIONS

@@ -39,4 +39,8 @@ class UserDecorator < Draper::Decorator
       num_words_this_week:      num_words_this_week
     }
   end
+
+  def as_settings_prop
+    object.attributes.merge(sharing: object.sharing.attributes)
+  end
 end

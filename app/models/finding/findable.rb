@@ -2,7 +2,7 @@ module Finding
   module Findable
     extend ActiveSupport::Concern
 
-    include Permalinkable, FormEditable
+    include Permalinkable, FormEditable, Shareable
 
     REQUIRED_FIELDS = %i(title user_id locked)
     HIDDEN_FIELDS   = %i(id permalink_id created_at updated_at)
