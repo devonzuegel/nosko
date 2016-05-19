@@ -5,8 +5,8 @@ describe FindingsController, :omniauth do
     @stranger = create(:user)
   end
 
-  let(:article) { create(:article, user: @stranger) }
-  let(:my_article) { create(:article, user: @stranger) }
+  let(:article)    { create(:article, user: @stranger) }
+  let(:my_article) { create(:article, user: @user) }
 
   context 'json format'do
     describe 'GET /finding/:permalink => #show' do
@@ -56,7 +56,7 @@ describe FindingsController, :omniauth do
       it 'should not allow you to lock a finding when you are not signed in'
       it 'should not allow you to lock a finding when it doesnt belong to you'
       it 'should lock the finding when it belongs to you' do
-        session[:user_id] = @user
+        session[:user_id] = @user.id
         expect(my_article.locked).to eq false
 
         get :lock, permalink: my_article.to_param, format: :json
@@ -75,7 +75,7 @@ describe FindingsController, :omniauth do
       it 'should not allow you to unlock a finding when it doesnt belong to you'
 
       it 'should unlock the finding when it belongs to you' do
-        session[:user_id] = @user
+        session[:user_id] = @user.id
         expect(locked_article.locked).to eq true
 
         get :unlock, permalink: locked_article.to_param, format: :json
@@ -91,7 +91,7 @@ describe FindingsController, :omniauth do
     describe 'PATCH /finding/:permalink', :focus do
       context 'updating the finding\'s visibility' do
         it 'should allow you to update the finding\'s :visibility if it belongs to you' do
-          session[:user_id] = @user
+          session[:user_id] = @user.id
           expect(my_article.visibility).to eq 'Only me'
 
           patch :update, permalink: my_article.to_param, article: { visibility: 'Public' }, format: :json
@@ -101,10 +101,20 @@ describe FindingsController, :omniauth do
         end
 
         it 'should not allow you to update the finding\'s visibility if it doesnt belong to you' do
-          ap my_article.visibility
+          session[:user_id] = @user.id
+          expect(article.visibility).to eq 'Only me'
+
+          patch :update, permalink: article.to_param, article: { visibility: 'Public' }, format: :json
+          assert_response :unauthorized
         end
 
-        it 'should not allow you to update it to a non-enumerated visibility'
+        it 'should not allow you to update it to a non-enumerated visibility' do
+          session[:user_id] = @user.id
+          expect(my_article.visibility).to eq 'Only me'
+
+          patch :update, permalink: my_article.to_param, article: { visibility: 'xxx' }, format: :json
+          assert_response :unprocessable_entity
+        end
       end
     end
   end

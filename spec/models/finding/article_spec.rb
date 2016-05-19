@@ -148,5 +148,10 @@ RSpec.describe Finding::Article, type: :model do
       expect { article.update_attributes(visibility: 'Friends') }
         .to change { article.visibility }.from('Public').to('Friends')
     end
+
+    it 'should have the right index' do
+      visibilities = { 'Only me' => 0, 'Friends' => 1, 'Public' => 2 }
+      expect(Finding::Article.visibilities).to eq visibilities
+    end
   end
 end

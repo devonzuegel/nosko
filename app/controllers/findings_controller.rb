@@ -22,11 +22,14 @@ class FindingsController < ApplicationController
   end
 
   def update
-    article = Finding::Article.find_by(permalink: @permalink)
-    if article.update(article_params)
-      render json: article.decorate.as_prop
+    @article = Finding::Article.find_by(permalink: @permalink)
+
+    if @article.user.id != current_user.id
+      head :unauthorized
+    elsif @article.update(article_params)
+      render json: @article.decorate.as_prop
     else
-      render json: article.errors, status: :unprocessable_entity
+      render json: @article.errors, status: :unprocessable_entity
     end
   end
 
