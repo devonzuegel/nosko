@@ -88,7 +88,7 @@ describe FindingsController, :omniauth do
 
     it 'should collapse the lock/unlock endpoints into the PATCh'
 
-    describe 'PATCH /finding/:permalink', :focus do
+    describe 'PATCH /finding/:permalink' do
       context 'updating the finding\'s visibility' do
         it 'should allow you to update the finding\'s :visibility if it belongs to you' do
           session[:user_id] = @user.id
@@ -112,8 +112,9 @@ describe FindingsController, :omniauth do
           session[:user_id] = @user.id
           expect(my_article.visibility).to eq 'Only me'
 
-          patch :update, permalink: my_article.to_param, article: { visibility: 'xxx' }, format: :json
-          assert_response :unprocessable_entity
+          expect {
+            patch :update, permalink: my_article.to_param, article: { visibility: 'xxx' }, format: :json
+          }.to raise_error ArgumentError
         end
       end
     end

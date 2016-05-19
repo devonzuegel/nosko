@@ -5,8 +5,8 @@ module Shareable
   REMINDERS_FREQUENCY_ENUM = { 'Daily'   => 0, 'Every two days' => 1, 'Weekly' => 2 }
 
   included do
-    enum visibility: SHARE_BY_DEFAULT_ENUM
     belongs_to :user
+    enum visibility: SHARE_BY_DEFAULT_ENUM
     validates_presence_of :user
     before_create :set_visibility_from_default
   end
