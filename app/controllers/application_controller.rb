@@ -26,7 +26,10 @@ class ApplicationController < ActionController::Base
 
     def authenticate_user!
       if !current_user
-        redirect_to root_url, alert: 'You need to sign in for access to this page.'
+        respond_to do |format|
+          format.html { redirect_to root_url, alert: 'You need to sign in for access to this page.' }
+          format.json { head :unauthorized }
+        end
       end
     end
 

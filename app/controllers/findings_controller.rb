@@ -1,5 +1,5 @@
 class FindingsController < ApplicationController
-  before_action :find_permalink
+  before_action :authenticate_user!, :find_permalink
 
   def show
     @article = Finding::Article.find_by(permalink: @permalink).decorate
@@ -10,15 +10,24 @@ class FindingsController < ApplicationController
   end
 
   def lock
-    a = Finding::Article.find_by(permalink: @permalink)
-    a.lock!
+    article = Finding::Article.find_by(permalink: @permalink)
+    article.lock!
     head :ok
   end
 
   def unlock
-    a = Finding::Article.find_by(permalink: @permalink)
-    a.unlock!
+    article = Finding::Article.find_by(permalink: @permalink)
+    article.unlock!
     head :ok
+  end
+
+  def update
+    article = Finding::Article.find_by(permalink: @permalink)
+    if article.update(article_params)
+      render json: article.decorate.as_prop
+    else
+      render json: article.errors, status: :unprocessable_entity
+    end
   end
 
   private
@@ -31,5 +40,9 @@ class FindingsController < ApplicationController
       format.html { render_404 }
       format.json { head :not_found }
     end
+  end
+
+  def article_params
+    params.require(:article).permit(*%i(visibility))
   end
 end

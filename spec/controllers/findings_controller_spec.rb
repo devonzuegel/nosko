@@ -69,8 +69,11 @@ describe FindingsController, :omniauth do
 
     describe 'GET /finding/:permalink/unlock => #unlock' do
       let(:locked_article) { create(:article, :locked, user: @user) }
+
       it 'should not allow you to unlock a finding when you are not signed in'
+
       it 'should not allow you to unlock a finding when it doesnt belong to you'
+
       it 'should unlock the finding when it belongs to you' do
         session[:user_id] = @user
         expect(locked_article.locked).to eq true
@@ -80,6 +83,28 @@ describe FindingsController, :omniauth do
         assert_response :success
         locked_article.reload
         expect(locked_article.locked).to eq false
+      end
+    end
+
+    it 'should collapse the lock/unlock endpoints into the PATCh'
+
+    describe 'PATCH /finding/:permalink', :focus do
+      context 'updating the finding\'s visibility' do
+        it 'should allow you to update the finding\'s :visibility if it belongs to you' do
+          session[:user_id] = @user
+          expect(my_article.visibility).to eq 'Only me'
+
+          patch :update, permalink: my_article.to_param, article: { visibility: 'Public' }, format: :json
+          assert_response :success
+          my_article.reload
+          expect(my_article.visibility).to eq 'Public'
+        end
+
+        it 'should not allow you to update the finding\'s visibility if it doesnt belong to you' do
+          ap my_article.visibility
+        end
+
+        it 'should not allow you to update it to a non-enumerated visibility'
       end
     end
   end

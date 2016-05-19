@@ -12,7 +12,7 @@ describe FollowingsController do
     end
 
     it 'should return an error if user not logged in' do
-      get :follow, id: @other_user
+      get :follow, id: @other_user, format: :json
       assert_response :unauthorized
     end
 
@@ -22,7 +22,7 @@ describe FollowingsController do
       expect(@user.leaders).to         eq []
       expect(@other_user.followers).to eq []
 
-      get :follow, id: @other_user
+      get :follow, id: @other_user, format: :json
       assert_response :success
 
       @user.reload
@@ -38,7 +38,7 @@ describe FollowingsController do
       expect(@user.leaders).to   eq []
       expect(@user.followers).to eq []
 
-      get :follow, id: @user
+      get :follow, id: @user, format: :json
       assert_response :unprocessable_entity
       expect(JSON.parse(response.body)).to eq({ 'errors' => ["You can't follow yourself, silly!"] })
 
@@ -55,7 +55,7 @@ describe FollowingsController do
       expect(@user.leaders).to         match [@other_user]
       expect(@other_user.followers).to match [@user]
 
-      get :follow, id: @other_user
+      get :follow, id: @other_user, format: :json
       assert_response :unprocessable_entity
       expect(JSON.parse(response.body)).to eq({ 'errors' => ["You're already following user ##{@other_user.id}"] })
 
@@ -74,7 +74,7 @@ describe FollowingsController do
     end
 
     it 'should return an error if user not logged in' do
-      get :unfollow, id: @other_user
+      get :unfollow, id: @other_user, format: :json
       assert_response :unauthorized
     end
 
@@ -85,7 +85,7 @@ describe FollowingsController do
       expect(@user.leaders).to         eq [@other_user]
       expect(@other_user.followers).to eq [@user]
 
-      get :unfollow, id: @other_user
+      get :unfollow, id: @other_user, format: :json
       assert_response :success
 
       @user.reload
@@ -101,7 +101,7 @@ describe FollowingsController do
       expect(@user.leaders).to         eq []
       expect(@other_user.followers).to eq []
 
-      get :unfollow, id: @other_user
+      get :unfollow, id: @other_user, format: :json
       assert_response :unprocessable_entity
       expect(JSON.parse(response.body)).to eq({ 'errors' => ["You weren't following user ##{@other_user.id}"] })
 
