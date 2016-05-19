@@ -1,5 +1,6 @@
 class FindingsController < ApplicationController
-  before_action :authenticate_user!, :find_permalink
+  before_action :authenticate_user!, except: %i(show)
+  before_action :find_permalink
 
   def show
     @article = Finding::Article.find_by(permalink: @permalink).decorate
