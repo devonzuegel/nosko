@@ -51,11 +51,25 @@
         React.DOM.h1 null, @props.article.title
         React.DOM.div className: 'markdown-body', dangerouslySetInnerHTML: { __html: @props.article.content }
 
+  update_visibility: ->
+    data =
+      article:
+        visibility: 'afasf'
+    $.ajax
+      url:          "/finding/#{@props.article.to_param}"
+      data:         JSON.stringify(data)
+      type:         'PATCH'
+      contentType:  'application/json'
+      processData:  false
+      dataType:     'json'
+      success: (res) =>
+        Utils.puts res
+
   card_buttons: ->
     React.DOM.div className: 'card-buttons',
       React.DOM.div className: 'right',
         @lock_btn()
-        Utils.ion_icon_link('eye',  null)
+        Utils.ion_icon_link('eye',  @update_visibility)
         Utils.ion_icon_link('link', @permalink_to_clipboard)
       React.DOM.div className: 'left',
         React.DOM.div className: 'card-button',

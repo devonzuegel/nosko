@@ -6,8 +6,11 @@ module Shareable
 
   included do
     belongs_to :user
-    enum visibility: SHARE_BY_DEFAULT_ENUM
     validates_presence_of :user
+
+    enum visibility: SHARE_BY_DEFAULT_ENUM
+    validates_inclusion_of :visibility, :in => self.visibilities.keys
+
     before_create :set_visibility_from_default
   end
 
