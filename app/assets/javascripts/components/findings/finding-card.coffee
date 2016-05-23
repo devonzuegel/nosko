@@ -54,16 +54,10 @@
   update_visibility: ->
     data =
       article:
-        visibility: 'afasf'
-    $.ajax
-      url:          "/finding/#{@props.article.to_param}"
-      data:         JSON.stringify(data)
-      type:         'PATCH'
-      contentType:  'application/json'
-      processData:  false
-      dataType:     'json'
-      success: (res) =>
-        Utils.puts res
+        visibility: 'Public'
+
+    $.patch "/finding/#{@props.article.to_param}", data, (result) ->
+      Utils.puts result
 
   card_buttons: ->
     React.DOM.div className: 'card-buttons',

@@ -112,10 +112,9 @@ describe FindingsController, :omniauth do
           session[:user_id] = @user.id
           expect(my_article.visibility).to eq 'Only me'
 
-          patch :update, permalink: my_article.to_param, article: { visibility: 'xxx' }, format: :json
-          # expect {
-          #   patch :update, permalink: my_article.to_param, article: { visibility: 'xxx' }, format: :json
-          # }.to raise_error ArgumentError
+          expect {
+            patch :update, permalink: my_article.to_param, article: { visibility: 'xxx' }, format: :json
+          }.to raise_error ArgumentError
         end
       end
     end
