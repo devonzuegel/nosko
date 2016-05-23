@@ -12,6 +12,10 @@ module Finding
       before_save :clean_url, :save_user
     end
 
+    def owned_by?(user)
+      self.user.id == user.id
+    end
+
     def locked?
       locked
     end

@@ -78,6 +78,20 @@ RSpec.describe Finding::Article, type: :model do
     end
   end
 
+  describe 'user ownership' do
+    let(:user)       { create(:user)                }
+    let(:other_user) { create(:user)                }
+    let(:article)    { create(:article, user: user) }
+
+    it 'should say that the article is owned by user' do
+      expect(article.owned_by?(user)).to eq true
+    end
+
+    it 'should say that the article is owned by user' do
+      expect(article.owned_by?(other_user)).to eq false
+    end
+  end
+
   describe '(un)locking' do
     it 'should allow you to lock the article' do
       article = create(:article)

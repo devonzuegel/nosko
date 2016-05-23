@@ -25,7 +25,7 @@ class FindingsController < ApplicationController
   def update
     @article = Finding::Article.find_by(permalink: @permalink)
 
-    if @article.user.id != current_user.id
+    if !@article.owned_by?(current_user)
       head :unauthorized
     elsif @article.update(article_params)
       render json: @article.decorate.as_prop
