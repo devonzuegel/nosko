@@ -108,7 +108,7 @@ describe FindingsController, :omniauth do
           assert_response :unauthorized
         end
 
-        it 'should not allow you to update it to a non-enumerated visibility', :focus do
+        it 'should not allow you to update it to a non-enumerated visibility' do
           session[:user_id] = @user.id
           expect(my_article.visibility).to eq 'Only me'
 
