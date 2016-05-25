@@ -32,7 +32,7 @@
   resize_btn: ->
     if @state.overflowing
       icon_name = if @state.expanded then 'arrow-shrink' else 'arrow-resize'
-      Utils.ion_icon_link(icon_name, @toggle_collapse)
+      Utils.ion_icon_link(icon_name, @toggle_collapse, null, 'pull-right')
 
   lock_btn: ->
     if @state.locked
@@ -90,5 +90,6 @@
     @hotkey_bindings()
 
     React.DOM.div className: 'card',
+      React.DOM.div className: 'pull-right above-card', @resize_btn()
       @card_body()
       @card_buttons()

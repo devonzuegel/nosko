@@ -8,7 +8,7 @@
 
   ion_icon_link: (name, onclick, text=null, classes='') ->
     React.DOM.a className: "card-button #{classes}", onClick: onclick,
-      @ion_icon(name)
+      @ion_icon(name, 'inline-block')
       if text
         React.DOM.div className: "icon-text", text
 

@@ -50,23 +50,9 @@ $card-border:      $default-border;
   .ion-icon {
     width: 14px;
     color: $light-grey;
+    display: inline-block;
     &:hover {
       color: $lightish-grey;
-    }
-  }
-
-  .card-button {
-    padding-right: $card-padding;
-    display: inline-block;
-    cursor: pointer;
-    .ion-icon {
-      font-size: 1em;
-    }
-    &.top-margin-tiny {
-      margin-top: 1px;
-    }
-    &.smaller {
-      font-size: 0.9em;
     }
   }
 
@@ -156,4 +142,8 @@ $card-border:      $default-border;
 .centerDropdown {
   left:         50% !important;
   margin-left:  -70px !important;
+}
+
+.inline-block {
+  display: inline-block;
 }
