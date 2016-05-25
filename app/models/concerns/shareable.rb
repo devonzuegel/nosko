@@ -10,6 +10,7 @@ module Shareable
 
     enum visibility: SHARE_BY_DEFAULT_ENUM
     validates_inclusion_of :visibility, :in => self.visibilities.keys
+    validates_presence_of  :visibility
 
     before_create :set_visibility_from_default
   end

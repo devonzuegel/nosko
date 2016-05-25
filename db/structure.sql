@@ -43,7 +43,7 @@ CREATE TABLE articles (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     locked boolean DEFAULT false,
-    visibility integer DEFAULT 0
+    visibility integer DEFAULT 0 NOT NULL
 );
 
 
