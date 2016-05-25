@@ -23,11 +23,10 @@
   id:                      ->   "article-body-#{@props.article.to_param}"
   overflowing:             ->   document.getElementById( @id() ).offsetHeight >= 230
 
-  toggle_lock:             ->
+  toggle_lock: ->
     endpoint = if @state.locked then 'unlock' else 'lock'
     $.get "/finding/#{@props.article.to_param}/#{endpoint}", success: (res) =>
       @setState(locked: !@state.locked)
-      Utils.puts res
 
   resize_btn: ->
     if @state.overflowing
@@ -89,7 +88,7 @@
   render: ->
     @hotkey_bindings()
 
-    React.DOM.div className: 'card',
+    React.DOM.div className: 'finding',
       React.DOM.div className: 'pull-right above-card', @resize_btn()
       @card_body()
-      @card_buttons()
+      # @card_buttons()
