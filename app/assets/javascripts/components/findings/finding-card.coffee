@@ -1,11 +1,13 @@
 @FindingCard = React.createClass
   propTypes:
-    article:  React.PropTypes.ArticleFacade.isRequired
-    selected: React.PropTypes.bool.isRequired
+    article:                React.PropTypes.ArticleFacade.isRequired
+    selected:               React.PropTypes.bool.isRequired
+    share_by_default_enums: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
 
   componentDidMount: ->
     @setState
       overflowing:  @overflowing()
+      visibility:   @props.article.visibility
 
   getInitialState: ->
     expanded:     false
@@ -51,19 +53,34 @@
         React.DOM.h1 null, @props.article.title
         React.DOM.div className: 'markdown-body', dangerouslySetInnerHTML: { __html: @props.article.content }
 
-  update_visibility: ->
-    data =
-      article:
-        visibility: 'Public'
+  update_visibility: (visibility) ->
+    $.patch "/finding/#{@props.article.to_param}", { article: { visibility: visibility } }, (result) =>
+      @setState(visibility: visibility)
 
-    $.patch "/finding/#{@props.article.to_param}", data, (result) ->
-      Utils.puts result
+  visibility_btn: ->
+    id = "dropdown-#{@props.article.to_param}"
+    React.DOM.div className: 'dropdown pull-right',
+      React.DOM.a
+        id:               id
+        className:        'dropdown-toggle above-card'
+        type:             'button'
+        'aria-expanded':  'true'
+        'aria-haspopup':  'true'
+        'data-toggle':    'dropdown'
+        Utils.ion_icon('eye', 'card-button')
+      React.DOM.ul className: 'dropdown-menu centerDropdown', 'aria-labelledby': id,
+        React.DOM.li className: 'dropdown-header', 'Change visibility'
+        @props.share_by_default_enums.map (label, id) =>
+          active_class = if label == @state.visibility then 'active' else 'inactive'
+          update_visibility = => @update_visibility(label)
+          React.DOM.li className: active_class, key: id,
+            React.DOM.a href: '#', onClick: update_visibility, label
 
   card_buttons: ->
     React.DOM.div className: 'card-buttons',
       React.DOM.div className: 'right',
         @lock_btn()
-        Utils.ion_icon_link('eye',  @update_visibility)
+        @visibility_btn()
         Utils.ion_icon_link('link', @permalink_to_clipboard)
       React.DOM.div className: 'left',
         React.DOM.div className: 'card-button',
@@ -71,7 +88,7 @@
 
   render: ->
     @hotkey_bindings()
+
     React.DOM.div className: 'card',
-      React.DOM.div className: 'pull-right top', @resize_btn()
       @card_body()
       @card_buttons()

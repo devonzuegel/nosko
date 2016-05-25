@@ -1,6 +1,7 @@
 @FindingsStream = React.createClass
   propTypes:
-    articles: React.PropTypes.arrayOf(React.PropTypes.ArticleFacade)
+    articles:                React.PropTypes.arrayOf(React.PropTypes.ArticleFacade)
+    share_by_default_enums:  React.PropTypes.arrayOf(React.PropTypes.string).isRequired
 
   getInitialState: ->
     active_finding_id: 0
@@ -34,7 +35,7 @@
   findings: ->
     @props.articles.map (article, id) =>
       React.DOM.div id: @finding_id(id), className: @finding_state_classes(id), key: id,
-        React.createElement FindingCard, article: article, selected: @is_selected(id)
+        React.createElement FindingCard, article: article, selected: @is_selected(id), share_by_default_enums: @props.share_by_default_enums
 
   to_next_finding: (e) ->
     e.preventDefault()
@@ -71,6 +72,7 @@
 
   render: ->
     @hotkey_bindings()
-    React.DOM.div className: 'findings-stream',
-      @buttons()
-      @findings()
+    React.DOM.div null,
+      React.DOM.div className: 'findings-stream',
+        @buttons()
+        @findings()

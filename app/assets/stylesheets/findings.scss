@@ -42,7 +42,7 @@ $card-border:      $default-border;
     background-color:  $card-hover-color;
     box-shadow:        $lighter-box-shadow;
   }
-  .top {
+  .above-card {
     z-index: 2;
     position: relative;
     cursor: pointer;
@@ -54,6 +54,22 @@ $card-border:      $default-border;
       color: $lightish-grey;
     }
   }
+
+  .card-button {
+    padding-right: $card-padding;
+    display: inline-block;
+    cursor: pointer;
+    .ion-icon {
+      font-size: 1em;
+    }
+    &.top-margin-tiny {
+      margin-top: 1px;
+    }
+    &.smaller {
+      font-size: 0.9em;
+    }
+  }
+
   .card-buttons {
     border-top: $card-border;
     margin: 0 (-$card-padding) (-$card-padding) (-$card-padding);
@@ -135,4 +151,9 @@ $card-border:      $default-border;
       background: linear-gradient(rgba(0,0,0,0), $card-hover-color);
     }
   }
+}
+
+.centerDropdown {
+  left:         50% !important;
+  margin-left:  -70px !important;
 }

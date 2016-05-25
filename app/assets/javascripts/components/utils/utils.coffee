@@ -8,9 +8,13 @@
 
   ion_icon_link: (name, onclick, text=null, classes='') ->
     React.DOM.a className: "card-button #{classes}", onClick: onclick,
-      React.DOM.div className: "ion-icon ion-#{name}"
+      @ion_icon(name)
       if text
         React.DOM.div className: "icon-text", text
+
+  ion_icon: (name, classes='') ->
+    React.DOM.div className: classes, onClick: onclick,
+      React.DOM.div className: "ion-icon ion-#{name}"
 
   copyToClipboard: (text) ->
     textArea = document.createElement('textarea')
