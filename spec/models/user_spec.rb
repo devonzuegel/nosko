@@ -1,8 +1,6 @@
 describe User do
-
   describe 'initializing basic model' do
     before(:each) { @user = create(:user) }
-
     subject { @user }
 
     it { should respond_to(:name)             }
@@ -13,6 +11,7 @@ describe User do
     it { should respond_to(:leaders)          }
     it { should respond_to(:followers)        }
     it { should respond_to(:sharing)          }
+    it { should respond_to(:findings)         }
 
     it '#name returns a string' do
       expect(@user.name).to match 'Test User'
@@ -33,6 +32,12 @@ describe User do
 
     it 'should initially not have any leaders' do
       expect(@user.leaders).to match []
+    end
+
+    it 'should allow assignment of various visibilities' do
+      expect(create(:article, :public).visibility).to  eq 'Public'
+      expect(create(:article, :only_me).visibility).to eq 'Only me'
+      expect(create(:article, :friends).visibility).to eq 'Friends'
     end
   end
 
@@ -106,6 +111,19 @@ describe User do
       @follower.reload
       expect(@follower.leaders).to match []
       expect(@leader.followers).to match []
+    end
+  end
+
+  describe 'retrieve user\'s findings', :focus do
+    before do
+      @user = create(:user)
+      traits = Shareable::SHARE_BY_DEFAULT_ENUM.keys.map { |k| k.downcase.tr(' ', '_').to_sym }
+      traits.each { |t| create(:article, t, user: @user) }
+    end
+
+    it 'should match the user\'s articles (for now, until we add new kinds of findings)' do
+      expect(@user.findings).to match @user.articles
+      expect(@user.findings.length).to eq 3
     end
   end
 end
