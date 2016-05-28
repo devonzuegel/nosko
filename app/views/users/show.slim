@@ -10,5 +10,6 @@
                                      following:     current_user.follows?(@user)
 
   .col-sm-9
-    - @feed.each do |article|
-      = react_component 'FindingCard', article: article
+    = render 'findings/hotkeys_modal'
+    = react_component 'FindingsStream', articles: @feed,
+                          share_by_default_enums: Finding::Article::SHARE_BY_DEFAULT_ENUM.keys

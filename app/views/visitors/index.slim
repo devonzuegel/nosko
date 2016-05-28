@@ -1,12 +1,4 @@
-= react_component 'FindingsStream', articles: @articles, share_by_default_enums: Finding::Article::SHARE_BY_DEFAULT_ENUM.keys
+= react_component 'FindingsStream', articles:               @articles,
+                                    share_by_default_enums: Finding::Article::SHARE_BY_DEFAULT_ENUM.keys
 
-#hotkeys-modal.modal.fade: .modal-dialog: .modal-content
-  .modal-header
-    button.close aria-hidden='true' data-dismiss='modal' type='button'  ×
-    h3.modal-title Hot keys
-  .modal-body: table.table.hotkeys
-    - hotkeys.each do |shortcut|
-      tr
-        td: kbd.hotkey = shortcut[:symbol]
-        td             = shortcut[:key_name]
-        td             = shortcut[:action]
+= render 'findings/hotkeys_modal'
