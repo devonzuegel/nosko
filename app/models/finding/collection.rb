@@ -9,10 +9,23 @@ module Finding
     end
 
     def all
-      TYPES.each.map do |type, klass|
-        records = klass.where(user: @user)
-        records.map { |finding| finding }
-      end.flatten
+      retrieve_records(user: @user)
+    end
+
+    def public
+      retrieve_records(user: @user, visibility: 'Public')
+    end
+
+    def only_me
+      retrieve_records(user: @user, visibility: 'Only me')
+    end
+
+    def friends
+      retrieve_records(user: @user, visibility: 'friends')
+    end
+
+    def retrieve_records(query)
+      TYPES.each.map { |_, klass| klass.where(query) }.flatten
     end
   end
 end
