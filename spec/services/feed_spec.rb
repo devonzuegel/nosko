@@ -16,6 +16,7 @@ describe Feed do
 
       @user.follow!(@leader)
 
+      Finding::Article.destroy_all
       visibilities = Shareable::SHARE_BY_DEFAULT_ENUM.keys.map { |k| k.downcase.tr(' ', '_').to_sym }
       [@user, @leader, @stranger].each do |u|
         visibilities.each { |t| create(:article, t, user: u) }
