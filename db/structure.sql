@@ -132,6 +132,43 @@ ALTER SEQUENCE evernote_extractors_id_seq OWNED BY evernote_extractors.id;
 
 
 --
+-- Name: facebook_accounts; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE facebook_accounts (
+    id integer NOT NULL,
+    auth_token character varying,
+    expires_at integer,
+    email character varying,
+    fb_id character varying,
+    name character varying,
+    image character varying,
+    uid character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: facebook_accounts_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE facebook_accounts_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: facebook_accounts_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE facebook_accounts_id_seq OWNED BY facebook_accounts.id;
+
+
+--
 -- Name: followings; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -371,6 +408,13 @@ ALTER TABLE ONLY evernote_extractors ALTER COLUMN id SET DEFAULT nextval('everno
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY facebook_accounts ALTER COLUMN id SET DEFAULT nextval('facebook_accounts_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY followings ALTER COLUMN id SET DEFAULT nextval('followings_id_seq'::regclass);
 
 
@@ -431,6 +475,14 @@ ALTER TABLE ONLY evernote_accounts
 
 ALTER TABLE ONLY evernote_extractors
     ADD CONSTRAINT evernote_extractors_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: facebook_accounts_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY facebook_accounts
+    ADD CONSTRAINT facebook_accounts_pkey PRIMARY KEY (id);
 
 
 --
@@ -629,4 +681,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160420054125');
 INSERT INTO schema_migrations (version) VALUES ('20160513010347');
 
 INSERT INTO schema_migrations (version) VALUES ('20160517015522');
+
+INSERT INTO schema_migrations (version) VALUES ('20160528042054');
 

@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
     SyncEvernoteAccount.enqueue(evernote_account.id)
   end
 
-  def connect_evernote(omniauth_response)
+  def connect_facebook(omniauth_response)
     Rails.logger.debug '> Connecting evernote...'
     # TODO
   end
