@@ -7,7 +7,9 @@ class UsersController < ApplicationController
   end
 
   def show
+    user = User.find(params[:id])
     @user = User.find(params[:id]).decorate
+    @feed = ProfileFeed.new(user, current_user).findings.map { |a| a.decorate.as_prop }
   end
 
   def settings

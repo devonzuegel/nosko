@@ -13,19 +13,25 @@ module Finding
     end
 
     def public
-      retrieve_records(user: @user, visibility: 'Public')
+      retrieve_records(user: @user, visibility: visibility_to_enum('Public'))
     end
 
     def only_me
-      retrieve_records(user: @user, visibility: 'Only me')
+      retrieve_records(user: @user, visibility: visibility_to_enum('Only me'))
     end
 
     def friends
-      retrieve_records(user: @user, visibility: 'friends')
+      retrieve_records(user: @user, visibility: visibility_to_enum('Friends'))
     end
+
+    private
 
     def retrieve_records(query)
       TYPES.each.map { |_, klass| klass.where(query) }.flatten
+    end
+
+    def visibility_to_enum(visibility_str)
+      Shareable::SHARE_BY_DEFAULT_ENUM[ visibility_str ]
     end
   end
 end

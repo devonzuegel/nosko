@@ -8,18 +8,17 @@ class ProfileFeed
   end
 
   def findings
-    result = users_findings.public
+    result = Finding::Collection.new(@user).public
     # if @user.friends_with(@viewer)
-    #   result += users_findings.friends
+    #   result += Finding::Collection.new(@user).friends
     # end
+    if @user == @viewer
+      result += Finding::Collection.new(@user).only_me
+    end
     sorted(result.uniq)
   end
 
   private
-
-  def users_findings
-    @users_findings ||= Finding::Collection.new(@user)
-  end
 
   def sorted(list)
     result = list.sort_by(&@options.fetch(:order))

@@ -34,32 +34,27 @@ RSpec.describe Finding::Collection, type: :model do
 
   describe '.public' do
     it 'retrieve only the user\'s Public articles' do
-      expect(@collection.public).to match @user.articles.where(visibility: 'Public')
+      expect(@collection.public).to match @user.articles.where(visibility: Shareable::SHARE_BY_DEFAULT_ENUM['Public'])
       expect(@collection.public.length).to eq 1
     end
   end
 
   describe '.only_me' do
     it 'retrieve only the user\'s "Only me" articles' do
-      expect(@collection.only_me).to match @user.articles.where(visibility: 'Only me')
+      expect(@collection.only_me).to match @user.articles.where(visibility: Shareable::SHARE_BY_DEFAULT_ENUM['Only me'])
       expect(@collection.only_me.length).to eq 1
     end
   end
 
   describe '.friends' do
     it 'retrieve only the user\'s Friends articles' do
-      expect(@collection.friends).to match @user.articles.where(visibility: 'Friends')
+      expect(@collection.friends).to match @user.articles.where(visibility: Shareable::SHARE_BY_DEFAULT_ENUM['Friends'])
       expect(@collection.friends.length).to eq 1
     end
   end
 
-  # The following specs will expand over time as we add more finding types
-
+  # The following spec will expand over time as we add more finding types
   it 'should have the expected finding types listed' do
     expect(Finding::Collection::TYPES).to eq({ article: Finding::Article })
-  end
-
-  it 'should have the expected sibling constants' do
-    expect(Finding.constants).to match %i(Article Findable Collection)
   end
 end

@@ -114,7 +114,7 @@ describe User do
     end
   end
 
-  describe 'retrieve user\'s findings', :focus do
+  describe 'retrieve user\'s findings' do
     before do
       @user = create(:user)
       traits = Shareable::SHARE_BY_DEFAULT_ENUM.keys.map { |k| k.downcase.tr(' ', '_').to_sym }
