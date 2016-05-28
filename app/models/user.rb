@@ -33,13 +33,7 @@ class User < ActiveRecord::Base
   end
 
   def connect_facebook(omniauth_response)
-    Rails.logger.debug '> Connecting Facebook...'
-    auth_token = omniauth_response['credentials']['token']
-
-    evernote_account.update(auth_token: auth_token)
-    Rails.logger.debug '> Evernote connected!'
-
-    SyncEvernoteAccount.enqueue(evernote_account.id)
+    facebook_account.connect(omniauth_response)
   end
 
   def evernote_connected?
@@ -47,8 +41,7 @@ class User < ActiveRecord::Base
   end
 
   def facebook_connected?
-    false
-    # facebook_account.connected?
+    facebook_account.connected?
   end
 
   private

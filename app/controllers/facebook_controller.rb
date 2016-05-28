@@ -4,10 +4,7 @@ class FacebookController < ApplicationController
   end
 
   def create
-    ap request.env['omniauth.auth']
-    # current_user.connect_evernote(request.env['omniauth.auth'])
-
-    # # TODO add error handling in case of bad account info
+    current_user.facebook_account.connect(request.env['omniauth.auth'])
     redirect_to root_url, notice: 'Facebook not yet connected!'
   end
 

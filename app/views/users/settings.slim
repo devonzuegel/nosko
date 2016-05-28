@@ -10,10 +10,15 @@
         - else
           a href='/evernote/connect'
             button.btn.btn-primary Connect your Evernote account
+
       tr: td
         - if !current_user.facebook_connected?
           a href='/facebook/connect'
-            button.btn.btn-primary Connect your Facebook account
+            button.btn.btn-primary
+              .ion-icon.ion-social-facebook
+              | Connect your Facebook account
+        - else
+          p Facebook connected!
 
   .col-lg-6
     = react_component 'SettingsForm',
