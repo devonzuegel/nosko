@@ -50,6 +50,8 @@
       React.DOM.a className: 'fill-div', href: @props.article.href
       React.DOM.div id: @id(), className: "#{@toggled_collapsed_class()} article-body",
         React.DOM.h1 null, @props.article.title
+        React.DOM.a href: @props.article.user.href,
+          React.DOM.h3 className: 'above-card', @props.article.user.name
         React.DOM.div className: 'markdown-body', dangerouslySetInnerHTML: { __html: @props.article.content }
 
   update_visibility: (visibility) ->

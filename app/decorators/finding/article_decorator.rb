@@ -14,6 +14,7 @@ class Finding::ArticleDecorator < Draper::Decorator
       href:        href,
       locked:      locked?,
       to_param:    to_param,
+      user:        user.decorate.as_prop,
       visibility:  visibility,
       updated_at:  h.time_ago_in_words(updated_at)
     }

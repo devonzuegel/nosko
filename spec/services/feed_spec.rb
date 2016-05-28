@@ -53,5 +53,7 @@ describe Feed do
     end
 
     it 'needs to incorporate friends\' friend-only findings once that is implemented'
+
+    it 'should perform LIMIT and OFFSET for pagination'
   end
 end

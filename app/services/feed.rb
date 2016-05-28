@@ -3,7 +3,7 @@ class Feed
     order:      :created_at,
     reverse:    false,
     offset:     0,
-    limit:      20,
+    limit:      20
   }
 
   def initialize(user, options = {})
