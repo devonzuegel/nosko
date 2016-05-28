@@ -27,7 +27,7 @@ module Finding
     private
 
     def retrieve_records(query)
-      TYPES.each.map { |_, klass| klass.where(query) }.flatten
+      TYPES.each.map { |_, klass| klass.where(query).limit(10) }.flatten
     end
 
     def visibility_to_enum(visibility_str)

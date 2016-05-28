@@ -10,8 +10,6 @@ class FacebookAccount < ActiveRecord::Base
 
   def connect(omniauth_response)
     Rails.logger.debug '> Connecting Facebook...'
-    puts 'BEFORE'.black
-    ap self
     update_attributes(
       auth_token:   omniauth_response['credentials']['token'],
       email:        omniauth_response['info']['email'],
@@ -21,8 +19,6 @@ class FacebookAccount < ActiveRecord::Base
       name:         omniauth_response['info']['name'],
       uid:          omniauth_response['uid'],
     )
-    puts 'AFTER'.black
-    ap self
     Rails.logger.debug '> Facebook connected!'
   end
 

@@ -5,7 +5,7 @@ class FacebookController < ApplicationController
 
   def create
     current_user.facebook_account.connect(request.env['omniauth.auth'])
-    redirect_to root_url, notice: 'Facebook not yet connected!'
+    redirect_to root_url, notice: 'Facebook connected!'
   end
 
   private
