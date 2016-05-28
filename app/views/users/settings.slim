@@ -1,14 +1,21 @@
 .row
-  h3 Settings
-  .col-lg-8.col-lg-offset-2.col-md-10.col-md-offset-1
-    - if current_user.evernote_connected?
-      a href=sync_evernote_path
-        button.btn.btn-default Sync Evernote
-    - else
-      a href='/evernote/connect'
-        button.btn.btn-primary Connect your Evernote account
+  .col-lg-12
+    h3 Settings
+  .col-lg-6
+    table.table.no-border
+      tr: td
+        - if current_user.evernote_connected?
+          a href=sync_evernote_path
+            button.btn.btn-default Sync Evernote
+        - else
+          a href='/evernote/connect'
+            button.btn.btn-primary Connect your Evernote account
+      tr: td
+        - if !current_user.facebook_connected?
+          a href='/facebook/connect'
+            button.btn.btn-primary Connect your Facebook account
 
-  .col-lg-8.col-lg-offset-2.col-md-10.col-md-offset-1
+  .col-lg-6
     = react_component 'SettingsForm',
       user:                         @user.decorate.as_settings_prop,
       share_by_default_options:     Shareable::share_by_default_options,

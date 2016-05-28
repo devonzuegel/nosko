@@ -27,6 +27,7 @@ gem 'oauth',                   '0.4.7'
 gem 'omniauth',                '1.2.2'
 gem 'omniauth-twitter',        '1.2.1'
 gem 'omniauth-evernote',       '1.2.1'
+gem 'omniauth-facebook'
 gem 'redcarpet',               '3.3.4'
 
 # Evernote

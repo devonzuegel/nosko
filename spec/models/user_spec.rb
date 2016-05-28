@@ -59,6 +59,16 @@ describe User do
     end
   end
 
+  describe 'connecting to evernote' do
+    before(:each) do
+      @user        = create(:user)
+      #@dummy_creds = { 'credentials' => { 'token' => Faker::Lorem.characters(20) } }
+    end
+
+    it 'should say that facebook is connected'
+    it 'should store the facebook credentials'
+  end
+
   describe 'creating a User' do
     subject { -> { @user = create(:user) } }
 

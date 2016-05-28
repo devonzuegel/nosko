@@ -1,4 +1,5 @@
-= react_component 'FindingsStream', articles:               @articles,
-                                    share_by_default_enums: Finding::Article::SHARE_BY_DEFAULT_ENUM.keys
-
 = render 'findings/hotkeys_modal'
+
+= react_component 'FindingsStream',
+    articles:                @articles,
+    share_by_default_enums:  Finding::Article::SHARE_BY_DEFAULT_ENUM.keys

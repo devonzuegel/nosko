@@ -29,4 +29,8 @@ Rails.application.routes.draw do
   get '/evernote/connect'        => 'evernote#new'
   get '/evernote/sync'           => 'evernote#sync',     as: :sync_evernote
   get '/auth/evernote/callback'  => 'evernote#create'
+
+  # Facebook authentication
+  get '/facebook/connect'        => 'facebook#new'
+  get '/auth/facebook/callback'  => 'facebook#create'
 end
