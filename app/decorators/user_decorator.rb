@@ -1,5 +1,5 @@
 class UserDecorator < Draper::Decorator
-  delegate *%i(id name)
+  delegate *%i(id name facebook_account)
 
   def followers
     object.followers.map(&:decorate).map(&:as_prop)
@@ -28,6 +28,10 @@ class UserDecorator < Draper::Decorator
   def num_words_this_week
     num = findings_this_week.map { |a| a.content.length }.reduce(&:+)
     h.number_with_delimiter(num)
+  end
+
+  def profile_pic
+    "http://graph.facebook.com/v2.6/#{facebook_account.fb_id}/picture?type=square&width=500"
   end
 
   def as_prop
