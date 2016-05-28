@@ -144,6 +144,7 @@ CREATE TABLE facebook_accounts (
     name character varying,
     image character varying,
     uid character varying,
+    user_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -562,6 +563,13 @@ CREATE INDEX index_evernote_extractors_on_evernote_account_id ON evernote_extrac
 
 
 --
+-- Name: index_facebook_accounts_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_facebook_accounts_on_user_id ON facebook_accounts USING btree (user_id);
+
+
+--
 -- Name: index_followings_on_follower_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -618,6 +626,14 @@ ALTER TABLE ONLY articles
 
 ALTER TABLE ONLY articles
     ADD CONSTRAINT fk_rails_3d31dad1cc FOREIGN KEY (user_id) REFERENCES users(id);
+
+
+--
+-- Name: fk_rails_81c535f93a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY facebook_accounts
+    ADD CONSTRAINT fk_rails_81c535f93a FOREIGN KEY (user_id) REFERENCES users(id);
 
 
 --

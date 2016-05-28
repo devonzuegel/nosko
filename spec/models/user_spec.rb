@@ -22,6 +22,11 @@ describe User do
       expect(@user.evernote_connected?).to         be false
     end
 
+    it 'should initially have an empty facebook_account' do
+      expect(@user.facebook_account.auth_token).to be nil
+      expect(@user.facebook_connected?).to         be false
+    end
+
     it 'should initially not have any articles' do
       expect(@user.articles).to match []
     end
