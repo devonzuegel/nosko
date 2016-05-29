@@ -1,5 +1,5 @@
 class UserDecorator < Draper::Decorator
-  delegate *%i(id name facebook_account)
+  delegate *%i(id name facebook_account follows?)
 
   def followers
     object.followers.map(&:decorate).map(&:as_prop)
@@ -31,7 +31,11 @@ class UserDecorator < Draper::Decorator
   end
 
   def profile_pic
-    "http://graph.facebook.com/v2.6/#{facebook_account.fb_id}/picture?type=square&width=500"
+    if !facebook_account.connected?
+      'http://signaltower.co/wp-content/uploads/2015/05/placeholder.png'
+    else
+      "http://graph.facebook.com/v2.6/#{facebook_account.fb_id}/picture?type=square&width=500"
+    end
   end
 
   def as_prop

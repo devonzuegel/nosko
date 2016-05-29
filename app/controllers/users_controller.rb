@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: %(settings)
   before_action :correct_user?, only: %(update)
 
   def index
@@ -8,8 +8,10 @@ class UsersController < ApplicationController
 
   def show
     user = User.find(params[:id])
-    @user = User.find(params[:id]).decorate
+
+    @user = user.decorate
     @feed = ProfileFeed.new(user, current_user).findings.map { |a| a.decorate.as_prop }
+    @current_user = CurrentUserDecorator.new(current_user)
   end
 
   def settings

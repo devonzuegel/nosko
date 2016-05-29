@@ -1,13 +1,13 @@
 .row
   .col-sm-3
-    img src=@user.profile_pic
+    .circle: img#profile-pic src=@user.profile_pic
 
     b= @user.name
 
     = react_component 'UserSidebar', user:          @user.as_prop,
                                      followers:     @user.followers,
-                                     current_user:  current_user.decorate.as_prop,
-                                     following:     current_user.follows?(@user)
+                                     current_user:  @current_user.render,
+                                     following:     @current_user.follows?(@user)
 
   .col-sm-9
     = render 'findings/hotkeys_modal'

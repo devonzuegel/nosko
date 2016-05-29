@@ -15,7 +15,9 @@
       followers: @followers()
 
   followers: ->
-    if !@state.following
+    if !@followable()
+      @state.followers
+    else if !@state.following
       @state.followers.concat([ @props.current_user ])
     else
       @state.followers.filter ((f) -> f.id != @props.current_user.id).bind(this)
@@ -23,10 +25,11 @@
   num_words:     -> @props.user.num_words_this_week
   num_findings:  -> @props.user.num_findings_this_month
   num_books:     -> 333
+  followable:    -> (@props.current_user != null) && (@props.user.id != @props.current_user.id)
 
   render: ->
     React.DOM.div null,
-      if @props.user.id != @props.current_user.id
+      if @followable()
         React.createElement FollowUnfollowButton,
           user:         @props.user
           following:    @state.following

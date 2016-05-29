@@ -35,22 +35,22 @@ module ApplicationHelper
         symbol:   'h',
         key_name: 'H key',
         action:   'Open or close the hot keys help'
+      }, {
+        keypress: 'shift+up',
+        symbol:   '⇧ + ↑', # ←
+        key_name: 'Shift + up arrow',
+        action:   'Go to first finding or highlight'
+      }, {
+        keypress: 'shift+down',
+        symbol:   '⇧ + ↓', # ←
+        key_name: 'Shift + down arrow',
+        action:   'Go to last finding or highlight'
 
       # }, {
       #   keypress: 's',
       #   symbol:   's', # ←
       #   key_name: 'S key',
       #   action:   'Star current finding or highlight'
-      # }, {
-      #   keypress: 'shift+up',
-      #   symbol:   '⇧ + ↑', # ←
-      #   key_name: 'Shift + up arrow',
-      #   action:   'Go to first finding or highlight'
-      # }, {
-      #   keypress: 'shift+down',
-      #   symbol:   '⇧ + ↓', # ←
-      #   key_name: 'Shift + down arrow',
-      #   action:   'Go to last finding or highlight'
       }
     ]
   end
