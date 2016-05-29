@@ -26,4 +26,8 @@ module Shareable
   def set_visibility_from_default
     self.visibility = user.sharing.share_by_default
   end
+
+  def update_visibility(visibility)
+    update_attributes(visibility: visibility, reviewed: true)
+  end
 end

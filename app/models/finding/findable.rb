@@ -4,7 +4,7 @@ module Finding
 
     include Permalinkable, FormEditable, Shareable
 
-    REQUIRED_FIELDS = %i(title user_id locked visibility)
+    REQUIRED_FIELDS = %i(title user_id locked visibility reviewed)
     HIDDEN_FIELDS   = %i(id permalink_id created_at updated_at)
 
     included do

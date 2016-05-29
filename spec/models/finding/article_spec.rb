@@ -12,7 +12,8 @@ RSpec.describe Finding::Article, type: :model do
     end
 
     it 'requires expected required fields' do
-      expect(Finding::Article.required_fields).to match_array %i(title content user_id locked visibility)
+      req_fields =  %i(title content user_id locked visibility reviewed)
+      expect(Finding::Article.required_fields).to match_array req_fields
       Finding::Article.required_fields.each do |field|
         expect(build(:article, field => nil)).to_not be_valid
       end
@@ -130,36 +131,36 @@ RSpec.describe Finding::Article, type: :model do
 
     it 'shouldnt allow non-enumerated visibility' do
       article = create(:article, user: private_user)
-      expect { article.update_attributes(visibility: 'asdflkjsaflk') }.to raise_error ArgumentError
+      expect { article.update_visibility('asdflkjsaflk') }.to raise_error ArgumentError
     end
 
     it 'should allow me to change the status from "Only Me" visibility to "Friends" and "Public"' do
       article = create(:article, user: private_user)
-      expect { article.update_attributes(visibility: 'Friends') }
+      expect { article.update_visibility('Friends') }
         .to change { article.visibility }.from('Only me').to('Friends')
 
       article = create(:article, user: private_user)
-      expect { article.update_attributes(visibility: 'Public') }
+      expect { article.update_visibility('Public') }
         .to change { article.visibility }.from('Only me').to('Public')
     end
 
     it 'should allow me to change the status from "Friends" visibility to "Only me" and "Public"' do
       article = create(:article, user: friends_user)
-      expect { article.update_attributes(visibility: 'Only me') }
+      expect { article.update_visibility('Only me') }
         .to change { article.visibility }.from('Friends').to('Only me')
 
       article = create(:article, user: friends_user)
-      expect { article.update_attributes(visibility: 'Public') }
+      expect { article.update_visibility('Public') }
         .to change { article.visibility }.from('Friends').to('Public')
     end
 
     it 'should allow me to change the status from "Public" visibility to "Only me" and "Friends"' do
       article = create(:article, user: public_user)
-      expect { article.update_attributes(visibility: 'Only me') }
+      expect { article.update_visibility('Only me') }
         .to change { article.visibility }.from('Public').to('Only me')
 
       article = create(:article, user: public_user)
-      expect { article.update_attributes(visibility: 'Friends') }
+      expect { article.update_visibility('Friends') }
         .to change { article.visibility }.from('Public').to('Friends')
     end
 
@@ -184,7 +185,7 @@ RSpec.describe Finding::Article, type: :model do
     end
 
     it 'updating the visibility should change status from "unreviewed" to "reviewed"' do
-      expect { unreviewed_article.update_attributes(visibility: 'Public') }
+      expect { unreviewed_article.update_visibility('Public') }
           .to change { unreviewed_article.reviewed? }
           .from(false).to true
     end
