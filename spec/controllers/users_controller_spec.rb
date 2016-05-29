@@ -6,10 +6,10 @@ describe UsersController, :omniauth do
   end
 
   describe 'GET /users' do
-    it 'should redirect to home page if user is not logged in' do
+    it 'should list other users if user is not logged in' do
       get :index
-      assert_response :redirect
-      assert_redirected_to root_url
+      assert_response :success
+      expect(assigns(:users).map(&:id)).to eq [ @user, @other_user ].map(&:id)
     end
 
     it 'should list other users to signed in users' do
@@ -21,10 +21,10 @@ describe UsersController, :omniauth do
   end
 
   describe 'GET /users/:id' do
-    it 'should redirect to root' do
+    it 'shows user with :id when user not logged in' do
       get :show, id: @user.id
-      assert_response :redirect
-      assert_redirected_to root_url
+      assert_response :success
+      expect(assigns(:user)).to eq @user
     end
 
     it 'shows user with :id when user logged in' do
