@@ -11,7 +11,5 @@ feature 'Home page' do
     visit root_path
     expect(page).to have_content 'Home'
     expect(page).to have_content 'Sign in'
-    expect(page).to have_content 'Sign in'
   end
-
 end
