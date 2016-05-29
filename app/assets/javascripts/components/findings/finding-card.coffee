@@ -50,9 +50,13 @@
       React.DOM.a className: 'fill-div', href: @props.article.href
       React.DOM.div id: @id(), className: "#{@toggled_collapsed_class()} article-body",
         React.DOM.h1 null, @props.article.title
-        React.DOM.a href: @props.article.user.href,
-          React.DOM.h4 className: 'above-card', @props.article.user.name
+        React.DOM.div className: 'date-and-user',
+          React.DOM.a className: 'user-link', href: @props.article.user.href,
+            React.DOM.div className: 'above-card', @props.article.user.name
+          React.DOM.div className: 'date-and-user-spacer', '//'
+          React.DOM.div className: 'date ', "#{@props.article.updated_at} ago"
         React.DOM.div className: 'markdown-body', dangerouslySetInnerHTML: { __html: @props.article.content }
+      @card_buttons() if @props.selected
 
   update_visibility: (visibility) ->
     $.patch "/finding/#{@props.article.to_param}", { article: { visibility: visibility } }, (result) =>
@@ -68,7 +72,10 @@
         'aria-expanded':  'true'
         'aria-haspopup':  'true'
         'data-toggle':    'dropdown'
-        Utils.ion_icon('eye', 'card-button')
+        if @state.visibility == 'Only me'
+          Utils.ion_icon('eye-disabled', 'card-button')
+        else
+          Utils.ion_icon('eye', 'card-button')
       React.DOM.ul className: 'dropdown-menu centerDropdown', 'aria-labelledby': id,
         React.DOM.li className: 'dropdown-header', 'Change visibility'
         @props.share_by_default_enums.map (label, id) =>
@@ -78,19 +85,15 @@
             React.DOM.a href: '#', onClick: update_visibility, label
 
   card_buttons: ->
-    React.DOM.div className: 'card-buttons',
+    React.DOM.div className: 'card-buttons above-card',
       React.DOM.div className: 'right',
         @lock_btn()
         @visibility_btn()
         Utils.ion_icon_link('link', @permalink_to_clipboard)
-      React.DOM.div className: 'left',
-        React.DOM.div className: 'card-button',
-          React.DOM.div className: 'date', "#{@props.article.updated_at} ago"
+        @resize_btn()
 
   render: ->
     @hotkey_bindings()
 
     React.DOM.div className: 'finding',
-      React.DOM.div className: 'pull-right above-card', @resize_btn()
       @card_body()
-      # @card_buttons()

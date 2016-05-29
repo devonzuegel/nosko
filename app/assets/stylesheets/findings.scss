@@ -4,7 +4,7 @@ $card-color:       $background-color;
 $card-hover-color: white;
 $article-height:   230px;
 $fade-height:      55px;
-$fade-top:         185px;
+$fade-top:         175px;
 $card-padding:     20px;
 $card-border:      $default-border;
 
@@ -42,34 +42,15 @@ $card-border:      $default-border;
     box-shadow:   inset  0  10px  10px -10px $lightest-grey,
                   inset  0  -10px 10px -10px $lightest-grey;
   }
-}
-
-
-
-
-
-
-
-.findings-stream .btn-toolbar button.btn.btn-secondary {
-  &:focus, &:active, &:hover, &:visited {
-    outline: none !important;
-  }
-}
-.card {
-  border-radius: 4px;
-  padding:  $card-padding;
-  margin-bottom: 10px;
-  background-color:  rgba($card-color, 0.9);
-  border:           $card-border;
-  &:hover {
-    background-color:  $card-hover-color;
-    box-shadow:        $lighter-box-shadow;
-  }
 
   .card-buttons {
-    border-top: $card-border;
-    margin: 0 (-$card-padding) (-$card-padding) (-$card-padding);
-    padding: (0.2 * $card-padding) ($card-padding);
+    padding:        0;
+    position:       relative;
+    background:     linear-gradient(rgba($card-hover-color, 0.4), $card-hover-color);
+    height:         25px;
+    margin-bottom:  -25px;
+    margin-top:     0;
+    top:            -20px;
     .card-button {
       display: inline-block;
       cursor: pointer;
@@ -96,6 +77,29 @@ $card-border:      $default-border;
     }
   }
 }
+
+
+
+
+
+
+
+.findings-stream .btn-toolbar button.btn.btn-secondary {
+  &:focus, &:active, &:hover, &:visited {
+    outline: none !important;
+  }
+}
+.card {
+  border-radius: 4px;
+  padding:  $card-padding;
+  margin-bottom: 10px;
+  background-color:  rgba($card-color, 0.9);
+  border:           $card-border;
+  &:hover {
+    background-color:  $card-hover-color;
+    box-shadow:        $lighter-box-shadow;
+  }
+}
 .filled-div {
   position: relative;
   a.fill-div {
@@ -112,12 +116,27 @@ $card-border:      $default-border;
   }
 }
 .date {
-  text-transform: uppercase;
+  // text-transform: uppercase;
   color:          $lightish-grey;
 }
 .article-body {
   position:   relative;
   overflow:   hidden;
+
+  .date-and-user {
+    display: inline-flex;
+    .user-link {
+      padding-right: 5px;
+    }
+    .date-and-user-spacer {
+      color: $lightish-grey;
+      font-size: .8em;
+      padding: 2px 5px;
+    }
+    .date {
+      padding-left: 5px;
+    }
+  }
 
   @include transition(all 0.3s ease-out);
 
