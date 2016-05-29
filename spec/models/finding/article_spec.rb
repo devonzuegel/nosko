@@ -168,4 +168,25 @@ RSpec.describe Finding::Article, type: :model do
       expect(Finding::Article.visibilities).to eq visibilities
     end
   end
+
+  describe 'review status' do
+    let(:unreviewed_article) { create(:article) }
+    let(:reviewed_article)   { create(:article, reviewed: true) }
+
+    it 'should be unreviewed' do
+      expect(unreviewed_article.reviewed?).to  eq false
+      expect(unreviewed_article.visibility).to eq 'Only me'
+    end
+
+    it 'should be reviewed' do
+      expect(reviewed_article.reviewed?).to  eq true
+      expect(reviewed_article.visibility).to eq 'Only me'
+    end
+
+    it 'updating the visibility should change status from "unreviewed" to "reviewed"' do
+      expect { unreviewed_article.update_attributes(visibility: 'Public') }
+          .to change { unreviewed_article.reviewed? }
+          .from(false).to true
+    end
+  end
 end
