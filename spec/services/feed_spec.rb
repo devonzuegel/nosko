@@ -32,7 +32,7 @@ describe Feed do
       expected_findings = [
         *Finding::Collection.new(@user).all,
         *Finding::Collection.new(@leader).public
-      ].sort_by &:created_at
+      ].sort_by(&:created_at).map { |f| f.decorate.as_prop }
       expect(Feed.new(@user).findings).to eq expected_findings
     end
 
@@ -42,14 +42,14 @@ describe Feed do
     end
 
     it 'should surface all findings viewable to the user owned by his/her leaders' do
-      expect(Feed.new(@user).leaders_findings).to eq Finding::Collection.new(@leader).public
+      expect(Feed.new(@user).leaders_findings).to eq Finding::Collection.new(@leader).public.map { |f| f.decorate.as_prop }
     end
 
     it 'should reverse findings result when passed reverse:true' do
       expected_findings = [
         *Finding::Collection.new(@user).all,
         *Finding::Collection.new(@leader).public
-      ].sort_by(&:created_at).reverse
+      ].sort_by(&:created_at).reverse.map { |f| f.decorate.as_prop }
       expect(Feed.new(@user, reverse: true).findings).to eq expected_findings
     end
 

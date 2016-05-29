@@ -6,7 +6,7 @@ class Finding::ArticleDecorator < Draper::Decorator
     "#{h.root_url}#{path}"
   end
 
-  def as_prop
+  def as_prop(current_user = nil)
     {
       title:       title,
       content:     content.gsub("\r\n","<br/>"),
@@ -16,7 +16,8 @@ class Finding::ArticleDecorator < Draper::Decorator
       to_param:    to_param,
       user:        user.decorate.as_prop,
       visibility:  visibility,
-      updated_at:  h.time_ago_in_words(updated_at).capitalize
+      updated_at:  h.time_ago_in_words(updated_at).capitalize,
+      editable:    h.current_user == user
     }
   end
 end

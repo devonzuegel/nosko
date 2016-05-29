@@ -87,8 +87,10 @@
   card_buttons: ->
     React.DOM.div className: 'card-buttons above-card',
       React.DOM.div className: 'right',
-        @lock_btn()
-        @visibility_btn()
+        if @props.article.editable
+          React.DOM.div null,
+            @lock_btn()
+            @visibility_btn()
         Utils.ion_icon_link('link', @permalink_to_clipboard)
         @resize_btn()
 
