@@ -1,3 +1,19 @@
-h4 Unreviewed
+h3 Unreviewed
 = react_component 'ActivityLog', findings: @unreviewed_findings
 
+css:
+  .animation-enter {
+    opacity: 0.01;
+  }
+  .animation-enter.animation-enter-active {
+    opacity: 1;
+    transition: opacity 2s ease-in;
+  }
+  .example-appear {
+    opacity: 0.01;
+    transition: opacity .5s ease-in;
+  }
+
+  .example-appear.example-appear-active {
+    opacity: 1;
+  }
