@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require moment
+//= require es5-shim
 //= require react
 //= require react_ujs
 //= require_tree ./components/utils

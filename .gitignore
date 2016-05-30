@@ -89,3 +89,5 @@ pickle-email-*.html
 
 /psds
 /kill_server.rb
+
+/node_modules

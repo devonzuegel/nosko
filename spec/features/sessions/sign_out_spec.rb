@@ -8,10 +8,12 @@ feature 'Sign out', :omniauth do
   #   Given I am signed in
   #   When I sign out
   #   Then I see a signed out message
-  scenario 'user signs out successfully' do
+  scenario 'user signs out successfully', js: true do
     signin
-    click_link 'Sign out'
+    find('#user-menu-dropdown').click
+    find('#user-menu-dropdown').click
+    puts page.text.blue
+    # click_link 'Sign out'
     expect(page).to have_content 'Signed out'
   end
-
 end
