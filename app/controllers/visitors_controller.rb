@@ -7,6 +7,5 @@ class VisitorsController < ApplicationController
 
   def activity
     @unreviewed_findings = ActivityLog.new(current_user).unreviewed
-    @reviewed_findings   = ActivityLog.new(current_user).reviewed
   end
 end

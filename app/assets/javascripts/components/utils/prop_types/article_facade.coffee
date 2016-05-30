@@ -6,5 +6,6 @@ React.PropTypes.ArticleFacade = React.PropTypes.shape({
   locked:       React.PropTypes.bool.isRequired,
   to_param:     React.PropTypes.string.isRequired,
   editable:     React.PropTypes.bool.isRequired,
-  updated_at:   React.PropTypes.string.isRequired
+  visibility:   React.PropTypes.string.isRequired,
+  updated_at:   React.PropTypes.string.isRequired,
 })

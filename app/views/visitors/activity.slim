@@ -1,11 +1,3 @@
-p Unreviewed
-ul
-  - @unreviewed_findings.each do |finding|
-    li= finding.id
-    /pre= JSON.pretty_generate finding.as_json
+h4 Unreviewed
+= react_component 'ActivityLog', findings: @unreviewed_findings
 
-p Reviewed
-ul
-  - @reviewed_findings.each do |finding|
-    li= finding.id
-    /pre= JSON.pretty_generate finding.as_json
