@@ -10,7 +10,7 @@ nav.navbar
       ul.nav.navbar-nav.navbar-left
         li= link_to 'Home', root_path, class: 'navbar-brand'
         - if user_signed_in?
-          li= link_to 'Activity Log', '#'
+          li= link_to 'Activity Log', activity_path
           li= link_to 'Inbox',        '#'
       ul.nav.navbar-nav.navbar-right
         - if user_signed_in?

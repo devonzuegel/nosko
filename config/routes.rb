@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root to: 'visitors#index'
+  get '/activity' => 'visitors#activity',   as: :activity
 
   resources :highlights, only: %i(create update destroy)
   resources :users

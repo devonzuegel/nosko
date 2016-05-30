@@ -56,6 +56,6 @@ class Feed
   end
 
   def rendered(list)
-    sorted(list).map { |finding| finding.decorate.as_prop(@user) }
+    sorted(list).map { |finding| finding.decorate.as_prop }
   end
 end

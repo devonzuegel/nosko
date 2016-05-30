@@ -1,5 +1,4 @@
 class SessionsController < ApplicationController
-
   def new
     redirect_to '/auth/twitter'
   end
