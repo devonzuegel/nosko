@@ -1,5 +1,5 @@
+R = React.DOM
 TransitionGroup = React.addons.CSSTransitionGroup
-R               = React.DOM
 
 @ActivityLog = React.createClass
   propTypes:
@@ -11,8 +11,7 @@ R               = React.DOM
 
   rendered_findings: ->
     @state.findings.map (finding, id) =>
-      R.button
-        type:       'button'
+      R.li
         onClick:    @handleRemove.bind(this, id)
         key:        finding.title
         id:         "list-group-item-#{id}"
@@ -35,8 +34,9 @@ R               = React.DOM
   render: ->
     R.div id: 'activity-log', className: 'list-group',
       R.button onClick: @handleAdd, 'Add Item'
-      React.createElement TransitionGroup,
-        transitionName:          'slide'
-        transitionEnterTimeout:   0
-        transitionLeaveTimeout:  300
-        @rendered_findings()
+      R.ul className: 'list-group',
+        React.createElement TransitionGroup,
+          transitionName:          'slide'
+          transitionEnterTimeout:   0
+          transitionLeaveTimeout:  300
+          @rendered_findings()
