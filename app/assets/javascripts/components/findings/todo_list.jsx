@@ -26,7 +26,7 @@ var TodoList = React.createClass({
 
       return (
         <div id='example'>
-          <button onClick={this.handleAdd}>Add Item</button>
+          <button className='btn btn-primary' onClick={this.handleAdd}>Add Item</button>
           <ReactCSSTransitionGroup transitionName='example' transitionEnterTimeout={0} transitionLeaveTimeout={0}>
             {items}
           </ReactCSSTransitionGroup>

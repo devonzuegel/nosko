@@ -13,15 +13,17 @@ TransitionGroup = React.addons.CSSTransitionGroup
       React.DOM.button
         type:       'button'
         onClick:    @handleRemove.bind(this, id)
-        key:        id
+        key:        finding.title
         id:         "list-group-item-#{id}"
         className:  'list-group-item'
 
         finding.title
         React.DOM.span className: 'pull-right badge', finding.visibility
 
+  rand_str: -> Math.random().toString(36).substring(7)
+
   handleAdd: ->
-    new_findings = @state.findings.concat([{ title: Math.random().toString(36).substring(7); }])
+    new_findings = @state.findings.concat([{ title: @rand_str() }])
     @setState findings: new_findings
 
   handleRemove: (i) ->
@@ -35,5 +37,5 @@ TransitionGroup = React.addons.CSSTransitionGroup
       React.createElement TransitionGroup,
         transitionName:          'example'
         transitionEnterTimeout:   0
-        transitionLeaveTimeout:  3000
+        transitionLeaveTimeout:  300
         @rendered_findings()
