@@ -2,18 +2,27 @@ h3 Unreviewed
 = react_component 'ActivityLog', findings: @unreviewed_findings
 
 css:
-  .animation-enter {
+  .example-enter {
     opacity: 0.01;
-  }
-  .animation-enter.animation-enter-active {
-    opacity: 1;
-    transition: opacity 2s ease-in;
-  }
-  .example-appear {
-    opacity: 0.01;
-    transition: opacity .5s ease-in;
+    visibility: hidden;
   }
 
-  .example-appear.example-appear-active {
+  .example-enter.example-enter-active {
     opacity: 1;
+    transition: opacity 500ms ease-out;
+    transition: visibility 300ms ease-out;
+    visibility: visible;
+  }
+
+  .example-leave {
+    opacity: 1;
+    left: 0;
+  }
+
+  .example-leave.example-leave-active {
+    opacity: 1;
+    left: 100%;
+    visibility: visible;
+    transition: opacity 200ms ease-out;
+    transition: left 200ms ease-out;
   }
