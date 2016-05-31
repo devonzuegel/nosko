@@ -10,18 +10,18 @@ TransitionGroup = React.addons.CSSTransitionGroup
 
   rendered_findings: ->
     @state.findings.map (finding, id) =>
-      class_active = ''# if id==1 then 'active' else 'inactive'
       React.DOM.button
-        type: 'button'
-        onClick: @handleRemove.bind(this, id)
-        key: id
-        id: "list-group-item-#{id}"
-        className: "list-group-item #{class_active} slide-out"
+        type:       'button'
+        onClick:    @handleRemove.bind(this, id)
+        key:        id
+        id:         "list-group-item-#{id}"
+        className:  'list-group-item'
+
         finding.title
         React.DOM.span className: 'pull-right badge', finding.visibility
 
   handleAdd: ->
-    new_findings = @state.findings.concat([{ title: 'BLAH' }])
+    new_findings = @state.findings.concat([{ title: Math.random().toString(36).substring(7); }])
     @setState findings: new_findings
 
   handleRemove: (i) ->
@@ -34,6 +34,6 @@ TransitionGroup = React.addons.CSSTransitionGroup
       React.DOM.button onClick: @handleAdd, 'Add Item'
       React.createElement TransitionGroup,
         transitionName:          'example'
-        transitionEnterTimeout:  500
-        transitionLeaveTimeout:  300
+        transitionEnterTimeout:   0
+        transitionLeaveTimeout:  3000
         @rendered_findings()
