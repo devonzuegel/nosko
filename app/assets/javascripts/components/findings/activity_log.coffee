@@ -1,4 +1,5 @@
 TransitionGroup = React.addons.CSSTransitionGroup
+R               = React.DOM
 
 @ActivityLog = React.createClass
   propTypes:
@@ -10,7 +11,7 @@ TransitionGroup = React.addons.CSSTransitionGroup
 
   rendered_findings: ->
     @state.findings.map (finding, id) =>
-      React.DOM.button
+      R.button
         type:       'button'
         onClick:    @handleRemove.bind(this, id)
         key:        finding.title
@@ -18,7 +19,7 @@ TransitionGroup = React.addons.CSSTransitionGroup
         className:  'list-group-item'
 
         finding.title
-        React.DOM.span className: 'pull-right badge', finding.visibility
+        R.span className: 'pull-right badge', finding.visibility
 
   rand_str: -> Math.random().toString(36).substring(7)
 
@@ -32,10 +33,10 @@ TransitionGroup = React.addons.CSSTransitionGroup
     @setState findings: new_findings
 
   render: ->
-    React.DOM.div id: 'activity-log', className: 'list-group',
-      React.DOM.button onClick: @handleAdd, 'Add Item'
+    R.div id: 'activity-log', className: 'list-group',
+      R.button onClick: @handleAdd, 'Add Item'
       React.createElement TransitionGroup,
-        transitionName:          'example'
+        transitionName:          'slide'
         transitionEnterTimeout:   0
         transitionLeaveTimeout:  300
         @rendered_findings()
