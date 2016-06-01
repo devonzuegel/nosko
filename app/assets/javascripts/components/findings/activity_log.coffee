@@ -107,7 +107,7 @@ TransitionGroup = React.addons.CSSTransitionGroup
 
   archive_finding: (e) ->
     e.preventDefault()
-    for id in @state.selected
+    for id in @state.selected.reverse()  # Don't mess up the indices before removing all
       @handleRemove(id)
     new_selected = [ @state.selected[0] ]
     @setState selected: []  # Set none as selected until slide out is over
