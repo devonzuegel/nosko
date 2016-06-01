@@ -13,7 +13,7 @@ TransitionGroup = React.addons.CSSTransitionGroup
     @state.findings.map (finding, id) =>
       R.li
         onClick:    @handleRemove.bind(this, id)
-        key:        finding.title
+        key:        finding.to_param
         id:         "list-group-item-#{id}"
         className:  'list-group-item'
 
@@ -23,7 +23,7 @@ TransitionGroup = React.addons.CSSTransitionGroup
   rand_str: -> Math.random().toString(36).substring(7)
 
   handleAdd: ->
-    new_findings = @state.findings.concat([{ title: @rand_str() }])
+    new_findings = @state.findings.concat([{ title: @rand_str(), to_param: @rand_str() }])
     @setState findings: new_findings
 
   handleRemove: (i) ->
@@ -33,7 +33,7 @@ TransitionGroup = React.addons.CSSTransitionGroup
 
   render: ->
     R.div id: 'activity-log', className: 'list-group',
-      R.button onClick: @handleAdd, 'Add Item'
+      R.button className: 'btn btn-primary', onClick: @handleAdd, 'Add Item'
       R.ul className: 'list-group',
         React.createElement TransitionGroup,
           transitionName:          'slide'

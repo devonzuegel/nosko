@@ -8,7 +8,6 @@
 
   buttons: ->
     React.DOM.div className: 'btn-toolbar',
-      # React.DOM.div className: 'btn-group pull-left', role: 'group',
       React.DOM.div className: 'btn-group pull-right', role: 'group',
         React.DOM.button className: 'btn btn-secondary',
           Utils.ion_icon_link('android-funnel', null, 'Filter')
