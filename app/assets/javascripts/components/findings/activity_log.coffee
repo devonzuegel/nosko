@@ -28,6 +28,11 @@ TransitionGroup = React.addons.CSSTransitionGroup
       @setState selecting: false
     , 'keyup'
 
+    $(document).click (event) =>
+      if !$(event.target).closest('#activity-log').length and !$(event.target).is('#activity-log')
+        @setState selected: [@state.active_id]
+
+
   buttons: ->
     R.div className: 'btn-toolbar',
       R.div className: 'btn-group pull-right', role: 'group',
@@ -46,12 +51,12 @@ TransitionGroup = React.addons.CSSTransitionGroup
 
   rendered_findings: ->
     @state.findings.map (finding, id) =>
-      active_class = if (id in @state.selected) then 'active' else 'inactive'
-      R.li
+      selected_class = if (id in @state.selected) then 'selected' else 'unselected'
+      React.DOM.div
         onClick:    @handleClick.bind(this, id)
         key:        finding.to_param
         id:         @finding_id(id)
-        className:  "list-group-item #{active_class}"
+        className:  "finding #{selected_class}"
 
         finding.title
         R.span
@@ -117,11 +122,11 @@ TransitionGroup = React.addons.CSSTransitionGroup
 
   render: ->
     @reset_active_id()
-    R.div id: 'activity-log', className: 'list-group',
+    R.div id: 'activity-log', className: 'findings-stream activity-log',
       @buttons()
-      R.ul className: 'list-group',
-        React.createElement TransitionGroup,
-          transitionName:          'slide'
-          transitionEnterTimeout:   0
-          transitionLeaveTimeout:  300
-          @rendered_findings()
+      # R.ul className: 'list-group',
+      React.createElement TransitionGroup,
+        transitionName:          'slide'
+        transitionEnterTimeout:   0
+        transitionLeaveTimeout:  300
+        @rendered_findings()

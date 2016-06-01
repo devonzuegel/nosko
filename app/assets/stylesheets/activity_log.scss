@@ -8,21 +8,15 @@ $list-item-border:         1px solid $lighter-grey;
   overflow: hidden;
   width: 100%;
 
-  .list-group-item {
-    color:            black;
-    background-color: $list-item-bkgd;
-    border:           $list-item-border;
+  // Padding with opposite margin allows us to see the box-shadow
+  padding: 10px;
+  margin: -10px;
 
-     &.active {
-      color:            black;
-      background-color: $list-item-bkgd-selected;
-      border:           $list-item-border;
-    }
-
+  .finding {
     .label.pull-right {
-      font-size:    90%;
+      font-size:    83%;
       font-weight:  bolder;
-      padding:      0.4em;
+      padding:      0.4em 0.5em;
     }
 
     .date {
@@ -48,5 +42,10 @@ $list-item-border:         1px solid $lighter-grey;
   transition: transform 250ms linear;
   &.slide-leave-active {
     @include translate(100%, 0);
+  }
+
+  &.activity-log .selected.finding {
+    // box-shadow:         $lighter-box-shadow;
+    box-shadow:         $lighter-box-shadow-no-top;
   }
 }

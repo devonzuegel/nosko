@@ -27,11 +27,15 @@ $card-border:      $default-border;
       cursor: pointer;
     }
   }
-  .selected:last-of-type .finding, .unselected:last-of-type .finding {
+  .selected:last-of-type .finding,
+  .unselected:last-of-type .finding,
+  .finding.selected:last-of-type,
+  .finding.unselected:last-of-type
+  {
     border-bottom:   $default-border;
   }
 
-  .selected .finding {
+  .selected .finding, .selected.finding {
     background-color:   $card-hover-color;
     border-left:        $default-border;
     border-right:       $default-border;
