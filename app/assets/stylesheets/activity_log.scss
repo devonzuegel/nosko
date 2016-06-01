@@ -1,26 +1,47 @@
 @import 'all_partials';
 
+$list-item-bkgd:           white;
+$list-item-bkgd-selected:  $lightest-grey;
+$list-item-border:         1px solid $lighter-grey;
+
 #activity-log {
   overflow: hidden;
   width: 100%;
+
+  .list-group-item {
+    color:            black;
+    background-color: $list-item-bkgd;
+    border:           $list-item-border;
+
+     &.active {
+      color:            black;
+      background-color: $list-item-bkgd-selected;
+      border:           $list-item-border;
+    }
+  }
+  .label.pull-right {
+    font-size:    90%;
+    font-weight:  bolder;
+    padding:      0.4em;
+  }
 }
+
 
 .slide-enter {
   opacity: 0.01;
   @include translate(0, 30px);
   transition: transform 250ms ease-out;
-}
 
-.slide-enter.slide-enter-active {
-  opacity: 1;
-  @include translate(0, 0);
+  &.slide-enter-active {
+    opacity: 1;
+    @include translate(0, 0);
+  }
 }
 
 .slide-leave {
   @include translate(0, 0);
   transition: transform 250ms linear;
-}
-
-.slide-leave.slide-leave-active {
-  @include translate(100%, 0);
+  &.slide-leave-active {
+    @include translate(100%, 0);
+  }
 }

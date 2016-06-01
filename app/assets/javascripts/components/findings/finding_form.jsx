@@ -5,17 +5,17 @@ var FindingForm = React.createClass({
         <div className='form-group'>
 
           <Input name='url'   className='form-control' required placeholder='URL' validations={[
-            { fn: required },
-            { fn: validURL }
+            { fn: Utils.required },
+            { fn: Utils.validURL }
           ]}/>
 
           <Input name='title' className='form-control' required placeholder='Title' validations={[
-            { fn: required },
-            { fn: minLength, args: { len: 3 } }
+            { fn: Utils.required },
+            { fn: Utils.minLength, args: { len: 3 } }
           ]}/>
 
           <Select name='kind' className='form-control' required options={ this.props.kinds } validations={[
-            { fn: required }
+            { fn: Utils.required }
           ]}/>
         </div>
       </Form>

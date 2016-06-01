@@ -3,8 +3,13 @@
     articles:                React.PropTypes.arrayOf(React.PropTypes.ArticleFacade)
     share_by_default_enums:  React.PropTypes.arrayOf(React.PropTypes.string).isRequired
 
-  getInitialState: ->
-    active_finding_id: 0
+  getInitialState:            -> active_id: 0
+  num_articles:               -> @props.articles.length
+  is_selected:           (id) -> @state.active_id == id
+  finding_state_classes: (id) -> if @is_selected(id) then 'selected' else 'unselected'
+  finding_id:            (id) -> "finding-#{id}"
+  modal_id:                   -> '#hotkeys-modal'
+
 
   buttons: ->
     React.DOM.div className: 'btn-toolbar',
@@ -21,16 +26,6 @@
           href:           @modal_id()
           Utils.ion_icon_link('ios-help-outline', null, 'Hot keys')
 
-  num_articles:               -> @props.articles.length
-  is_selected:           (id) -> @state.active_finding_id == id
-  finding_state_classes: (id) -> if @is_selected(id) then 'selected' else 'unselected'
-  finding_id:            (id) -> "finding-#{id}"
-  modal_id:                   -> '#hotkeys-modal'
-
-  scroll_to: (finding_id) ->
-    return if $("##{finding_id}").is_fully_in_view()
-    document.getElementById(finding_id).scrollIntoView(true)
-
   findings: ->
     @props.articles.map (article, id) =>
       React.DOM.div id: @finding_id(id), className: @finding_state_classes(id), key: id,
@@ -38,25 +33,25 @@
 
   to_next_finding: (e) ->
     e.preventDefault()
-    if @state.active_finding_id < @num_articles() - 1
-      @setState(active_finding_id: @state.active_finding_id + 1)
-    @scroll_to(@finding_id(@state.active_finding_id))
+    if @state.active_id < @num_articles() - 1
+      @setState(active_id: @state.active_id + 1)
+    Utils.scroll_to(@finding_id(@state.active_id))
 
   to_prev_finding: (e) ->
     e.preventDefault()
-    if @state.active_finding_id > 0
-      @setState(active_finding_id: @state.active_finding_id - 1)
-    @scroll_to(@finding_id(@state.active_finding_id))
+    if @state.active_id > 0
+      @setState(active_id: @state.active_id - 1)
+    Utils.scroll_to(@finding_id(@state.active_id))
 
   to_last_finding: (e) ->
     e.preventDefault()
-    @setState(active_finding_id: @num_articles() - 1)
-    @scroll_to(@finding_id(@state.active_finding_id))
+    @setState(active_id: @num_articles() - 1)
+    Utils.scroll_to(@finding_id(@state.active_id))
 
   to_first_finding: (e) ->
     e.preventDefault()
-    @setState(active_finding_id: 0)
-    @scroll_to(@finding_id(@state.active_finding_id))
+    @setState(active_id: 0)
+    Utils.scroll_to(@finding_id(@state.active_id))
 
   open_hotkeys_help: (e) ->
     e.preventDefault()

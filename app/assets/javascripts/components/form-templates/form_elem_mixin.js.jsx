@@ -37,7 +37,7 @@ var FormElemMixin = {
 
   getValidations: function () {
     var validations = this.props.validations;
-    if (this.props.required == true)  validations.push({ fn: required });
+    if (this.props.required == true)  validations.push({ fn: Utils.required });
     return validations;
   },
 
