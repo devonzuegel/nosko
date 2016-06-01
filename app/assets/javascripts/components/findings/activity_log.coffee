@@ -2,7 +2,7 @@ R = React.DOM
 TransitionGroup = React.addons.CSSTransitionGroup
 
 @ActivityLog = React.createClass
-  mixins: [HotkeysModal]
+  mixins: [ HotkeysModal]
 
   propTypes:
     findings: React.PropTypes.arrayOf(React.PropTypes.ArticleFacade).isRequired
@@ -12,6 +12,7 @@ TransitionGroup = React.addons.CSSTransitionGroup
     findings:   @props.findings
     active_id:  0
     selected:   [0]
+    selecting:  false
 
   componentDidMount: ->
     Mousetrap.bind 'down',      (e) => @to_next_finding(e)
@@ -20,12 +21,20 @@ TransitionGroup = React.addons.CSSTransitionGroup
     Mousetrap.bind 'ctrl+down', (e) => @to_last_finding(e)
     Mousetrap.bind 'ctrl+up',   (e) => @to_first_finding(e)
 
+    Mousetrap.bind 'shift',     (e) =>
+      @setState selecting: true
+    Mousetrap.bind 'shift',     (e) =>
+      @setState selecting: false
+    , 'keyup'
+
   buttons: ->
     R.div className: 'btn-toolbar',
       R.div className: 'btn-group pull-right', role: 'group',
         @hotkeys_modal_btn()
         R.button className: 'btn btn-secondary', onClick: @handleAdd,
           Utils.ion_icon_link('ios-plus-outline', null, 'Add Item')
+        R.button className: 'btn btn-secondary', onClick: @select_all,
+          Utils.ion_icon_link('ios-checkmark-outline', null, 'Select all')
 
   label_class: (finding) ->
     switch finding.visibility
@@ -38,7 +47,7 @@ TransitionGroup = React.addons.CSSTransitionGroup
     @state.findings.map (finding, id) =>
       active_class = if (id in @state.selected) then 'active' else 'inactive'
       R.li
-        onClick:    @handleRemove.bind(this, id)
+        onClick:    @handleClick.bind(this, id)
         key:        finding.to_param
         id:         @finding_id(id)
         className:  "list-group-item #{active_class}"
@@ -83,9 +92,27 @@ TransitionGroup = React.addons.CSSTransitionGroup
         selected:  [new_active_id]
     Utils.scroll_to(@finding_id(@state.active_id))
 
+  select_all: ->
+    @setState selected: [0..@state.findings.length - 1]
+
+  handleClick: (i) ->
+    @setState active_id:  i
+    if not @state.selecting
+      @setState selected: [i]
+    else if (i in @state.selected)
+      @setState selected: @state.selected.filter (j) -> j isnt i
+    else
+      @setState selected: @state.selected.concat([ @state.active_id..i ]).sort().unique()
+
   archive_finding: (e) ->
     e.preventDefault()
-    @handleRemove(@state.active_id)
+    for id in @state.selected
+      @handleRemove(id)
+    new_selected = [ @state.selected[0] ]
+    @setState selected: []  # Set none as selected until slide out is over
+    setTimeout =>
+      @setState selected: new_selected
+    , 350
 
   render: ->
     @reset_active_id()
