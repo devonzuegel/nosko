@@ -1,4 +1,6 @@
 @FindingsStream = React.createClass
+  mixins: [HotkeysModal]
+
   propTypes:
     articles:                React.PropTypes.arrayOf(React.PropTypes.ArticleFacade)
     share_by_default_enums:  React.PropTypes.arrayOf(React.PropTypes.string).isRequired
@@ -8,8 +10,6 @@
   is_selected:           (id) -> @state.active_id == id
   finding_state_classes: (id) -> if @is_selected(id) then 'selected' else 'unselected'
   finding_id:            (id) -> "finding-#{id}"
-  modal_id:                   -> '#hotkeys-modal'
-
 
   buttons: ->
     React.DOM.div className: 'btn-toolbar',
@@ -20,11 +20,7 @@
           Utils.ion_icon_link('grid', null, 'Cards')
         React.DOM.button className: 'btn btn-secondary',
           Utils.ion_icon_link('navicon', null, 'Title Only')
-        React.DOM.button
-          className:      'btn btn-secondary'
-          'data-toggle':  'modal'
-          href:           @modal_id()
-          Utils.ion_icon_link('ios-help-outline', null, 'Hot keys')
+        @hotkeys_modal_btn()
 
   findings: ->
     @props.articles.map (article, id) =>
@@ -53,16 +49,11 @@
     @setState(active_id: 0)
     Utils.scroll_to(@finding_id(@state.active_id))
 
-  open_hotkeys_help: (e) ->
-    e.preventDefault()
-    $( @modal_id() ).modal('toggle');
-
   hotkey_bindings: ->
-    Mousetrap.bind 'h',           (e) => @open_hotkeys_help(e)
     Mousetrap.bind 'down',        (e) => @to_next_finding(e)
     Mousetrap.bind 'up',          (e) => @to_prev_finding(e)
-    Mousetrap.bind 'shift+down',  (e) => @to_last_finding(e)
-    Mousetrap.bind 'shift+up',    (e) => @to_first_finding(e)
+    Mousetrap.bind 'ctrl+down',   (e) => @to_last_finding(e)
+    Mousetrap.bind 'ctrl+up',     (e) => @to_first_finding(e)
 
   render: ->
     @hotkey_bindings()

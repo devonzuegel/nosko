@@ -24,7 +24,7 @@ module ApplicationHelper
         keypress: 'right',
         symbol:   '→',
         key_name: 'Right arrow',
-        action:   'Star current finding or highlight'
+        action:   'Mark activity as "reviewed"'
       }, {
         keypress: 'space',
         symbol:   'Space',
@@ -36,17 +36,18 @@ module ApplicationHelper
         key_name: 'H key',
         action:   'Open or close the hot keys help'
       }, {
-        keypress: 'shift+up',
-        symbol:   '⇧ + ↑', # ←
-        key_name: 'Shift + up arrow',
+        keypress: 'ctrl+up',
+        symbol:   'ctrl + ↑', # ←
+        key_name: 'Ctrl + up arrow',
         action:   'Go to first finding or highlight'
       }, {
-        keypress: 'shift+down',
-        symbol:   '⇧ + ↓', # ←
-        key_name: 'Shift + down arrow',
+        keypress: 'ctrl+down',
+        symbol:   'ctrl + ↓', # ←
+        key_name: 'Ctrl + down arrow',
         action:   'Go to last finding or highlight'
 
       # }, {
+      # ⇧
       #   keypress: 's',
       #   symbol:   's', # ←
       #   key_name: 'S key',

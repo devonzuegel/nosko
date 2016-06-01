@@ -18,11 +18,16 @@ $list-item-border:         1px solid $lighter-grey;
       background-color: $list-item-bkgd-selected;
       border:           $list-item-border;
     }
-  }
-  .label.pull-right {
-    font-size:    90%;
-    font-weight:  bolder;
-    padding:      0.4em;
+
+    .label.pull-right {
+      font-size:    90%;
+      font-weight:  bolder;
+      padding:      0.4em;
+    }
+
+    .date {
+      margin-right: 10px;
+    }
   }
 }
 
