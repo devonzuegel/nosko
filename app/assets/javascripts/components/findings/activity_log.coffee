@@ -1,12 +1,18 @@
 R = React.DOM
 TransitionGroup = React.addons.CSSTransitionGroup
 
+
 @ActivityLog = React.createClass
   mixins: [ HotkeysModal]
 
   propTypes:
     findings: React.PropTypes.arrayOf(React.PropTypes.ArticleFacade).isRequired
     # TODO need to actually persist the reviewing
+
+  # componentDidMount: ->
+  #   Greeter = require('../../greeter')
+  #   Greeter.sayHello('Visitor')
+  #   Greeter.sayGoodbye('Visitor')
 
   getInitialState: ->
     findings:   @props.findings
