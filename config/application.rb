@@ -42,5 +42,7 @@ module Nosko
     config.active_record.schema_format = :sql
 
     config.react.addons = true
+
+    config.browserify_rails.commandline_options = "-t coffeeify --extension=\".js.coffee\""
   end
 end

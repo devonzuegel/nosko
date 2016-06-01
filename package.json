@@ -1,8 +1,9 @@
 {
-  "name": "Nosko",
+  "name": "something",
   "dependencies" : {
     "browserify": "~10.2.4",
-    "browserify-incremental": "^3.0.1"
+    "browserify-incremental": "^3.0.1",
+    "coffeeify": "~0.6"
   },
   "license": "MIT",
   "engines": {

@@ -9,11 +9,6 @@ TransitionGroup = React.addons.CSSTransitionGroup
     findings: React.PropTypes.arrayOf(React.PropTypes.ArticleFacade).isRequired
     # TODO need to actually persist the reviewing
 
-  # componentDidMount: ->
-  #   Greeter = require('../../greeter')
-  #   Greeter.sayHello('Visitor')
-  #   Greeter.sayGoodbye('Visitor')
-
   getInitialState: ->
     findings:   @props.findings
     active_id:  0
