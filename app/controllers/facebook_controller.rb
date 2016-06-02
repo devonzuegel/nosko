@@ -9,7 +9,14 @@ class FacebookController < ApplicationController
   end
 
   def messages
-
+    if params['hub.verify_token'] != ENV['fb_verify_token']
+      head status: :unauthorized
+    else
+      puts '-----------------------------'.black
+      ap params
+      puts '-----------------------------'.black
+      render json: params['hub.challenge'], status: :ok
+    end
   end
 
   private
