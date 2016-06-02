@@ -59,7 +59,8 @@
       @card_buttons() if @props.selected
 
   update_visibility: (visibility) ->
-    $.patch "/finding/#{@props.article.to_param}", { article: { visibility: visibility } }, (result) =>
+    data = { article: { visibility: visibility } }
+    $.patch "/finding/#{@props.article.to_param}", data, (result) =>
       @setState(visibility: visibility)
 
   visibility_btn: ->

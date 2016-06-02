@@ -32,38 +32,6 @@ TransitionGroup = React.addons.CSSTransitionGroup
       if !$(event.target).closest('#activity-log').length and !$(event.target).is('#activity-log')
         @setState selected: [@state.active_id]
 
-
-  buttons: ->
-    R.div className: 'btn-toolbar',
-      R.div className: 'btn-group pull-right', role: 'group',
-        @hotkeys_modal_btn()
-        R.button className: 'btn btn-secondary', onClick: @handleAdd,
-          Utils.ion_icon_link('ios-plus-outline', null, 'Add Item')
-        R.button className: 'btn btn-secondary', onClick: @select_all,
-          Utils.ion_icon_link('ios-checkmark-outline', null, 'Select all')
-
-  label_class: (finding) ->
-    switch finding.visibility
-      when 'Only me' then 'label-primary'
-      when 'Friends' then 'label-info'
-      when 'Public'  then 'label-success'
-      else 'label-default'
-
-  rendered_findings: ->
-    @state.findings.map (finding, id) =>
-      selected_class = if (id in @state.selected) then 'selected' else 'unselected'
-      React.DOM.div
-        onClick:    @handleClick.bind(this, id)
-        key:        finding.to_param
-        id:         @finding_id(id)
-        className:  "finding #{selected_class}"
-
-        finding.title
-        R.span
-          className: "label #{@label_class(finding)} pull-right"
-          finding.visibility
-        R.span className: 'pull-right date', finding.updated_at
-
   rand_str:        -> Math.random().toString(36).substring(7)
   finding_id: (id) -> "list-group-item-#{id}"
 
@@ -72,9 +40,11 @@ TransitionGroup = React.addons.CSSTransitionGroup
     @setState findings: new_findings
 
   handleRemove: (i) ->
-    new_findings = @state.findings.slice()
-    new_findings.splice(i, 1)
-    @setState findings: new_findings
+    data = { article: { reviewed: true } }
+    $.patch "/finding/#{@props.findings[i].to_param}", data, (result) =>
+      new_findings = @state.findings.slice()
+      new_findings.splice(i, 1)
+      @setState findings: new_findings
 
   reset_active_id: ->
     if (@state.findings.length - 1 < @state.active_id)
@@ -119,6 +89,37 @@ TransitionGroup = React.addons.CSSTransitionGroup
     setTimeout =>
       @setState selected: new_selected
     , 350
+
+  buttons: ->
+    R.div className: 'btn-toolbar',
+      R.div className: 'btn-group pull-right', role: 'group',
+        @hotkeys_modal_btn()
+        R.button className: 'btn btn-secondary', onClick: @handleAdd,
+          Utils.ion_icon_link('ios-plus-outline', null, 'Add Item')
+        R.button className: 'btn btn-secondary', onClick: @select_all,
+          Utils.ion_icon_link('ios-checkmark-outline', null, 'Select all')
+
+  label_class: (finding) ->
+    switch finding.visibility
+      when 'Only me' then 'label-primary'
+      when 'Friends' then 'label-info'
+      when 'Public'  then 'label-success'
+      else                'label-default'
+
+  rendered_findings: ->
+    @state.findings.map (finding, id) =>
+      selected_class = if (id in @state.selected) then 'selected' else 'unselected'
+      React.DOM.div
+        onClick:    @handleClick.bind(this, id)
+        key:        finding.to_param
+        id:         @finding_id(id)
+        className:  "finding #{selected_class}"
+
+        finding.title
+        R.span
+          className: "label #{@label_class(finding)} pull-right"
+          finding.visibility
+        R.span className: 'pull-right date', finding.updated_at
 
   render: ->
     @reset_active_id()

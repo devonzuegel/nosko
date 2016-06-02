@@ -10,7 +10,7 @@ $card-border:      $default-border;
 
 .findings-stream {
   .finding {
-    border:       1px solid $background-color;
+    border:       1px solid transparent;
     border-top:   $default-border;
     padding:      15px 15px 10px 15px;
     .ion-icon {

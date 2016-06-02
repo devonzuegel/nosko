@@ -138,7 +138,7 @@ describe User do
     end
 
     it 'should match the user\'s articles (for now, until we add new kinds of findings)' do
-      expect(@user.findings).to match @user.articles
+      expect(@user.findings.map &:title).to match @user.articles.map &:title
       expect(@user.findings.length).to eq 3
     end
   end
