@@ -1,51 +1,24 @@
-javascript:
-  (function(d, s, id){
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) {return;}
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/sdk.js";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
-
-  alert("#{ENV['fb_app_id']}");
-  window.fbAsyncInit = function() {
-   FB.init({
-     appId      : "#{ENV['fb_app_id']}",
-     xfbml      : true,
-     version    : 'v2.6'
-   });
-  };
-
-
-button.fb-send-to-messenger(messenger_app_id="#{ENV['fb_app_id']}" page_id="#{ENV['fb_page_id']}" data-ref='PASS_THROUGH_PARAM' color='blue' size='standard')
-
-
 .row
-  .col-lg-12
-    h3 Settings
-  .col-lg-6
-    table.table.no-border
-      tr: td
-        - if current_user.evernote_connected?
-          a href=sync_evernote_path
-            button.btn.btn-default Sync Evernote
-        - else
-          a href='/evernote/connect'
-            button.btn.btn-primary Connect your Evernote account
+  .col-lg-12: h3 Settings
+  .col-lg-6: table.table.no-border
+    tr: td
+      - if current_user.evernote_connected?
+        a href=sync_evernote_path
+          button.btn.btn-default Sync Evernote
+      - else
+        a href='/evernote/connect'
+          button.btn.btn-primary Connect your Evernote account
 
-      tr: td
-        - if !current_user.facebook_connected?
-          a href='/facebook/connect'
-            button.btn.btn-primary
-              .ion-icon.ion-social-facebook
-              | Connect your Facebook account
-        - else
-          p Facebook connected!
+    tr: td
+      - if !current_user.facebook_connected?
+        a href='/facebook/connect'
+          button.btn.btn-primary
+            .ion-icon.ion-social-facebook
+            | Connect your Facebook account
+      - else
+        p Facebook connected!
 
-      tr: td
-
-  .col-lg-6
-    = react_component 'SettingsForm',
-      user:                         @user.decorate.as_settings_prop,
-      share_by_default_options:     Shareable::share_by_default_options,
-      reminders_frequency_options:  Shareable::reminders_frequency_options
+  .col-lg-6= react_component 'SettingsForm',
+    user:                         @user.decorate.as_settings_prop,
+    share_by_default_options:     Shareable::share_by_default_options,
+    reminders_frequency_options:  Shareable::reminders_frequency_options
