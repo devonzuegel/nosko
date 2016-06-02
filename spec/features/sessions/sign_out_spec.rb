@@ -14,7 +14,7 @@ feature 'Sign out', :omniauth do
     expect(page).to have_content 'Signed out'
   end
 
-  scenario 'user signs out successfully', :focus, js: true do
+  scenario 'user signs out successfully', js: true do
     signin
     find('#user-menu-dropdown').click
     sleep 1

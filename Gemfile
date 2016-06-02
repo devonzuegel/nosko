@@ -21,6 +21,7 @@ gem 'draper',                  '~> 1.3'
 gem 'bower-rails',             '~> 0.10.0'
 gem 'sass-rails',              '~> 5.0'
 gem 'bootstrap-sass',          '3.3.6'
+gem 'stackprof',               '~> 0.2.7'
 gem 'browserify-rails'
 
 # Omniauth
