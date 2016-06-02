@@ -22,7 +22,8 @@ gem 'bower-rails',             '~> 0.10.0'
 gem 'sass-rails',              '~> 5.0'
 gem 'bootstrap-sass',          '3.3.6'
 gem 'stackprof',               '~> 0.2.7'
-gem 'browserify-rails'
+gem 'browserify-rails',        '3.0.0'
+gem 'messenger-bot',           '1.0.2'
 
 # Omniauth
 gem 'oauth',                   '0.4.7'

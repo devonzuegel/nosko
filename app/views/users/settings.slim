@@ -1,3 +1,25 @@
+javascript:
+  (function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  alert("#{ENV['fb_app_id']}");
+  window.fbAsyncInit = function() {
+   FB.init({
+     appId      : "#{ENV['fb_app_id']}",
+     xfbml      : true,
+     version    : 'v2.6'
+   });
+  };
+
+
+button.fb-send-to-messenger(messenger_app_id="#{ENV['fb_app_id']}" page_id="#{ENV['fb_page_id']}" data-ref='PASS_THROUGH_PARAM' color='blue' size='standard')
+
+
 .row
   .col-lg-12
     h3 Settings
@@ -19,6 +41,8 @@
               | Connect your Facebook account
         - else
           p Facebook connected!
+
+      tr: td
 
   .col-lg-6
     = react_component 'SettingsForm',

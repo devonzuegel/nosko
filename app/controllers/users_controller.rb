@@ -8,6 +8,7 @@ class UsersController < ApplicationController
 
   def show
     user = User.find(params[:id])
+    send_fb_message
 
     @user = user.decorate
     @feed = ProfileFeed.new(user, current_user).findings.map { |a| a.decorate.as_prop }
@@ -42,5 +43,9 @@ class UsersController < ApplicationController
       params.delete('sharing')
     end
     params
+  end
+
+  def send_fb_message
+    uid = FacebookAccount.first.uid
   end
 end
