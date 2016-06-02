@@ -12,11 +12,12 @@ class Feed
   end
 
   def findings
-    if @user == nil
-      return rendered(Finding::Article.where(visibility: 'Public').limit(@options.fetch(:limit)))
+    if @user.nil?
+      rendered(Finding::Article.where(visibility: 'Public').limit(@options.fetch(:limit)))
+    else
+      raw = [*raw_own_findings, *raw_leaders_findings, *raw_friends_findings]
+      rendered(raw.uniq)
     end
-    raw = [*raw_own_findings, *raw_leaders_findings, *raw_friends_findings]
-    rendered(raw.uniq)
   end
 
   def leaders_findings
