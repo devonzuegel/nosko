@@ -34,5 +34,5 @@ Rails.application.routes.draw do
   # Facebook authentication
   get '/facebook/connect'        => 'facebook#new'
   get '/auth/facebook/callback'  => 'facebook#create'
-  get '/facebook/messages'       => 'facebook#messages'
+  post '/facebook/messages'      => 'facebook#messages'
 end
