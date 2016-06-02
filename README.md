@@ -7,6 +7,10 @@
     + [`SyncEvernoteAccount`](./app/jobs/sync_evernote_account.rb)
     + [`SyncEvernoteNote`](./app/jobs/sync_evernote_note.rb)
 
+## Running the app locally for development ##
+
+To get the Facebook Messenger bot to work locally, open a secure tunnel to localhost with [`ngrok`](https://ngrok.com/) by running `./ngrok http 3000` (or if you're running the app on a different port, replace `3000` with that port number). Then, go to the bot's page at [developers.facebook.com](https://developers.facebook.com/apps) and copy-paste the generated ngrok url (something like `https://randomlygeneratedstring.ngrok.io`) into the "New Page Subscription > Callback URL" field of the Facebook bot dashboard. **Please note that every time you run ngrok, you will have to update this callback url in the bot dashboard.**
+
 ## Models Structure ##
 
 ![](http://i.imgur.com/rTurMFC.jpg)

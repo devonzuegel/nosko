@@ -8,6 +8,10 @@ class FacebookController < ApplicationController
     redirect_to root_url, notice: 'Facebook connected!'
   end
 
+  def messages
+
+  end
+
   private
 
   def check_status
