@@ -6,6 +6,15 @@ class Finding::ArticleDecorator < Draper::Decorator
     "#{h.root_url}#{path}"
   end
 
+  def label_type
+    case visibility
+      when 'Only me' then 'label-primary'
+      when 'Friends' then 'label-info'
+      when 'Public'  then 'label-success'
+      else 'label-default'
+    end
+  end
+
   def as_prop(current_user = nil)
     {
       title:       title,
@@ -17,7 +26,8 @@ class Finding::ArticleDecorator < Draper::Decorator
       user:        user.decorate.as_prop,
       visibility:  visibility,
       updated_at:  "#{h.time_ago_in_words(updated_at).capitalize} ago",
-      editable:    h.current_user == user
+      editable:    h.current_user == user,
+      label_type:  label_type
     }
   end
 end

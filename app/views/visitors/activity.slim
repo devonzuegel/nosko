@@ -2,3 +2,19 @@
 
 h2 Unreviewed
 = react_component 'ActivityLog', findings: @unreviewed_findings
+
+- 10.times do
+
+  .spacer.large
+
+h2 Reviewed
+- 8.times do
+
+  .spacer.large
+
+#activity-log.findings-stream.reviewed
+  - @reviewed_findings.each do |finding|
+    .finding
+      = finding[:title]
+      span.label.pull-right(class="#{finding[:label_type]}")= finding[:visibility]
+      .pull-right.date= finding[:updated_at]
