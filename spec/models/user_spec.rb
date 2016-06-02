@@ -131,6 +131,7 @@ describe User do
 
   describe 'retrieve user\'s findings' do
     before do
+      Finding::Article.destroy_all
       @user = create(:user)
       traits = Shareable::SHARE_BY_DEFAULT_ENUM.keys.map { |k| k.downcase.tr(' ', '_').to_sym }
       traits.each { |t| create(:article, t, user: @user) }
