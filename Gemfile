@@ -25,6 +25,9 @@ gem 'stackprof',               '~> 0.2.7'
 gem 'browserify-rails',        '3.0.0'
 gem 'messenger-bot',           '1.0.2'
 
+gem 'colorize',                '0.7.7'  ## MOVE ME BACK TO DEVELOPMENT
+gem 'awesome_print',           '1.6.1'
+
 # Omniauth
 gem 'oauth',                   '0.4.7'
 gem 'omniauth',                '1.2.2'
@@ -48,8 +51,6 @@ group :development, :test do
   gem 'rspec-rails',           '3.4.0'
   gem 'pry-rails',             '0.3.4'
   gem 'pry-byebug'
-  gem 'awesome_print',         '1.6.1'
-  gem 'colorize',              '0.7.7'
   gem 'fuubar',                '2.0.0'
 end
 
