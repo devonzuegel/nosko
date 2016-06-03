@@ -1,7 +1,7 @@
 class Feed
   DEFAULT_OPTIONS = {
     order:      :created_at,
-    reverse:    false,
+    reverse:    true,
     offset:     0,
     limit:      20
   }

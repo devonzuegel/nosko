@@ -3,6 +3,10 @@
     article:                React.PropTypes.ArticleFacade.isRequired
     selected:               React.PropTypes.bool.isRequired
     share_by_default_enums: React.PropTypes.arrayOf(React.PropTypes.string).isRequired
+    title_only:             React.PropTypes.bool
+
+  getDefaultProps: ->
+    title_only: false
 
   componentDidMount: ->
     @setState
@@ -55,7 +59,8 @@
             React.DOM.div className: 'above-card', @props.article.user.name
           React.DOM.div className: 'date-and-user-spacer', '//'
           React.DOM.div className: 'date ', @props.article.created_at
-        React.DOM.div className: 'markdown-body', dangerouslySetInnerHTML: { __html: @props.article.content }
+        if !@props.title_only
+          React.DOM.div className: 'markdown-body', dangerouslySetInnerHTML: { __html: @props.article.content }
       @card_buttons() if @props.selected
 
   update_visibility: (visibility) ->

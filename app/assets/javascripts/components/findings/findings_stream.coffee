@@ -5,7 +5,10 @@
     articles:                React.PropTypes.arrayOf(React.PropTypes.ArticleFacade)
     share_by_default_enums:  React.PropTypes.arrayOf(React.PropTypes.string).isRequired
 
-  getInitialState:            -> active_id: 0
+  getInitialState: ->
+    active_id:  0
+    title_only: false
+
   num_articles:               -> @props.articles.length
   is_selected:           (id) -> @state.active_id == id
   finding_state_classes: (id) -> if @is_selected(id) then 'selected' else 'unselected'
@@ -16,16 +19,24 @@
       React.DOM.div className: 'btn-group pull-right', role: 'group',
         React.DOM.button className: 'btn btn-secondary',
           Utils.ion_icon_link('android-funnel', null, 'Filter')
-        React.DOM.button className: 'btn btn-secondary',
-          Utils.ion_icon_link('grid', null, 'Cards')
-        React.DOM.button className: 'btn btn-secondary',
-          Utils.ion_icon_link('navicon', null, 'Title Only')
+        React.DOM.button className: 'btn btn-secondary', onClick: @toggle_title_only,
+          if @state.title_only
+            Utils.ion_icon_link('grid', null, 'Cards')
+          else
+            Utils.ion_icon_link('navicon', null, 'Title Only')
         @hotkeys_modal_btn()
+
+  toggle_title_only: ->
+    @setState title_only: !@state.title_only
 
   findings: ->
     @props.articles.map (article, id) =>
       React.DOM.div id: @finding_id(id), className: @finding_state_classes(id), key: id,
-        React.createElement FindingCard, article: article, selected: @is_selected(id), share_by_default_enums: @props.share_by_default_enums
+        React.createElement FindingCard,
+          article:                article
+          selected:               @is_selected(id)
+          title_only:             @state.title_only
+          share_by_default_enums: @props.share_by_default_enums
 
   to_next_finding: (e) ->
     e.preventDefault()
