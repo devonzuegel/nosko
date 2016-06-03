@@ -3,7 +3,8 @@ class MessengerBotController < ActionController::Base
     # profile = sender.get_profile # default field [:locale, :timezone, :gender, :first_name, :last_name, :profile_pic]
     puts "Received:".black
     log(event, sender)
-    sender.reply([msg1(event), msg2].sample)
+    msg = [msg1(event), msg2, msg3].sample
+    sender.reply(msg)
   end
 
   def delivery(event, sender)
@@ -29,6 +30,12 @@ class MessengerBotController < ActionController::Base
     ap sender
     ap event
     puts '--------------'.black
+  end
+
+  def msg3
+    {
+      text: "Hello smallbusiness.chron.com/adding-links-facebook-messages-30012.html goodbye github.com/devonzuegel/nosko/tree/staging/app/assets/javascripts/components/form-templates"
+    }
   end
 
   def msg1(event)
