@@ -119,7 +119,7 @@ TransitionGroup = React.addons.CSSTransitionGroup
         R.span
           className: "label #{@label_class(finding)} pull-right"
           finding.visibility
-        R.span className: 'pull-right date', finding.updated_at
+        R.span className: 'pull-right date', "Created #{finding.created_at}"
 
   render: ->
     @reset_active_id()

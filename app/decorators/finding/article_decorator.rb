@@ -25,7 +25,7 @@ class Finding::ArticleDecorator < Draper::Decorator
       to_param:    to_param,
       user:        user.decorate.as_prop,
       visibility:  visibility,
-      updated_at:  "#{h.time_ago_in_words(updated_at).capitalize} ago",
+      created_at:  "#{h.time_ago_in_words(created_at).capitalize} ago",
       editable:    h.current_user == user,
       label_type:  label_type
     }

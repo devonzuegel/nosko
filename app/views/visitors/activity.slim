@@ -17,4 +17,4 @@ h2 Reviewed
     .finding
       = finding[:title]
       span.label.pull-right(class="#{finding[:label_type]}")= finding[:visibility]
-      .pull-right.date= finding[:updated_at]
+      .pull-right.date= "Created #{finding[:created_at]}"

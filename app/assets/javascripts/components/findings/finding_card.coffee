@@ -54,7 +54,7 @@
           React.DOM.a className: 'user-link', href: @props.article.user.href,
             React.DOM.div className: 'above-card', @props.article.user.name
           React.DOM.div className: 'date-and-user-spacer', '//'
-          React.DOM.div className: 'date ', @props.article.updated_at
+          React.DOM.div className: 'date ', @props.article.created_at
         React.DOM.div className: 'markdown-body', dangerouslySetInnerHTML: { __html: @props.article.content }
       @card_buttons() if @props.selected
 
