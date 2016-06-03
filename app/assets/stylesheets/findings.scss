@@ -50,7 +50,7 @@ $card-border:      $default-border;
   .card-buttons {
     padding:        0;
     position:       relative;
-    background:     linear-gradient(rgba($card-hover-color, 0.4), $card-hover-color);
+    background:     linear-gradient(175deg, rgba($card-hover-color, 0), $card-hover-color);
     height:         25px;
     margin-bottom:  -25px;
     margin-top:     0;

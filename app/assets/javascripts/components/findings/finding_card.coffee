@@ -93,7 +93,7 @@
   card_buttons: ->
     React.DOM.div className: 'card-buttons above-card',
       React.DOM.div className: 'right',
-        if @props.article.editable
+        if @props.article.editable  # Only editable if owned by current user
           React.DOM.div null,
             @lock_btn()
             @visibility_btn()

@@ -1,0 +1,31 @@
+@import 'all_partials';
+
+.dropdown, .dropdown.open {
+  .dropdown-menu {
+    border-radius:    2px;
+    box-shadow:       $default-box-shadow;
+    border:           $default-border;
+    padding:          0;
+    background-color: white;
+    li {
+      height: auto;
+      a {
+        color: $link-color;
+        width:   100%;
+        padding: 10px 20px;
+        &:hover, &:active, &:focus {
+          color: $link-hover-color;
+          background-color: $lightest-grey !important;
+        }
+      }
+      &.active a {
+        color: $link-hover-color;
+        background-color: darken($lightest-grey, 3%) !important;
+      }
+    }
+    .divider {
+      height:           1px;
+      margin:           0;
+    }
+  }
+}

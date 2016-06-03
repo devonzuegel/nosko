@@ -1,4 +1,4 @@
-@FindingsStream = React.createClass
+@FindingsFeed = React.createClass
   mixins: [HotkeysModal]
 
   propTypes:

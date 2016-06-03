@@ -11,5 +11,5 @@
 
   .col-sm-9
     = render 'findings/hotkeys_modal'
-    = react_component 'FindingsStream', articles: @feed,
-                          share_by_default_enums: Finding::Article::SHARE_BY_DEFAULT_ENUM.keys
+    = react_component 'FindingsFeed', articles:               @feed,
+                                      share_by_default_enums: Finding::Article::SHARE_BY_DEFAULT_ENUM.keys

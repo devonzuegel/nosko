@@ -1,10 +1,10 @@
 @import 'all_partials';
 
-$nav-background-color:  $lightest-grey;
-$nav-link-color:        $link-color;
-$nav-link-hover-color:  $link-hover-color;
-$nav-link-padding-top-bottom: 10px;
-$nav-link-padding-left-right: 15px;
+$nav-background-color:         $lightest-grey;
+$nav-link-color:               $link-color;
+$nav-link-hover-color:         $link-hover-color;
+$nav-link-padding-top-bottom:  10px;
+$nav-link-padding-left-right:  15px;
 
 .navbar {
   margin-bottom: 0 !important;
@@ -15,39 +15,12 @@ $nav-link-padding-left-right: 15px;
     display:       inline-block;
   }
   li {
-    height:        $nav-height;
+    height: $nav-height;
     a {
       font-size:     1em;
       padding: $nav-link-padding-left-right $nav-link-padding-top-bottom;
       &:hover {
         background-color:  $background-color !important;
-      }
-    }
-  }
-  .dropdown, .dropdown.open {
-    .dropdown-menu {
-      border-radius:    2px;
-      box-shadow:       $default-box-shadow;
-      border:           $default-border;
-      padding:          0;
-      left:             0;
-      top:              47px;
-      background-color: white;
-      & > li {
-        height: auto;
-        a {
-          color: $nav-link-color;
-          &:hover, &:active, &:focus {
-            color: $nav-link-hover-color;
-            background-color: $nav-background-color !important;
-          }
-          width:   100%;
-          padding: 10px 20px;
-        }
-      }
-      .divider {
-        height:           1px;
-        margin:           0;
       }
     }
   }
@@ -69,6 +42,11 @@ $nav-link-padding-left-right: 15px;
     @media (max-width: 768px) {
       box-shadow: none;
     }
+  }
+  .dropdown-menu {
+    left: 0;
+    right: 0;
+    top:   47px;
   }
 }
 .nav .open > a, .nav .open > a:hover, .nav .open > a:focus {
