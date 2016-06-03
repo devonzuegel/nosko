@@ -34,5 +34,5 @@ Rails.application.routes.draw do
   # Facebook authentication
   get '/facebook/connect'        => 'facebook#new'
   get '/auth/facebook/callback'  => 'facebook#create'
-  post '/facebook/messages'      => 'facebook#messages'
+  mount Messenger::Bot::Space    => "facebook/webhook"
 end
