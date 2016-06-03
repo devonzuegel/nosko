@@ -41,25 +41,25 @@ class MessengerBotController < ActionController::Base
   end
 
   def msg
+    buttons = User.first.findings.take(5).map { |f| button(f) }
     {
       "attachment":{
         "type":"template",
         "payload":{
           "template_type":"button",
           "text":"Last week, you read:",
-          "buttons": User.first.findings.take(5).map { |f| button(f) }
+          "buttons": buttons
         }
       }
     }
   end
 
   def button(finding)
-    btn = {
+    {
       "type":  "web_url",
       "url":   "https://#{ENV['domain_name']}/finding/#{finding.to_param}",
       "title": finding.title
     }
-    btn
   end
 
   # def msg3
