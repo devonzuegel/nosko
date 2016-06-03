@@ -41,7 +41,8 @@ class MessengerBotController < ActionController::Base
   end
 
   def msg
-    buttons = User.first.findings.take(5).map { |f| button(f) }
+    # buttons = User.first.findings.take(5).map { |f| button(f) }
+    buttons = [ button(User.first.findings.first), button(User.first.findings.second) ]
     {
       "attachment":{
         "type":"template",
