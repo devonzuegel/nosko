@@ -11,9 +11,9 @@
   componentDidMount: ->
     @setState
       overflowing:  @overflowing()
-      visibility:   @props.article.visibility
 
   getInitialState: ->
+    visibility:   @props.article.visibility
     expanded:     false
     overflowing:  true
     locked:       @props.article.locked
@@ -69,26 +69,17 @@
       @setState(visibility: visibility)
 
   visibility_btn: ->
-    id = "dropdown-#{@props.article.to_param}"
-    React.DOM.div className: 'dropdown pull-right',
-      React.DOM.a
-        id:               id
-        className:        'dropdown-toggle above-card'
-        type:             'button'
-        'aria-expanded':  'true'
-        'aria-haspopup':  'true'
-        'data-toggle':    'dropdown'
-        if @state.visibility == 'Only me'
-          Utils.ion_icon('eye-disabled', 'card-button')
-        else
-          Utils.ion_icon('eye', 'card-button')
-      React.DOM.ul className: 'dropdown-menu centerDropdown', 'aria-labelledby': id,
-        React.DOM.li className: 'dropdown-header', 'Change visibility'
-        @props.share_by_default_enums.map (label, id) =>
-          active_class = if label == @state.visibility then 'active' else 'inactive'
-          update_visibility = => @update_visibility(label)
-          React.DOM.li className: active_class, key: id,
-            React.DOM.a href: '#', onClick: update_visibility, label
+    React.createElement Dropdown,
+      id:                  "dropdown-#{@props.article.to_param}"
+      header:              'Change visibility'
+      option_labels:       @props.share_by_default_enums
+      active_label:        @state.visibility
+      dropdownClasses:     'pull-right'
+      menuClasses:         'centerDropdown'
+      onItemClick: (label) => @update_visibility(label)
+      button:              =>
+        icon =  if @state.visibility == 'Only me' then 'eye-disabled' else 'eye'
+        Utils.ion_icon(icon, 'card-button')
 
   card_buttons: ->
     React.DOM.div className: 'card-buttons above-card',
