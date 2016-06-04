@@ -18,7 +18,7 @@ feature 'Sign out', :omniauth do
     signin
     find('#user-menu-dropdown').click
     sleep 1
-    ap all("ul.dropdown-menu > li")
+    # ap all("ul.dropdown-menu > li")
     click_link 'Sign out'
     expect(page).to have_content 'Signed out'
   end
