@@ -203,6 +203,39 @@ ALTER SEQUENCE followings_id_seq OWNED BY followings.id;
 
 
 --
+-- Name: friendships; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE friendships (
+    id integer NOT NULL,
+    friender_id integer NOT NULL,
+    friendee_id integer NOT NULL,
+    confirmed boolean DEFAULT false NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: friendships_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE friendships_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: friendships_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE friendships_id_seq OWNED BY friendships.id;
+
+
+--
 -- Name: highlights; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -424,6 +457,13 @@ ALTER TABLE ONLY followings ALTER COLUMN id SET DEFAULT nextval('followings_id_s
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY friendships ALTER COLUMN id SET DEFAULT nextval('friendships_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY highlights ALTER COLUMN id SET DEFAULT nextval('highlights_id_seq'::regclass);
 
 
@@ -493,6 +533,14 @@ ALTER TABLE ONLY facebook_accounts
 
 ALTER TABLE ONLY followings
     ADD CONSTRAINT followings_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: friendships_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY friendships
+    ADD CONSTRAINT friendships_pkey PRIMARY KEY (id);
 
 
 --
@@ -582,6 +630,20 @@ CREATE INDEX index_followings_on_follower_id ON followings USING btree (follower
 --
 
 CREATE INDEX index_followings_on_leader_id ON followings USING btree (leader_id);
+
+
+--
+-- Name: index_friendships_on_friendee_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_friendships_on_friendee_id ON friendships USING btree (friendee_id);
+
+
+--
+-- Name: index_friendships_on_friender_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_friendships_on_friender_id ON friendships USING btree (friender_id);
 
 
 --
@@ -702,4 +764,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160517015522');
 INSERT INTO schema_migrations (version) VALUES ('20160528042054');
 
 INSERT INTO schema_migrations (version) VALUES ('20160529210026');
+
+INSERT INTO schema_migrations (version) VALUES ('20160604211111');
 

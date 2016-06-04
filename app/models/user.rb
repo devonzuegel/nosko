@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  include Followable
+  include Followable, Friendable
 
   has_one  :facebook_account, dependent: :destroy
   has_one  :evernote_account, dependent: :destroy
