@@ -15,6 +15,10 @@ Rails.application.routes.draw do
   get '/follow/:id'              => 'followings#follow'
   get '/unfollow/:id'            => 'followings#unfollow'
 
+  # Friend / unfriend
+  get '/friend/:id'              => 'friendships#friend'
+  get '/unfriend/:id'            => 'friendships#unfriend'
+
   # User settings
   get '/settings'                => 'users#settings'
 
@@ -34,5 +38,7 @@ Rails.application.routes.draw do
   # Facebook authentication
   get '/facebook/connect'        => 'facebook#new'
   get '/auth/facebook/callback'  => 'facebook#create'
+
+  # Facebok messenger bot webook
   mount Messenger::Bot::Space    => "facebook/webhook"
 end

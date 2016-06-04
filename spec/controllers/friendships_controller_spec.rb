@@ -4,67 +4,74 @@ describe FriendshipsController do
     @other_user = create(:user)
   end
 
-  # describe 'PUT /follow/:id'  do
-  #   before(:each) do
-  #     Following.destroy_all
-  #     @user.reload
-  #     @other_user.reload
-  #   end
+  describe 'PUT /friend/:id'  do
+    before(:each) do
+      Friendship.destroy_all
+      @user.reload
+      @other_user.reload
+    end
 
-  #   it 'should return an error if user not logged in' do
-  #     get :follow, id: @other_user, format: :json
-  #     assert_response :unauthorized
-  #   end
+    it 'should return an error if user not logged in' do
+      get :friend, id: @other_user, format: :json
+      assert_response :unauthorized
+    end
 
-  #   it 'should allow you to follow another person' do
-  #     session[:user_id] = @user.id
+    it 'should allow you to friend another person' do
+      session[:user_id] = @user.id
 
-  #     expect(@user.leaders).to         eq []
-  #     expect(@other_user.followers).to eq []
+      expect(@user.request_pending?(@other_user)).to eq false
+      expect(@other_user.request_pending?(@user)).to eq false
 
-  #     get :follow, id: @other_user, format: :json
-  #     assert_response :success
+      get :friend, id: @other_user, format: :json
+      assert_response :success
 
-  #     @user.reload
-  #     @other_user.reload
+      @user.reload
+      @other_user.reload
 
-  #     expect(@user.leaders).to         match [@other_user]
-  #     expect(@other_user.followers).to match [@user]
-  #   end
+      expect(@user.request_pending?(@other_user)).to eq true
+      expect(@other_user.request_pending?(@user)).to eq true
 
-  #   it 'should not allow you to follow yourself' do
-  #     session[:user_id] = @user.id
+      expect(@user.unconfirmed_friends).to match [@other_user]
+      expect(@other_user.unconfirmed_friends).to match [@user]
+    end
 
-  #     expect(@user.leaders).to   eq []
-  #     expect(@user.followers).to eq []
+    it 'should not allow you to friend yourself' do
+      session[:user_id] = @user.id
+      expect(@user.request_pending?(@user)).to eq false
 
-  #     get :follow, id: @user, format: :json
-  #     assert_response :unprocessable_entity
-  #     expect(JSON.parse(response.body)).to eq({ 'errors' => ["You can't follow yourself, silly!"] })
+      get :friend, id: @user, format: :json
+      assert_response :unprocessable_entity
+      expect(JSON.parse(response.body)).to eq({ 'errors' => ["You can't friend yourself, silly!"] })
 
-  #     @user.reload
+      @user.reload
 
-  #     expect(@user.leaders).to   match []
-  #     expect(@user.followers).to match []
-  #   end
+      expect(@user.confirmed_friends).to   match []
+      expect(@user.unconfirmed_friends).to match []
+    end
 
-  #   it 'should not allow you to follow the same person twice' do
-  #     session[:user_id] = @user.id
-  #     @user.follow!(@other_user)
+    it 'should not allow you to friend request the same person twice' do
+      session[:user_id] = @user.id
+      @user.friend!(@other_user)
 
-  #     expect(@user.leaders).to         match [@other_user]
-  #     expect(@other_user.followers).to match [@user]
+      expect(@user.request_pending?(@other_user)).to eq true
+      expect(@other_user.request_pending?(@user)).to eq true
 
-  #     get :follow, id: @other_user, format: :json
-  #     assert_response :unprocessable_entity
-  #     expect(JSON.parse(response.body)).to eq({ 'errors' => ["You're already following user ##{@other_user.id}"] })
+      get :friend, id: @other_user, format: :json
+      assert_response :unprocessable_entity
+      expect(JSON.parse(response.body)).to eq({
+        'errors' => ["There's a pending friendship request with #{@other_user.name} already!"]
+      })
 
-  #     @user.reload
+      @user.reload
+      @other_user.reload
 
-  #     expect(@user.leaders).to         match [@other_user]
-  #     expect(@other_user.followers).to match [@user]
-  #   end
-  # end
+      expect(@user.request_pending?(@other_user)).to eq true
+      expect(@other_user.request_pending?(@user)).to eq true
+
+      expect(@user.unconfirmed_friends).to match [@other_user]
+      expect(@other_user.unconfirmed_friends).to match [@user]
+    end
+  end
 
   # describe 'GET /unfollow/:id' do
   #   before(:each) do
