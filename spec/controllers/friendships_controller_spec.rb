@@ -73,50 +73,58 @@ describe FriendshipsController do
     end
   end
 
-  # describe 'GET /unfollow/:id' do
-  #   before(:each) do
-  #     Following.destroy_all
-  #     @user.reload
-  #     @other_user.reload
-  #   end
+  describe 'GET /unfollow/:id' do
+    before(:each) do
+      Following.destroy_all
+      @user.reload
+      @other_user.reload
+    end
 
-  #   it 'should return an error if user not logged in' do
-  #     get :unfollow, id: @other_user, format: :json
-  #     assert_response :unauthorized
-  #   end
+    it 'should return an error if user not logged in' do
+      get :unfriend, id: @other_user, format: :json
+      assert_response :unauthorized
+    end
 
-  #   it 'should allow you to unfollow a person if youre already following them' do
-  #     session[:user_id] = @user.id
-  #     @user.follow!(@other_user)
+    it 'should allow you to unfriend a person if youre already confirmed friends with them' do
+      session[:user_id] = @user.id
+      @user.friend!(@other_user)
+      friendship = Friendship.where(friender: @user, friendee: @other_user).first
+      friendship.confirm!
+      expect(friendship.confirmed?).to eq true
 
-  #     expect(@user.leaders).to         eq [@other_user]
-  #     expect(@other_user.followers).to eq [@user]
+      expect(@user.confirmed_friends).to       eq [@other_user]
+      expect(@other_user.confirmed_friends).to eq [@user]
 
-  #     get :unfollow, id: @other_user, format: :json
-  #     assert_response :success
+      get :unfriend, id: @other_user, format: :json
+      assert_response :success
 
-  #     @user.reload
-  #     @other_user.reload
+      @user.reload
+      @other_user.reload
 
-  #     expect(@user.leaders).to         match []
-  #     expect(@other_user.followers).to match []
-  #   end
+      expect(@user.confirmed_friends).to       match []
+      expect(@other_user.confirmed_friends).to match []
+    end
 
-  #   it 'should not allow you to unfollow someone you arent following' do
-  #     session[:user_id] = @user.id
+    it 'should not allow you to unfriend someone you arent confirmed friends with' do
+      session[:user_id] = @user.id
+      @user.friend!(@other_user)
 
-  #     expect(@user.leaders).to         eq []
-  #     expect(@other_user.followers).to eq []
+      expect(@user.unconfirmed_friends).to       eq [@other_user]
+      expect(@other_user.unconfirmed_friends).to eq [@user]
 
-  #     get :unfollow, id: @other_user, format: :json
-  #     assert_response :unprocessable_entity
-  #     expect(JSON.parse(response.body)).to eq({ 'errors' => ["You weren't following user ##{@other_user.id}"] })
+      get :unfriend, id: @other_user, format: :json
+      assert_response :unprocessable_entity
+      expect(JSON.parse(response.body)).to eq({
+        'errors' => ["You weren't friends with user ##{@other_user.id}"]
+      })
 
-  #     @user.reload
-  #     @other_user.reload
+      @user.reload
+      @other_user.reload
 
-  #     expect(@user.leaders).to         match []
-  #     expect(@other_user.followers).to match []
-  #   end
-  # end
+      expect(@user.unconfirmed_friends).to       match [@other_user]
+      expect(@other_user.unconfirmed_friends).to match [@user]
+    end
+  end
+
+  it 'should allow you to delete friend requests'
 end
