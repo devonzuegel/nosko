@@ -1,6 +1,6 @@
 @Dropdown = React.createClass
   propTypes:
-    button:           React.PropTypes.func.isRequired
+    toggleBtn:        React.PropTypes.func.isRequired
     id:               React.PropTypes.string.isRequired
     onItemClick:      React.PropTypes.func.isRequired
     option_labels:    React.PropTypes.arrayOf(React.PropTypes.string).isRequired
@@ -19,7 +19,7 @@
         'aria-expanded':  'true'
         'aria-haspopup':  'true'
         'data-toggle':    'dropdown'
-        @props.button()
+        @props.toggleBtn()
       React.DOM.ul className: "dropdown-menu #{@props.menuClasses}", 'aria-labelledby': @props.id,
         if @props.header
           React.DOM.li className: 'dropdown-header', @props.header

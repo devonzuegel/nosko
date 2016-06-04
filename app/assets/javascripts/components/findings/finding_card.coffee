@@ -49,20 +49,6 @@
       e.preventDefault()
       @toggle_collapse()
 
-  card_body: ->
-    React.DOM.div className: 'filled-div',
-      React.DOM.a className: 'fill-div', href: @props.article.href
-      React.DOM.div id: @id(), className: "#{@toggled_collapsed_class()} article-body",
-        React.DOM.h1 null, @props.article.title
-        React.DOM.div className: 'date-and-user',
-          React.DOM.a className: 'user-link', href: @props.article.user.href,
-            React.DOM.div className: 'above-card', @props.article.user.name
-          React.DOM.div className: 'date-and-user-spacer', '//'
-          React.DOM.div className: 'date ', @props.article.created_at
-        if !@props.title_only
-          React.DOM.div className: 'markdown-body', dangerouslySetInnerHTML: { __html: @props.article.content }
-      @card_buttons() if @props.selected
-
   update_visibility: (visibility) ->
     data = { article: { visibility: visibility } }
     $.patch "/finding/#{@props.article.to_param}", data, (result) =>
@@ -77,7 +63,7 @@
       dropdownClasses:     'pull-right'
       menuClasses:         'centerDropdown'
       onItemClick: (label) => @update_visibility(label)
-      button:              =>
+      toggleBtn:           =>
         icon =  if @state.visibility == 'Only me' then 'eye-disabled' else 'eye'
         Utils.ion_icon(icon, 'card-button')
 
@@ -93,6 +79,16 @@
 
   render: ->
     @hotkey_bindings()
-
     React.DOM.div className: 'finding',
-      @card_body()
+      React.DOM.div className: 'filled-div',
+        React.DOM.a className: 'fill-div', href: @props.article.href
+        React.DOM.div id: @id(), className: "#{@toggled_collapsed_class()} article-body",
+          React.DOM.h2 null, @props.article.title
+          React.DOM.div className: 'date-and-user',
+            React.DOM.a className: 'user-link', href: @props.article.user.href,
+              React.DOM.div className: 'above-card', @props.article.user.name
+            React.DOM.div className: 'date-and-user-spacer', '//'
+            React.DOM.div className: 'date ', @props.article.created_at
+          if !@props.title_only
+            React.DOM.div className: 'markdown-body', dangerouslySetInnerHTML: { __html: @props.article.content }
+        @card_buttons() if @props.selected

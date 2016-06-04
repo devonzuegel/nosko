@@ -1,13 +1,12 @@
 R = React.DOM
 TransitionGroup = React.addons.CSSTransitionGroup
 
-
 @ActivityLog = React.createClass
   mixins: [ HotkeysModal]
 
   propTypes:
-    findings: React.PropTypes.arrayOf(React.PropTypes.ArticleFacade).isRequired
-    # TODO need to actually persist the reviewing
+    findings:                React.PropTypes.arrayOf(React.PropTypes.ArticleFacade).isRequired
+    share_by_default_enums:  React.PropTypes.arrayOf(React.PropTypes.string).isRequired
 
   getInitialState: ->
     findings:   @props.findings
@@ -41,7 +40,7 @@ TransitionGroup = React.addons.CSSTransitionGroup
 
   handleRemove: (i) ->
     data = { article: { reviewed: true } }
-    $.patch "/finding/#{@props.findings[i].to_param}", data, (result) =>
+    $.patch "/finding/#{@state.findings[i].to_param}", data, (result) =>
       new_findings = @state.findings.slice()
       new_findings.splice(i, 1)
       @setState findings: new_findings
@@ -94,8 +93,8 @@ TransitionGroup = React.addons.CSSTransitionGroup
     R.div className: 'btn-toolbar',
       R.div className: 'btn-group pull-right', role: 'group',
         @hotkeys_modal_btn()
-        R.button className: 'btn btn-secondary', onClick: @handleAdd,
-          Utils.ion_icon_link('ios-plus-outline', null, 'Add Item')
+        # R.button className: 'btn btn-secondary', onClick: @handleAdd,
+        #   Utils.ion_icon_link('ios-plus-outline', null, 'Add Item')
         R.button className: 'btn btn-secondary', onClick: @select_all,
           Utils.ion_icon_link('ios-checkmark-outline', null, 'Select all')
 
@@ -105,6 +104,30 @@ TransitionGroup = React.addons.CSSTransitionGroup
       when 'Friends' then 'label-info'
       when 'Public'  then 'label-success'
       else                'label-default'
+
+  update_visibility: (visibility, i) ->
+    finding = @state.findings[i]
+    data    = { article: { visibility: visibility } }
+    $.patch "/finding/#{finding.to_param}", data, (result) =>
+      new_findings = @state.findings.slice()
+      new_findings[i].visibility = visibility
+      @setState(findings: new_findings, selected: @state.selected.filter (j) -> j isnt i)
+      @handleRemove(i)
+
+  visibility_btn: (i) ->
+    finding = @state.findings[i]
+    React.createElement Dropdown,
+      id:                  "dropdown-#{finding.to_param}"
+      header:              'Change visibility'
+      option_labels:       @props.share_by_default_enums
+      active_label:        finding.visibility
+      dropdownClasses:     'pull-right'
+      menuClasses:         'centerDropdown'
+      onItemClick: (label) => @update_visibility(label, i)
+      toggleBtn:           =>
+        R.span
+          className: "label #{@label_class(finding)} pull-right"
+          finding.visibility
 
   rendered_findings: ->
     @state.findings.map (finding, id) =>
@@ -116,16 +139,15 @@ TransitionGroup = React.addons.CSSTransitionGroup
         className:  "finding #{selected_class}"
 
         finding.title
-        R.span
-          className: "label #{@label_class(finding)} pull-right"
-          finding.visibility
+        @visibility_btn(id)
         R.span className: 'pull-right date', "Created #{finding.created_at}"
 
   render: ->
     @reset_active_id()
     R.div id: 'activity-log', className: 'findings-stream activity-log',
       @buttons()
-      # R.ul className: 'list-group',
+      if @state.findings.length == 0
+        R.div className: 'disabled', 'No findings to review!'
       React.createElement TransitionGroup,
         transitionName:          'slide'
         transitionEnterTimeout:   0

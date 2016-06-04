@@ -1,20 +1,22 @@
 = render 'findings/hotkeys_modal'
 
 h2 Unreviewed
-= react_component 'ActivityLog', findings: @unreviewed_findings
+= react_component 'ActivityLog',
+  findings:               @unreviewed_findings,
+  share_by_default_enums: Finding::Article::SHARE_BY_DEFAULT_ENUM.keys
 
 - 10.times do
 
   .spacer.large
 
-h2 Reviewed
-- 8.times do
+/ h2 Reviewed
+/ - 8.times do
 
-  .spacer.large
+/   .spacer.large
 
-#activity-log.findings-stream.reviewed
-  - @reviewed_findings.each do |finding|
-    .finding
-      = finding[:title]
-      span.label.pull-right(class="#{finding[:label_type]}")= finding[:visibility]
-      .pull-right.date= "Created #{finding[:created_at]}"
+/ #activity-log.findings-stream.reviewed
+/   - @reviewed_findings.each do |finding|
+/     .finding
+/       = finding[:title]
+/       span.label.pull-right(class="#{finding[:label_type]}")= finding[:visibility]
+/       .pull-right.date= "Created #{finding[:created_at]}"
