@@ -2,6 +2,7 @@
   propTypes:
     friends_with:    React.PropTypes.bool.isRequired,
     request_pending: React.PropTypes.bool.isRequired,
+    propogation:     React.PropTypes.func.isRequired,
     user:            React.PropTypes.UserFacade
 
   getInitialState: ->
@@ -24,6 +25,7 @@
         @setState(friends_with: false)
       else
         @setState(request_pending: true)
+        @props.propogation()
 
   url: ->
     if @state.friends_with

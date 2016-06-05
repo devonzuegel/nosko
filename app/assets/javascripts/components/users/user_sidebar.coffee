@@ -32,6 +32,10 @@ R = React.DOM
   num_findings:  -> @props.user.num_findings_this_month
   num_books:     -> 333
   followable:    -> (@props.current_user != null) && (@props.user.id != @props.current_user.id)
+  follow:        ->
+    return if @state.following
+    $.get "/follow/#{@props.user.id}", success: =>
+      @update_followers()
 
   render: ->
     React.DOM.div null,
@@ -48,6 +52,7 @@ R = React.DOM
                 user:            @props.user
                 friends_with:    @state.friends_with
                 request_pending: @state.request_pending
+                propogation:     @follow
       React.DOM.table id: 'stats',
         React.DOM.tbody null,
           React.DOM.tr null,
