@@ -1,3 +1,5 @@
+R = React.DOM
+
 @FindingCard = React.createClass
   propTypes:
     article:                React.PropTypes.ArticleFacade.isRequired
@@ -49,6 +51,13 @@
       e.preventDefault()
       @toggle_collapse()
 
+  label_class: ->
+    switch @state.visibility
+      when 'Only me' then 'label-primary'
+      when 'Friends' then 'label-info'
+      when 'Public'  then 'label-success'
+      else                'label-default'
+
   update_visibility: (visibility) ->
     data = { article: { visibility: visibility } }
     $.patch "/finding/#{@props.article.to_param}", data, (result) =>
@@ -64,31 +73,32 @@
       menuClasses:         'centerDropdown'
       onItemClick: (label) => @update_visibility(label)
       toggleBtn:           =>
-        icon =  if @state.visibility == 'Only me' then 'eye-disabled' else 'eye'
-        Utils.ion_icon(icon, 'card-button')
+        R.span
+          className: "label #{@label_class()} pull-right card-button"
+          @state.visibility
 
   card_buttons: ->
-    React.DOM.div className: 'card-buttons above-card',
-      React.DOM.div className: 'right',
+    R.div className: 'card-buttons above-card',
+      R.div className: 'right',
         if @props.article.editable  # Only editable if owned by current user
-          React.DOM.div null,
-            @lock_btn()
+          R.div null,
             @visibility_btn()
+            @lock_btn()
         Utils.ion_icon_link('link', @permalink_to_clipboard)
         @resize_btn()
 
   render: ->
     @hotkey_bindings()
-    React.DOM.div className: 'finding',
-      React.DOM.div className: 'filled-div',
-        React.DOM.a className: 'fill-div', href: @props.article.href
-        React.DOM.div id: @id(), className: "#{@toggled_collapsed_class()} article-body",
-          React.DOM.h2 null, @props.article.title
-          React.DOM.div className: 'date-and-user',
-            React.DOM.a className: 'user-link', href: @props.article.user.href,
-              React.DOM.div className: 'above-card', @props.article.user.name
-            React.DOM.div className: 'date-and-user-spacer', '//'
-            React.DOM.div className: 'date ', @props.article.created_at
+    R.div className: 'finding',
+      R.div className: 'filled-div',
+        R.a className: 'fill-div', href: @props.article.href
+        R.div id: @id(), className: "#{@toggled_collapsed_class()} article-body",
+          R.h2 null, @props.article.title
+          R.div className: 'date-and-user',
+            R.a className: 'user-link', href: @props.article.user.href,
+              R.div className: 'above-card', @props.article.user.name
+            R.div className: 'date-and-user-spacer', '//'
+            R.div className: 'date ', @props.article.created_at
           if !@props.title_only
-            React.DOM.div className: 'markdown-body', dangerouslySetInnerHTML: { __html: @props.article.content }
+            R.div className: 'markdown-body', dangerouslySetInnerHTML: { __html: @props.article.content }
         @card_buttons() if @props.selected

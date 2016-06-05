@@ -1,13 +1,19 @@
+R = React.DOM
+
 @UserSidebar = React.createClass
   propTypes:
-    following:    React.PropTypes.bool.isRequired,
-    current_user: React.PropTypes.UserFacade,
-    user:         React.PropTypes.UserFacade,
-    followers:    React.PropTypes.arrayOf(React.PropTypes.UserFacade).isRequired
+    following:       React.PropTypes.bool.isRequired,
+    friends_with:    React.PropTypes.bool.isRequired,
+    request_pending: React.PropTypes.bool.isRequired,
+    current_user:    React.PropTypes.UserFacade,
+    user:            React.PropTypes.UserFacade,
+    followers:       React.PropTypes.arrayOf(React.PropTypes.UserFacade).isRequired
 
   getInitialState: ->
-    following:  @props.following
-    followers:  @props.followers
+    following:       @props.following
+    friends_with:    @props.friends_with
+    request_pending: @props.request_pending
+    followers:       @props.followers
 
   update_followers: ->
     @setState
@@ -30,10 +36,18 @@
   render: ->
     React.DOM.div null,
       if @followable()
-        React.createElement FollowUnfollowButton,
-          user:         @props.user
-          following:    @state.following
-          propogation:  @update_followers
+        R.table null, R.tbody null,
+          R.tr null,
+            R.td null,
+              React.createElement FollowUnfollowButton,
+                user:         @props.user
+                following:    @state.following
+                propogation:  @update_followers
+            R.td null,
+              React.createElement FriendUnfriendButton,
+                user:            @props.user
+                friends_with:    @state.friends_with
+                request_pending: @state.request_pending
       React.DOM.table id: 'stats',
         React.DOM.tbody null,
           React.DOM.tr null,

@@ -67,6 +67,9 @@ $card-border:      $default-border;
       &.smaller {
         font-size: 0.9em;
       }
+      &.label {
+        margin-top: 3px;
+      }
     }
     .left {
       .card-button {
