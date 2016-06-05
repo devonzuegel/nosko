@@ -4,10 +4,12 @@
 
     b= @user.name
 
-    = react_component 'UserSidebar', user:          @user.as_prop,
-                                     followers:     @user.followers,
-                                     current_user:  @current_user.render,
-                                     following:     @current_user.follows?(@user)
+    = react_component 'UserSidebar', user:            @user.as_prop,
+                                     followers:       @user.followers,
+                                     current_user:    @current_user.render,
+                                     following:       @current_user.follows?(@user),
+                                     friends_with:    @current_user.friends_with?(@user),
+                                     request_pending: @current_user.request_pending?(@user)
 
   .col-sm-9
     = render 'findings/hotkeys_modal'

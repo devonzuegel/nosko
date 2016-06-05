@@ -2,7 +2,6 @@ class VisitorsController < ApplicationController
   before_action :authenticate_user!, only: %i(activity_log)
 
   def index
-    puts "\n\n#{Rails.root}\n\n".red
     @articles = Feed.new(current_user).findings
   end
 

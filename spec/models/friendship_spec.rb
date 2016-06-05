@@ -87,7 +87,63 @@ RSpec.describe Friendship, type: :model do
   end
 
   describe '#unfriend!' do
-    it 'should destroy a friendship'
+    context 'confirmed friendship' do
+      before(:each) do
+        @friendship = create(:friendship, confirmed: true)
+        @friendee   = @friendship.friendee
+        @friender   = @friendship.friender
+      end
+
+      it 'should destroy a friendship' do
+        expect { @friendee.unfriend!(@friender) }.to change { Friendship.count }.by -1
+      end
+
+      it 'should destroy a friendship' do
+        expect { @friender.unfriend!(@friendee) }.to change { Friendship.count }.by -1
+      end
+
+      it 'should return true on success' do
+        expect(@friendee.unfriend!(@friender)).to eq true
+      end
+
+      it 'should return true on success' do
+        expect(@friender.unfriend!(@friendee)).to eq true
+      end
+    end
+
+    context 'unconfirmed friendship' do
+      before(:each) do
+        @unconfirmed_friendship = create(:friendship)
+        @friendee = @unconfirmed_friendship.friendee
+        @friender = @unconfirmed_friendship.friender
+      end
+
+      it 'should not destroy an unconfirmed friendship' do
+        expect { (@friendee).unfriend!(@friender) }.to change { Friendship.count }.by 0
+      end
+
+      it 'should not destroy an unconfirmed friendship' do
+        expect { (@friender).unfriend!(@friendee) }.to change { Friendship.count }.by 0
+      end
+
+      it 'should return false on failure' do
+        expect(@friendee.unfriend!(@friender)).to eq false
+      end
+
+      it 'should return false on failure' do
+        expect(@friender.unfriend!(@friendee)).to eq false
+      end
+    end
+
+    context 'no friendship, pending or confirmed' do
+      let(:user1) { create(:user) }
+      let(:user2) { create(:user) }
+
+      it 'should not destroy a friendship if they werent friends in the first place' do
+        expect(user1.unfriend!(user2)).to eq false
+        expect { user1.unfriend!(user2) }.to change { Friendship.count }.by 0
+      end
+    end
   end
 
   describe '#confirm!' do

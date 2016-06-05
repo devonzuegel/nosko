@@ -10,7 +10,7 @@ module Friendable
   end
 
   def friends_with?(user)
-    confirmed_friends.map(&:id).include? user.id
+    !friendship_with(user).nil?
   end
 
   def request_pending?(user)
@@ -52,14 +52,23 @@ module Friendable
   end
 
   def unfriend!(friend)
-    matches = Friendship.where(friender: friend, friendee: self) + Friendship.where(friender: self, friendee: friend)
+    friendship = friendship_with(friend)
 
-    if matches.empty?
+    if !friends_with?(friend)
       errors[:base] << "You weren't friends with user ##{friend.id}"
       return false
     end
 
-    matches.first.destroy!
+    friendship.destroy!
     true
+  end
+
+  private
+
+  def friendship_with(friend)
+    [
+      *Friendship.where(friender: friend, friendee: self).confirmed,
+      *Friendship.where(friender: self,   friendee: friend).confirmed
+    ].first
   end
 end
