@@ -2,9 +2,9 @@ module Finding
   module Findable
     extend ActiveSupport::Concern
 
-    include Permalinkable, FormEditable, Shareable
+    include Permalinkable, FormEditable, Shareable, Lockable
 
-    REQUIRED_FIELDS = %i(title user_id locked visibility reviewed)
+    REQUIRED_FIELDS = %i(title user_id locked visibility reviewed favorited)
     HIDDEN_FIELDS   = %i(id permalink_id created_at updated_at)
 
     included do
@@ -14,22 +14,6 @@ module Finding
 
     def owned_by?(user)
       self.user.id == user.id
-    end
-
-    def locked?
-      locked
-    end
-
-    def unlocked?
-      !locked?
-    end
-
-    def lock!
-      update(locked: true)
-    end
-
-    def unlock!
-      update(locked: false)
     end
 
     def to_param

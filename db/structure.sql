@@ -44,7 +44,8 @@ CREATE TABLE articles (
     updated_at timestamp without time zone NOT NULL,
     locked boolean DEFAULT false,
     visibility integer DEFAULT 0 NOT NULL,
-    reviewed boolean DEFAULT false NOT NULL
+    reviewed boolean DEFAULT false NOT NULL,
+    favorited boolean DEFAULT false
 );
 
 
@@ -766,4 +767,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160528042054');
 INSERT INTO schema_migrations (version) VALUES ('20160529210026');
 
 INSERT INTO schema_migrations (version) VALUES ('20160604211111');
+
+INSERT INTO schema_migrations (version) VALUES ('20160607221314');
 

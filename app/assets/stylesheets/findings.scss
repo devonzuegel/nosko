@@ -177,9 +177,13 @@ $card-border:      $default-border;
 
 .centerDropdown {
   left:         50% !important;
-  margin-left:  -70px !important;
+  margin-left:  -60px !important;
 }
 
 .inline-block {
   display: inline-block;
+}
+
+.small-left-margin {
+  margin-left: 8px;
 }

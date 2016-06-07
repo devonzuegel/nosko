@@ -1,13 +1,8 @@
 = render 'findings/hotkeys_modal'
 
-h2 Unreviewed
 = react_component 'ActivityLog',
   findings:               @unreviewed_findings,
   share_by_default_enums: Finding::Article::SHARE_BY_DEFAULT_ENUM.keys
-
-- 10.times do
-
-  .spacer.large
 
 / h2 Reviewed
 / - 8.times do

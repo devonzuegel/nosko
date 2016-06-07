@@ -125,21 +125,6 @@ TransitionGroup = React.addons.CSSTransitionGroup
 
     $.patch "/finding/#{@state.findings[i].to_param}", { article: { visibility: visibility } }
 
-  # visibility_btn: (i) ->
-  #   finding = @state.findings[i]
-  #   React.createElement Dropdown,
-  #     id:                  "dropdown-#{finding.to_param}"
-  #     header:              'Change visibility'
-  #     option_labels:       @props.share_by_default_enums
-  #     active_label:        finding.visibility
-  #     dropdownClasses:     'pull-right'
-  #     menuClasses:         'centerDropdown'
-  #     onItemClick: (label) => @update_visibility(label, i)
-  #     toggleBtn:           =>
-  #       R.span
-  #         className: "label #{@label_class(finding)} pull-right"
-  #         finding.visibility
-
   rendered_findings: ->
     @state.findings.map (finding, id) =>
       selected_class = if (id in @state.selected) then 'selected' else 'unselected'
@@ -153,11 +138,16 @@ TransitionGroup = React.addons.CSSTransitionGroup
           className: "label #{@label_class(finding)} pull-right"
           finding.visibility
         R.span className: 'pull-right date', "Created #{finding.created_at}"
+        R.span
+          className: 'pull-left'
+          onClick:   -> alert('lskdjf')
+          Utils.ion_icon('star', 'inline-block')
         R.div className: 'title', finding.title
 
   render: ->
     @reset_active_id()
     R.div id: 'activity-log', className: "findings-stream activity-log #{@selectability_klass()}",
+      R.h2 className: 'inline-block', 'Unreviewed'
       @buttons()
       if @state.findings.length == 0
         R.div className: 'disabled', 'No findings to review!'

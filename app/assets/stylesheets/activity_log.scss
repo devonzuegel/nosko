@@ -23,6 +23,11 @@ $list-item-border:         1px solid $lighter-grey;
       margin-right: 10px;
     }
   }
+
+  .ion-icon.ion-star {
+    margin-right: 12px;
+    margin-top: -3px;
+  }
 }
 
 
@@ -47,6 +52,7 @@ $list-item-border:         1px solid $lighter-grey;
   &.activity-log .selected.finding {
     box-shadow:         $lighter-box-shadow-no-top;
   }
+
 }
 
 #mass-visibility-update {

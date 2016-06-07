@@ -47,6 +47,6 @@ class FindingsController < ApplicationController
   end
 
   def article_params
-    filtered = params.require(:article).permit(*%i(visibility reviewed))
+    filtered = params.require(:article).permit(*%i(visibility reviewed favorited))
   end
 end

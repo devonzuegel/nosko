@@ -10,6 +10,7 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require_tree ./vendor
  *= require_tree .
  *= require_self
  */
@@ -99,4 +100,12 @@ pre {
 
 .center-contents {
   text-align: center;
+}
+
+.label-notification {
+  border-radius:  100%;
+  font-size:      65%;
+  padding:        .2em .4em;
+  margin-top:     -3px;
+  margin-left:    5px;
 }
