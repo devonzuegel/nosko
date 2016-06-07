@@ -1,12 +1,17 @@
-class CurrentUserDecorator < Draper::Decorator
-  decorates :user
-  delegate *%i(id name facebook_account)
+class CurrentUserDecorator
+  def initialize(user)
+    @user = user
+  end
+
+  def facebook_account
+    @user.facebook_account
+  end
 
   def href
-    if object.nil?
+    if @user.nil?
       root_path
     else
-      h.user_path(object)
+      h.user_path(@user)
     end
   end
 
@@ -16,28 +21,36 @@ class CurrentUserDecorator < Draper::Decorator
 
   def as_prop
     {
-      id:                       id,
-      name:                     name,
-      href:                     href
+      id:   @user.id,
+      name: @user.name,
+      href: href
     }
   end
 
+  def name
+    @user.name
+  end
+
+  def id
+    @user.id
+  end
+
   def render
-    return nil if object.nil?
+    return nil if @user.nil?
     decorated.as_prop
   end
 
   def decorated
-    object.decorate
+    @user.decorate
   end
 
   def follows?(leader)
-    return false if object.nil?
-    object.follows?(leader)
+    return false if @user.nil?
+    @user.follows?(leader)
   end
 
   def friends_with?(user)
-    return false if object.nil?
+    return false if @user.nil?
     matches = [
       *Friendship.where(friender_id: user, friendee_id: id).confirmed,
       *Friendship.where(friender_id: id,   friendee_id: user).confirmed
