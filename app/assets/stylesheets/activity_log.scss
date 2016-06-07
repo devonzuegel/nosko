@@ -45,7 +45,6 @@ $list-item-border:         1px solid $lighter-grey;
   }
 
   &.activity-log .selected.finding {
-    // box-shadow:         $lighter-box-shadow;
     box-shadow:         $lighter-box-shadow-no-top;
   }
 }
@@ -56,4 +55,10 @@ $list-item-border:         1px solid $lighter-grey;
     font-weight:  bolder;
     padding:      0.4em 0.5em;
   }
+}
+
+.title {
+  display:  inline;
+  overflow: hidden;
+  width:    80%;
 }

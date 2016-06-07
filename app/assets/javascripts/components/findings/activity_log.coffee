@@ -149,11 +149,11 @@ TransitionGroup = React.addons.CSSTransitionGroup
         id:         @finding_id(id)
         className:  "finding #{selected_class}"
 
-        finding.title
         R.span
           className: "label #{@label_class(finding)} pull-right"
           finding.visibility
         R.span className: 'pull-right date', "Created #{finding.created_at}"
+        R.div className: 'title', finding.title
 
   render: ->
     @reset_active_id()
