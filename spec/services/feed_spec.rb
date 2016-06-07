@@ -2,7 +2,7 @@ describe Feed do
   it 'should have the expected default options' do
     expect(Feed::DEFAULT_OPTIONS).to eq ({
       order:      :created_at,
-      reverse:    false,
+      reverse:    true,
       offset:     0,
       limit:      20,
     })
@@ -32,8 +32,8 @@ describe Feed do
       expected_findings = [
         *Finding::Collection.new(@user).all,
         *Finding::Collection.new(@leader).public
-      ].sort_by(&:created_at).map { |f| f.decorate.as_prop }
-      expect(Feed.new(@user).findings).to eq expected_findings
+      ].sort_by(&:created_at).reverse.map { |f| f.decorate.as_prop }
+      expect(Feed.new(@user).findings).to match expected_findings
     end
 
     # TODO update me
