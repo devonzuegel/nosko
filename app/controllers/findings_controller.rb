@@ -48,7 +48,5 @@ class FindingsController < ApplicationController
 
   def article_params
     filtered = params.require(:article).permit(*%i(visibility reviewed))
-    return filtered if filtered[:visibility].nil?
-    filtered.merge({ reviewed: true })
   end
 end

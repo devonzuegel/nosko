@@ -22,8 +22,11 @@ TransitionGroup = React.addons.CSSTransitionGroup
     Mousetrap.bind 'ctrl+up',   (e) => @to_first_finding(e)
 
     Mousetrap.bind 'shift',     (e) =>
+      $(document).bind('selectstart', Utils.return_false)
       @setState selecting: true
+    , 'keypress'
     Mousetrap.bind 'shift',     (e) =>
+      $(document).unbind('selectstart', Utils.return_false)
       @setState selecting: false
     , 'keyup'
 
@@ -31,12 +34,8 @@ TransitionGroup = React.addons.CSSTransitionGroup
       if !$(event.target).closest('#activity-log').length and !$(event.target).is('#activity-log')
         @setState selected: [@state.active_id]
 
-  rand_str:        -> Math.random().toString(36).substring(7)
   finding_id: (id) -> "list-group-item-#{id}"
-
-  handleAdd: ->
-    new_findings = @state.findings.concat([{ title: @rand_str(), to_param: @rand_str() }])
-    @setState findings: new_findings
+  selectability_klass: -> if @state.selecting then 'no-select' else 'select-enabled'
 
   handleRemove: (i) ->
     data = { article: { reviewed: true } }
@@ -93,8 +92,6 @@ TransitionGroup = React.addons.CSSTransitionGroup
     R.div className: 'btn-toolbar',
       R.div className: 'btn-group pull-right', role: 'group',
         @hotkeys_modal_btn()
-        # R.button className: 'btn btn-secondary', onClick: @handleAdd,
-        #   Utils.ion_icon_link('ios-plus-outline', null, 'Add Item')
         R.button className: 'btn btn-secondary', onClick: @select_all,
           Utils.ion_icon_link('ios-checkmark-outline', null, 'Select all')
 
@@ -111,8 +108,7 @@ TransitionGroup = React.addons.CSSTransitionGroup
     $.patch "/finding/#{finding.to_param}", data, (result) =>
       new_findings = @state.findings.slice()
       new_findings[i].visibility = visibility
-      @setState(findings: new_findings, selected: @state.selected.filter (j) -> j isnt i)
-      @handleRemove(i)
+      @setState(findings: new_findings)
 
   visibility_btn: (i) ->
     finding = @state.findings[i]
@@ -144,7 +140,7 @@ TransitionGroup = React.addons.CSSTransitionGroup
 
   render: ->
     @reset_active_id()
-    R.div id: 'activity-log', className: 'findings-stream activity-log',
+    R.div id: 'activity-log', className: "findings-stream activity-log #{@selectability_klass()}",
       @buttons()
       if @state.findings.length == 0
         R.div className: 'disabled', 'No findings to review!'

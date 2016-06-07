@@ -1,4 +1,6 @@
 @Utils =
+  return_false: -> return false
+
   amountFormat: (amt) ->
     '$ ' + Number(amt).toLocaleString()
 
