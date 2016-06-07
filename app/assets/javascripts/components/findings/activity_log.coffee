@@ -11,7 +11,7 @@ TransitionGroup = React.addons.CSSTransitionGroup
   getInitialState: ->
     findings:   @props.findings
     active_id:  0
-    selected:   [0]
+    selected:   if (@props.findings.length == 0) then [] else [0]
     selecting:  false
 
   componentDidMount: ->
@@ -80,9 +80,9 @@ TransitionGroup = React.addons.CSSTransitionGroup
 
   archive_finding: (e) ->
     e.preventDefault()
+    new_selected = if (@state.findings.length == @state.selected.length) then [] else [ @state.selected[0] ]
     for id in @state.selected.reverse()  # Don't mess up the indices before removing all
       @handleRemove(id)
-    new_selected = [ @state.selected[0] ]
     @setState selected: []  # Set none as selected until slide out is over
     setTimeout =>
       @setState selected: new_selected
@@ -101,7 +101,7 @@ TransitionGroup = React.addons.CSSTransitionGroup
         toggleBtn:           =>
           React.DOM.div className: 'card-button',
             Utils.ion_icon('eye', 'inline-block')
-            React.DOM.div className: 'icon-text inline-block', 'Change visibility'
+            React.DOM.div className: 'icon-text inline-block', "Change visibility (#{@state.selected.length})"
 
   buttons: ->
     R.div className: 'btn-toolbar',
