@@ -49,3 +49,11 @@ $list-item-border:         1px solid $lighter-grey;
     box-shadow:         $lighter-box-shadow-no-top;
   }
 }
+
+#mass-visibility-update {
+  .label {
+    font-size:    83%;
+    font-weight:  bolder;
+    padding:      0.4em 0.5em;
+  }
+}

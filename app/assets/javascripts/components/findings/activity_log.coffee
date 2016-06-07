@@ -88,9 +88,25 @@ TransitionGroup = React.addons.CSSTransitionGroup
       @setState selected: new_selected
     , 350
 
+  mass_visibility_change_btn: ->
+    R.button className: 'btn btn-secondary', id: 'mass-visibility-update',
+      React.createElement Dropdown,
+        id:                  "dropdown-mass-visibility-update"
+        option_labels:       @props.share_by_default_enums
+        dropdownClasses:     'pull-right'
+        menuClasses:         'centerDropdown'
+        onItemClick: (label) =>
+          for id in @state.selected
+            @update_visibility(label, id)
+        toggleBtn:           =>
+          React.DOM.div className: 'card-button',
+            Utils.ion_icon('eye', 'inline-block')
+            React.DOM.div className: 'icon-text inline-block', 'Change visibility'
+
   buttons: ->
     R.div className: 'btn-toolbar',
       R.div className: 'btn-group pull-right', role: 'group',
+        @mass_visibility_change_btn()
         @hotkeys_modal_btn()
         R.button className: 'btn btn-secondary', onClick: @select_all,
           Utils.ion_icon_link('ios-checkmark-outline', null, 'Select all')
@@ -103,27 +119,26 @@ TransitionGroup = React.addons.CSSTransitionGroup
       else                'label-default'
 
   update_visibility: (visibility, i) ->
-    finding = @state.findings[i]
-    data    = { article: { visibility: visibility } }
-    $.patch "/finding/#{finding.to_param}", data, (result) =>
-      new_findings = @state.findings.slice()
-      new_findings[i].visibility = visibility
-      @setState(findings: new_findings)
+    new_findings = @state.findings.slice()
+    new_findings[i].visibility = visibility
+    @setState(findings: new_findings)
 
-  visibility_btn: (i) ->
-    finding = @state.findings[i]
-    React.createElement Dropdown,
-      id:                  "dropdown-#{finding.to_param}"
-      header:              'Change visibility'
-      option_labels:       @props.share_by_default_enums
-      active_label:        finding.visibility
-      dropdownClasses:     'pull-right'
-      menuClasses:         'centerDropdown'
-      onItemClick: (label) => @update_visibility(label, i)
-      toggleBtn:           =>
-        R.span
-          className: "label #{@label_class(finding)} pull-right"
-          finding.visibility
+    $.patch "/finding/#{@state.findings[i].to_param}", { article: { visibility: visibility } }
+
+  # visibility_btn: (i) ->
+  #   finding = @state.findings[i]
+  #   React.createElement Dropdown,
+  #     id:                  "dropdown-#{finding.to_param}"
+  #     header:              'Change visibility'
+  #     option_labels:       @props.share_by_default_enums
+  #     active_label:        finding.visibility
+  #     dropdownClasses:     'pull-right'
+  #     menuClasses:         'centerDropdown'
+  #     onItemClick: (label) => @update_visibility(label, i)
+  #     toggleBtn:           =>
+  #       R.span
+  #         className: "label #{@label_class(finding)} pull-right"
+  #         finding.visibility
 
   rendered_findings: ->
     @state.findings.map (finding, id) =>
@@ -135,7 +150,9 @@ TransitionGroup = React.addons.CSSTransitionGroup
         className:  "finding #{selected_class}"
 
         finding.title
-        @visibility_btn(id)
+        R.span
+          className: "label #{@label_class(finding)} pull-right"
+          finding.visibility
         R.span className: 'pull-right date', "Created #{finding.created_at}"
 
   render: ->

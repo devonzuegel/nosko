@@ -24,7 +24,7 @@
   numberWithCommas: (x) ->
     x.toString().replace /\B(?=(\d{3})+(?!\d))/g, ','
 
-  ion_icon_link: (name, onclick, text=null, classes='') ->
+  ion_icon_link: (name, onclick, text=null, classes='', to_right=false) ->
     React.DOM.a className: "card-button #{classes}", onClick: onclick,
       @ion_icon(name, 'inline-block')
       if text
