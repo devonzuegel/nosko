@@ -125,6 +125,16 @@ TransitionGroup = React.addons.CSSTransitionGroup
 
     $.patch "/finding/#{@state.findings[i].to_param}", { article: { visibility: visibility } }
 
+  star_toggle: (i) ->
+    new_findings = @state.findings.slice()
+    new_findings[i].favorited = !new_findings[i].favorited
+    @setState(findings: new_findings)
+
+    $.patch "/finding/#{@state.findings[i].to_param}", { article: { favorited: new_findings[i].favorited } }
+
+  favorited_klass: (finding) ->
+    if finding.favorited then 'favorited' else 'not-favorited'
+
   rendered_findings: ->
     @state.findings.map (finding, id) =>
       selected_class = if (id in @state.selected) then 'selected' else 'unselected'
@@ -140,8 +150,8 @@ TransitionGroup = React.addons.CSSTransitionGroup
         R.span className: 'pull-right date', "Created #{finding.created_at}"
         R.span
           className: 'pull-left'
-          onClick:   -> alert('lskdjf')
-          Utils.ion_icon('star', 'inline-block')
+          onClick:   => @star_toggle(id)
+          Utils.ion_icon('star', "inline-block #{@favorited_klass(finding)}")
         R.div className: 'title', finding.title
 
   render: ->

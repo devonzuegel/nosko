@@ -27,6 +27,11 @@ $list-item-border:         1px solid $lighter-grey;
   .ion-icon.ion-star {
     margin-right: 12px;
     margin-top: -3px;
+    cursor: pointer;
+  }
+
+  .favorited .ion-icon {
+    color: #FFDC00;
   }
 }
 
